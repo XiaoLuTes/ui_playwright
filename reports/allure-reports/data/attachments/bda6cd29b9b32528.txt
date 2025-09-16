@@ -1,0 +1,87 @@
+INFO     root:browser.py:33 正在初始化浏览器: chrome, 无头模式: False
+INFO     WDM:logger.py:11 ====== WebDriver manager ======
+INFO     WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+INFO     WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+INFO     WDM:logger.py:11 Driver [C:\Users\86181\.wdm\drivers\chromedriver\win64\140.0.7339.82\chromedriver-win32/chromedriver.exe] found in cache
+INFO     root:browser.py:78 浏览器初始化完成: chrome
+INFO     UI_Automation:executor.py:25 注册页面对象: login_page
+INFO     UI_Automation:base_page.py:35 正在打开页面: https://test-admin.gsrtech.com/
+INFO     UI_Automation:base_page.py:37 页面已成功打开: https://test-admin.gsrtech.com/
+INFO     UI_Automation:login_page.py:33 已导航到登录页面: https://test-admin.gsrtech.com/
+INFO     UI_Automation:test_from_yaml.py:33 测试类初始化完成
+INFO     UI_Automation:executor.py:37 开始执行测试用例: 尝试招聘非eor全流程 -测试用例2 - 非eor
+INFO     UI_Automation:executor.py:82 执行步骤: 1、用户名输入, username_input, input, 小卢
+INFO     UI_Automation:base_page.py:71 在元素 username_input 输入: 小卢
+INFO     UI_Automation:executor.py:82 执行步骤: 2、密码输入, password_input, input, Aa129889
+INFO     UI_Automation:base_page.py:71 在元素 password_input 输入: Aa129889
+INFO     UI_Automation:executor.py:82 执行步骤: 3、验证码输入, code_input, input, 1
+INFO     UI_Automation:base_page.py:71 在元素 code_input 输入: 1
+INFO     UI_Automation:executor.py:82 执行步骤: 4、点击登录, login_button, click, None
+INFO     UI_Automation:base_page.py:81 点击元素: login_button
+INFO     UI_Automation:executor.py:82 执行步骤: 5、点击招聘平台, talent_button, click, None
+INFO     UI_Automation:base_page.py:81 点击元素: talent_button
+INFO     UI_Automation:executor.py:82 执行步骤: 6、验证进入招聘平台, jobManagement, check_exists, 存在
+INFO     UI_Automation:executor.py:82 执行步骤: 7、点击进入岗位管理, jobManagement, click, None
+INFO     UI_Automation:base_page.py:81 点击元素: jobManagement
+INFO     UI_Automation:executor.py:82 执行步骤: 8、新建岗位需求, new_job, click, None
+INFO     UI_Automation:base_page.py:81 点击元素: new_job
+INFO     UI_Automation:executor.py:82 执行步骤: 9、岗位类型选择-新建岗位, customer_type_new, click, None
+INFO     UI_Automation:base_page.py:81 点击元素: customer_type_new
+INFO     UI_Automation:executor.py:82 执行步骤: 10、点击合同类型, contract_type, click, None
+INFO     UI_Automation:base_page.py:81 点击元素: contract_type
+INFO     UI_Automation:executor.py:82 执行步骤: 11、合同类型输入'劳动合同', contract_type, input, 劳动合同
+INFO     UI_Automation:base_page.py:71 在元素 contract_type 输入: 劳动合同
+INFO     UI_Automation:executor.py:82 执行步骤: 12、回车确认选择'劳动合同', contract_type, enter, None
+INFO     UI_Automation:base_page.py:157 点击enter键
+INFO     UI_Automation:executor.py:82 执行步骤: 13、验证合同选择, contract_type_check, check_text, 劳动合同
+INFO     UI_Automation:executor.py:82 执行步骤: 14、公司名称输入“louie1号测试客户”, company_name, input, louie测试1号客户
+INFO     UI_Automation:base_page.py:71 在元素 company_name 输入: louie测试1号客户
+INFO     UI_Automation:executor.py:82 执行步骤: 15、回车确认, company_name, enter, None
+INFO     UI_Automation:base_page.py:157 点击enter键
+INFO     UI_Automation:executor.py:82 执行步骤: 16、校验公司选择, company_name_check, check_text, louie测试1号客户
+INFO     UI_Automation:executor.py:82 执行步骤: 17、需求类型：猎头, requirement_type_1, click, None
+INFO     UI_Automation:base_page.py:81 点击元素: requirement_type_1
+INFO     UI_Automation:executor.py:82 执行步骤: 18、需求人数15人, recruitment_volume, input, 15
+INFO     UI_Automation:base_page.py:71 在元素 recruitment_volume 输入: 15
+INFO     UI_Automation:executor.py:82 执行步骤: 19、选择非eor入职, eor_not, click, None
+INFO     UI_Automation:base_page.py:81 点击元素: eor_not
+INFO     UI_Automation:executor.py:82 执行步骤: 20、岗位负责人栏输入"卢毅", project_manager, input, 卢毅
+INFO     UI_Automation:base_page.py:71 在元素 project_manager 输入: 卢毅
+INFO     UI_Automation:executor.py:82 执行步骤: 21、回车确认, None, enter, None
+INFO     UI_Automation:base_page.py:157 点击enter键
+INFO     UI_Automation:executor.py:82 执行步骤: 22、校验岗位负责人选择, project_manager_check, check_text, 卢毅
+INFO     UI_Automation:executor.py:82 执行步骤: 23、上传文件, fr_upload_jd, hidden_upload, testcases/JD.pdf
+INFO     UI_Automation:executor.py:82 执行步骤: 24、等待5秒，等待上传完成, fr_upload_jd, wait, 5
+INFO     UI_Automation:executor.py:82 执行步骤: 25、验证上传是否成功, fr_upload_list, check_exists, 存在
+INFO     UI_Automation:executor.py:82 执行步骤: 26、输入AI描述, ai_instruction, input, autotest
+INFO     UI_Automation:base_page.py:71 在元素 ai_instruction 输入: autotest
+INFO     UI_Automation:executor.py:82 执行步骤: 27、输入job_title, job_title, input, autotest_louie
+INFO     UI_Automation:base_page.py:71 在元素 job_title 输入: autotest_louie
+INFO     UI_Automation:executor.py:82 执行步骤: 28、点击国家/地区选项栏(使其可见), country_click, click, None
+INFO     UI_Automation:base_page.py:81 点击元素: country_click
+INFO     UI_Automation:executor.py:82 执行步骤: 29、国家/地区选项栏模糊输入, country, input, American Samoa
+INFO     UI_Automation:base_page.py:71 在元素 country 输入: American Samoa
+INFO     UI_Automation:executor.py:82 执行步骤: 30、回车确认, country, enter, None
+INFO     UI_Automation:base_page.py:157 点击enter键
+INFO     UI_Automation:executor.py:82 执行步骤: 31、验证国家/地区选项栏, country_check, check_text, American Samoa
+INFO     UI_Automation:executor.py:82 执行步骤: 32、国家/城市栏输入American, country_city, input, American
+INFO     UI_Automation:base_page.py:71 在元素 country_city 输入: American
+INFO     UI_Automation:executor.py:82 执行步骤: 33、点击start, start, click, None
+INFO     UI_Automation:base_page.py:81 点击元素: start
+INFO     UI_Automation:executor.py:82 执行步骤: 34、点击项目负责人选项, project_possessor, hidden_click, None
+INFO     UI_Automation:base_page.py:81 点击元素: project_possessor
+INFO     UI_Automation:executor.py:82 执行步骤: 35、向下3次, project_possessor, down, 3
+INFO     UI_Automation:base_page.py:138 输入向下指令: 3次
+INFO     UI_Automation:executor.py:82 执行步骤: 36、回车确认, project_possessor, enter, None
+INFO     UI_Automation:base_page.py:157 点击enter键
+INFO     UI_Automation:executor.py:82 执行步骤: 37、验证项目负责人选择'卢毅', project_possessor, check_text, 卢毅
+INFO     UI_Automation:executor.py:82 执行步骤: 38、选择优先级C, priority_C, click, None
+INFO     UI_Automation:base_page.py:81 点击元素: priority_C
+INFO     UI_Automation:executor.py:82 执行步骤: 39、点击提交, submit, click, None
+INFO     UI_Automation:base_page.py:81 点击元素: submit
+INFO     UI_Automation:yaml_load.py:43 更新测试用例 尝试招聘非eor全流程 -测试用例2 结果为: 通过
+INFO     UI_Automation:executor.py:65 测试用例执行通过: 尝试招聘非eor全流程 -测试用例2
+INFO     UI_Automation:conftest.py:33 已清除浏览器cookies
+INFO     root:browser.py:84 正在关闭浏览器...
+INFO     root:browser.py:87 浏览器已成功关闭
+INFO     UI_Automation:conftest.py:20 测试会话结束，浏览器已关闭

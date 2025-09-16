@@ -1,0 +1,27 @@
+pytest_ui_framework/
+├── config/                   # 配置文件
+│   ├── settings.py           # 全局配置 √
+│   └── pytest.ini            # pytest配置
+├── drivers/                  # 浏览器驱动（可选）
+├── pages/                    # 页面对象模型
+│   ├── base_page.py          # 页面基类 √
+│   ├── login_page.py         # 登录页面
+│   ├── dashboard_page.py     # 仪表盘页面
+│   └── locators.py           # 定位器常量
+├── tests/                    # 测试用例
+│   ├── __init__.py
+│   ├── test_login.py         # 登录测试
+│   ├── test_dashboard.py     # 仪表盘测试
+│   └── test_checkout.py      # 结账流程测试
+├── utils/                    # 工具类
+│   ├── browser.py            # 浏览器管理  √
+│   ├── logger.py             # 日志系统 √
+│   ├── report_utils.py       # 报告工具
+│   └── api_client.py         # API辅助方法
+├── conftest.py               # pytest fixture配置
+├── requirements.txt          # 依赖库
+├── pytest.ini                # pytest配置文件
+└── run_tests.py              # 测试运行入口
+
+
+

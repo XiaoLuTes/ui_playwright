@@ -1,0 +1,26 @@
+2025-09-16 10:56:11,148 - UI_Automation - INFO - Logger initialized successfully
+2025-09-16 10:56:11,364 - UI_Automation - INFO - 测试用例地址：./testcases/testcases.yaml
+2025-09-16 10:56:11,364 - UI_Automation - INFO - 从YAML文件加载了 1 个测试用例
+2025-09-16 10:56:16,391 - UI_Automation - INFO - 注册页面对象: login_page
+2025-09-16 10:56:16,393 - UI_Automation - INFO - 正在打开页面: https://test-admin.gsrtech.com/
+2025-09-16 10:56:19,544 - UI_Automation - INFO - 页面已成功打开: https://test-admin.gsrtech.com/
+2025-09-16 10:56:19,545 - UI_Automation - INFO - 已导航到登录页面: https://test-admin.gsrtech.com/
+2025-09-16 10:56:19,545 - UI_Automation - INFO - 测试类初始化完成
+2025-09-16 10:56:19,547 - UI_Automation - INFO - 开始执行测试用例: 尝试招聘非eor全流程 -测试用例2 - 非eor
+2025-09-16 10:56:19,548 - UI_Automation - INFO - 执行步骤: 1、用户名输入, username_input, input, 小卢
+2025-09-16 10:56:19,548 - UI_Automation - INFO - 在元素 username_input 输入: 小卢
+2025-09-16 10:56:19,799 - UI_Automation - INFO - 执行步骤: 2、密码输入, password_input, input, Aa129889
+2025-09-16 10:56:19,800 - UI_Automation - INFO - 在元素 password_input 输入: Aa129889
+2025-09-16 10:56:19,929 - UI_Automation - INFO - 执行步骤: 3、验证码输入, code_input, input, 1
+2025-09-16 10:56:19,930 - UI_Automation - INFO - 在元素 code_input 输入: 1
+2025-09-16 10:56:20,042 - UI_Automation - INFO - 执行步骤: 4、点击登录, login_button, click, None
+2025-09-16 10:56:20,122 - UI_Automation - INFO - 点击元素: login_button
+2025-09-16 10:56:20,122 - UI_Automation - INFO - 执行步骤: 5、点击招聘平台, talent_button, click, None
+2025-09-16 10:56:24,232 - UI_Automation - INFO - 点击元素: talent_button
+2025-09-16 10:56:24,232 - UI_Automation - INFO - 执行步骤: 6、验证进入招聘平台, jobManagement, check_exists, 存在
+2025-09-16 10:56:49,267 - UI_Automation - ERROR - 元素查找超时: jobManagement
+2025-09-16 10:56:49,438 - UI_Automation - INFO - 已截图: ./reports/screenshots\元素查找超时-jobManagement_20250916_105649.png
+2025-09-16 10:56:49,523 - UI_Automation - INFO - 更新测试用例 尝试招聘非eor全流程 -测试用例2 结果为: 失败: 步骤'6、验证进入招聘平台'校验失败, jobManagement元素应存在,实际不存在
+2025-09-16 10:56:49,523 - UI_Automation - ERROR - 测试用例执行失败: 尝试招聘非eor全流程 -测试用例2 - 步骤'6、验证进入招聘平台'校验失败, jobManagement元素应存在,实际不存在
+2025-09-16 10:56:49,822 - UI_Automation - INFO - 已清除浏览器cookies
+2025-09-16 10:56:52,008 - UI_Automation - INFO - 测试会话结束，浏览器已关闭

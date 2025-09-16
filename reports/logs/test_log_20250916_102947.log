@@ -1,0 +1,130 @@
+2025-09-16 10:29:47,757 - UI_Automation - INFO - Logger initialized successfully
+2025-09-16 10:29:47,974 - UI_Automation - INFO - 测试用例地址：./testcases/testcases.yaml
+2025-09-16 10:29:47,975 - UI_Automation - INFO - 从YAML文件加载了 1 个测试用例
+2025-09-16 10:29:52,210 - UI_Automation - INFO - 注册页面对象: login_page
+2025-09-16 10:29:52,211 - UI_Automation - INFO - 正在打开页面: https://test-admin.gsrtech.com/
+2025-09-16 10:29:54,853 - UI_Automation - INFO - 页面已成功打开: https://test-admin.gsrtech.com/
+2025-09-16 10:29:54,853 - UI_Automation - INFO - 已导航到登录页面: https://test-admin.gsrtech.com/
+2025-09-16 10:29:54,853 - UI_Automation - INFO - 测试类初始化完成
+2025-09-16 10:29:54,856 - UI_Automation - INFO - 开始执行测试用例: 尝试招聘非eor全流程 -测试用例2 - 非eor
+2025-09-16 10:29:54,856 - UI_Automation - INFO - 执行步骤: 1、用户名输入, username_input, input, 小卢
+2025-09-16 10:29:54,856 - UI_Automation - INFO - 在元素 username_input 输入: 小卢
+2025-09-16 10:29:55,298 - UI_Automation - INFO - 执行步骤: 2、密码输入, password_input, input, Aa129889
+2025-09-16 10:29:55,299 - UI_Automation - INFO - 在元素 password_input 输入: Aa129889
+2025-09-16 10:29:55,449 - UI_Automation - INFO - 执行步骤: 3、验证码输入, code_input, input, 1
+2025-09-16 10:29:55,450 - UI_Automation - INFO - 在元素 code_input 输入: 1
+2025-09-16 10:29:55,578 - UI_Automation - INFO - 执行步骤: 4、点击登录, login_button, click, None
+2025-09-16 10:29:55,703 - UI_Automation - INFO - 点击元素: login_button
+2025-09-16 10:29:55,703 - UI_Automation - INFO - 执行步骤: 5、点击招聘平台, talent_button, click, None
+2025-09-16 10:29:57,904 - UI_Automation - INFO - 点击元素: talent_button
+2025-09-16 10:29:57,904 - UI_Automation - INFO - 执行步骤: 6、验证进入招聘平台, jobManagement, check_exists, 存在
+2025-09-16 10:30:05,659 - UI_Automation - INFO - 执行步骤: 7、点击进入岗位管理, jobManagement, click, None
+2025-09-16 10:30:05,753 - UI_Automation - INFO - 点击元素: jobManagement
+2025-09-16 10:30:05,754 - UI_Automation - INFO - 执行步骤: 8、新建岗位需求, new_job, click, None
+2025-09-16 10:30:06,391 - UI_Automation - INFO - 点击元素: new_job
+2025-09-16 10:30:06,393 - UI_Automation - INFO - 执行步骤: 9、岗位类型选择-新建岗位, customer_type_new, click, None
+2025-09-16 10:30:07,494 - UI_Automation - INFO - 点击元素: customer_type_new
+2025-09-16 10:30:07,494 - UI_Automation - INFO - 执行步骤: 10、点击合同类型, contract_type, click, None
+2025-09-16 10:30:07,587 - UI_Automation - INFO - 点击元素: contract_type
+2025-09-16 10:30:07,588 - UI_Automation - INFO - 执行步骤: 11、合同类型输入'劳动合同', contract_type, input, 劳动合同
+2025-09-16 10:30:07,589 - UI_Automation - INFO - 在元素 contract_type 输入: 劳动合同
+2025-09-16 10:30:07,672 - UI_Automation - INFO - 执行步骤: 12、回车确认选择'劳动合同', contract_type, enter, None
+2025-09-16 10:30:07,694 - UI_Automation - INFO - 点击enter键
+2025-09-16 10:30:07,695 - UI_Automation - INFO - 执行步骤: 13、验证合同选择, contract_type_check, check_text, 劳动合同
+2025-09-16 10:30:07,730 - UI_Automation - INFO - 执行步骤: 14、公司名称输入“louie1号测试客户”, company_name, input, louie测试1号客户
+2025-09-16 10:30:07,731 - UI_Automation - INFO - 在元素 company_name 输入: louie测试1号客户
+2025-09-16 10:30:07,853 - UI_Automation - INFO - 执行步骤: 15、回车确认, company_name, enter, None
+2025-09-16 10:30:07,875 - UI_Automation - INFO - 点击enter键
+2025-09-16 10:30:07,875 - UI_Automation - INFO - 执行步骤: 16、校验公司选择, company_name_check, check_text, louie测试1号客户
+2025-09-16 10:30:07,908 - UI_Automation - INFO - 执行步骤: 17、需求类型：猎头, requirement_type_1, click, None
+2025-09-16 10:30:07,995 - UI_Automation - INFO - 点击元素: requirement_type_1
+2025-09-16 10:30:07,997 - UI_Automation - INFO - 执行步骤: 18、需求人数15人, recruitment_volume, input, 15
+2025-09-16 10:30:07,997 - UI_Automation - INFO - 在元素 recruitment_volume 输入: 15
+2025-09-16 10:30:08,123 - UI_Automation - INFO - 执行步骤: 19、选择非eor入职, eor_not, click, None
+2025-09-16 10:30:08,207 - UI_Automation - INFO - 点击元素: eor_not
+2025-09-16 10:30:08,208 - UI_Automation - INFO - 执行步骤: 20、岗位负责人栏输入"卢毅", project_manager, input, 卢毅
+2025-09-16 10:30:08,208 - UI_Automation - INFO - 在元素 project_manager 输入: 卢毅
+2025-09-16 10:30:08,300 - UI_Automation - INFO - 执行步骤: 21、回车确认, None, enter, None
+2025-09-16 10:30:08,322 - UI_Automation - INFO - 点击enter键
+2025-09-16 10:30:08,322 - UI_Automation - INFO - 执行步骤: 22、校验岗位负责人选择, project_manager_check, check_text, 卢毅
+2025-09-16 10:30:08,353 - UI_Automation - INFO - 执行步骤: 23、上传文件, fr_upload_jd, hidden_upload, testcases/JD.pdf
+2025-09-16 10:30:08,421 - UI_Automation - INFO - 执行步骤: 24、等待5秒，等待上传完成, fr_upload_jd, wait, 5
+2025-09-16 10:30:13,422 - UI_Automation - INFO - 执行步骤: 25、验证上传是否成功, fr_upload_list, check_exists, 存在
+2025-09-16 10:30:13,439 - UI_Automation - INFO - 执行步骤: 26、输入AI描述, ai_instruction, input, autotest
+2025-09-16 10:30:13,439 - UI_Automation - INFO - 在元素 ai_instruction 输入: autotest
+2025-09-16 10:30:13,684 - UI_Automation - INFO - 执行步骤: 27、输入job_title, job_title, input, autotest_louie
+2025-09-16 10:30:13,684 - UI_Automation - INFO - 在元素 job_title 输入: autotest_louie
+2025-09-16 10:30:13,839 - UI_Automation - INFO - 执行步骤: 28、点击国家/地区选项栏(使其可见), country_click, click, None
+2025-09-16 10:30:13,927 - UI_Automation - INFO - 点击元素: country_click
+2025-09-16 10:30:13,928 - UI_Automation - INFO - 执行步骤: 29、国家/地区选项栏模糊输入, country, input, American Samoa
+2025-09-16 10:30:13,928 - UI_Automation - INFO - 在元素 country 输入: American Samoa
+2025-09-16 10:30:14,058 - UI_Automation - INFO - 执行步骤: 30、回车确认, country, enter, None
+2025-09-16 10:30:14,081 - UI_Automation - INFO - 点击enter键
+2025-09-16 10:30:14,081 - UI_Automation - INFO - 执行步骤: 31、验证国家/地区选项栏, country_check, check_text, American Samoa
+2025-09-16 10:30:14,111 - UI_Automation - INFO - 执行步骤: 32、国家/城市栏输入American, country_city, input, American
+2025-09-16 10:30:14,112 - UI_Automation - INFO - 在元素 country_city 输入: American
+2025-09-16 10:30:14,275 - UI_Automation - INFO - 执行步骤: 33、点击start, start, click, None
+2025-09-16 10:30:15,490 - UI_Automation - INFO - 点击元素: start
+2025-09-16 10:30:15,491 - UI_Automation - INFO - 执行步骤: 34、点击项目负责人选项, project_possessor, hidden_click, None
+2025-09-16 10:30:20,375 - UI_Automation - INFO - 更新测试用例 尝试招聘非eor全流程 -测试用例2 结果为: 失败: Message: element click intercepted: Element <div class="ant-select ant-select-outlined ant-select-in-form-item css-var-rj ant-select-css-var css-sx1p5s ant-select-single ant-select-show-arrow" aria-required="true" externalmethod="[object Object]" forminstance="[object Object]" style="max-width: 340px; width: 100%;">...</div> is not clickable at point (452, 16). Other element would receive the click: <div class="ant-pro-global-header css-px1fgw">...</div>
+  (Session info: chrome=140.0.7339.80); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementclickinterceptedexception
+Stacktrace:
+	GetHandleVerifier [0x0x118d2a3+66419]
+	GetHandleVerifier [0x0x118d2e4+66484]
+	(No symbol) [0x0xf64bd3]
+	(No symbol) [0x0xfb4e40]
+	(No symbol) [0x0xfb31a3]
+	(No symbol) [0x0xfb0c57]
+	(No symbol) [0x0xfafedd]
+	(No symbol) [0x0xfa43c5]
+	(No symbol) [0x0xfd101c]
+	(No symbol) [0x0xfa3e24]
+	(No symbol) [0x0xfd11d4]
+	(No symbol) [0x0xff28a1]
+	(No symbol) [0x0xfd0e16]
+	(No symbol) [0x0xfa25ce]
+	(No symbol) [0x0xfa34a4]
+	GetHandleVerifier [0x0x13d5ee3+2461619]
+	GetHandleVerifier [0x0x13d0f66+2441270]
+	GetHandleVerifier [0x0x11b6242+234258]
+	GetHandleVerifier [0x0x11a6208+168664]
+	GetHandleVerifier [0x0x11ad1ad+197245]
+	GetHandleVerifier [0x0x11955f8+100040]
+	GetHandleVerifier [0x0x1195792+100450]
+	GetHandleVerifier [0x0x117f74a+10266]
+	BaseThreadInitThunk [0x0x76507ba9+25]
+	RtlInitializeExceptionChain [0x0x7774c0cb+107]
+	RtlClearBits [0x0x7774c04f+191]
+
+2025-09-16 10:30:20,376 - UI_Automation - ERROR - 测试用例执行失败: 尝试招聘非eor全流程 -测试用例2 - Message: element click intercepted: Element <div class="ant-select ant-select-outlined ant-select-in-form-item css-var-rj ant-select-css-var css-sx1p5s ant-select-single ant-select-show-arrow" aria-required="true" externalmethod="[object Object]" forminstance="[object Object]" style="max-width: 340px; width: 100%;">...</div> is not clickable at point (452, 16). Other element would receive the click: <div class="ant-pro-global-header css-px1fgw">...</div>
+  (Session info: chrome=140.0.7339.80); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementclickinterceptedexception
+Stacktrace:
+	GetHandleVerifier [0x0x118d2a3+66419]
+	GetHandleVerifier [0x0x118d2e4+66484]
+	(No symbol) [0x0xf64bd3]
+	(No symbol) [0x0xfb4e40]
+	(No symbol) [0x0xfb31a3]
+	(No symbol) [0x0xfb0c57]
+	(No symbol) [0x0xfafedd]
+	(No symbol) [0x0xfa43c5]
+	(No symbol) [0x0xfd101c]
+	(No symbol) [0x0xfa3e24]
+	(No symbol) [0x0xfd11d4]
+	(No symbol) [0x0xff28a1]
+	(No symbol) [0x0xfd0e16]
+	(No symbol) [0x0xfa25ce]
+	(No symbol) [0x0xfa34a4]
+	GetHandleVerifier [0x0x13d5ee3+2461619]
+	GetHandleVerifier [0x0x13d0f66+2441270]
+	GetHandleVerifier [0x0x11b6242+234258]
+	GetHandleVerifier [0x0x11a6208+168664]
+	GetHandleVerifier [0x0x11ad1ad+197245]
+	GetHandleVerifier [0x0x11955f8+100040]
+	GetHandleVerifier [0x0x1195792+100450]
+	GetHandleVerifier [0x0x117f74a+10266]
+	BaseThreadInitThunk [0x0x76507ba9+25]
+	RtlInitializeExceptionChain [0x0x7774c0cb+107]
+	RtlClearBits [0x0x7774c04f+191]
+
+2025-09-16 10:30:20,693 - UI_Automation - INFO - 已清除浏览器cookies
+2025-09-16 10:30:22,917 - UI_Automation - INFO - 测试会话结束，浏览器已关闭
