@@ -41,6 +41,7 @@ class Browser:
             chrome_options.add_argument("--disable-dev-shm-usage")  # 禁用/dev/shm使用
 
             # 使用WebDriver Manager自动管理驱动程序
+            logger.info(f"正在配置webdriver-chrome")
             self.driver = webdriver.Chrome(
                 service=ChromeService(ChromeDriverManager().install()),
                 options=chrome_options
@@ -53,6 +54,7 @@ class Browser:
                 firefox_options.add_argument("--headless")
 
             # 使用WebDriver Manager自动管理驱动程序
+            logger.info(f"正在配置webdriver-firefox")
             self.driver = webdriver.Firefox(
                 service=FirefoxService(GeckoDriverManager().install()),
                 options=firefox_options
