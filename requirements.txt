@@ -6,5 +6,3 @@ allure-pytest~=2.13.2
 python-dotenv~=1.0.0
 PyYAML~=6.0.2
 allure-python-commons~=2.15.0
-utils~=1.0.2
-logger~=1.4
