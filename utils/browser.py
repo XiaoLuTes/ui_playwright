@@ -38,6 +38,8 @@ class Browser:
                 chrome_options.add_argument("--headless=new")  # 新版无头模式
             chrome_options.add_argument("--no-sandbox")  # 禁用沙箱
             chrome_options.add_argument("--disable-dev-shm-usage")  # 禁用/dev/shm使用
+            chrome_options.add_argument('--memory-model=low-memory')    # 低内存模式
+            chrome_options.add_argument('--disable-features=VizDisplayCompositor')
 
             # 使用WebDriver Manager自动管理驱动程序
             logger.info(f"正在配置webdriver-chrome")
