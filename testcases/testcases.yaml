@@ -197,4 +197,6 @@ test_cases:
     action: click
     data: null
     expected: null
-  result: 通过
+  result: '失败: Message: 元素查找超时: talent_button
+
+    '
