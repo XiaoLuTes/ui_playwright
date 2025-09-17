@@ -30,7 +30,6 @@ class Browser:
         browser_name = self.settings.BROWSER
         headless = self.settings.HEADLESS
         logger.info(f"正在初始化浏览器: {browser_name}, 无头模式: {headless}")
-
         # 根据浏览器类型创建不同的驱动
         if browser_name == "chrome":
             # 配置Chrome选项
@@ -46,7 +45,6 @@ class Browser:
                 service=ChromeService(ChromeDriverManager().install()),
                 options=chrome_options
             )
-
         elif browser_name == "firefox":
             # 配置Firefox选项
             firefox_options = webdriver.FirefoxOptions()
@@ -59,7 +57,6 @@ class Browser:
                 service=FirefoxService(GeckoDriverManager().install()),
                 options=firefox_options
             )
-
         else:
             # 不支持的浏览器类型抛出异常
             raise ValueError(f"不支持的浏览器类型: {browser_name}")
@@ -69,13 +66,11 @@ class Browser:
         # self.driver.set_page_load_timeout(self.config.get_page_load_timeout()) # 显式超时
         self.driver.implicitly_wait(self.settings.IMPLICIT_WAIT)  # 隐式超时
         self.driver.set_page_load_timeout(self.settings.EXPLICIT_WAIT)  # 显式超时
-
         # 设置浏览器窗口大小
         # width, height = self.config.get_window_size()
         (width, height) = self.settings.WINDOW_SIZE
         print(width, height)
         self.driver.set_window_size(width, height)
-
         logger.info(f"浏览器初始化完成: {browser_name}")
         return self.driver
 

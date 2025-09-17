@@ -29,5 +29,6 @@ class LoginPage(BasePage):
     def navigate_to_login(self):
         """打开登录页面"""
         login_url = self.config.URL
+        logger.info(f"开始导航到登录页面: {login_url}")
         self.open(login_url)
         logger.info(f"已导航到登录页面: {login_url}")

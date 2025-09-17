@@ -1,4 +1,0 @@
-2025-09-16 10:02:36,459 - UI_Automation - INFO - Logger initialized successfully
-2025-09-16 10:02:36,733 - UI_Automation - INFO - 测试用例地址：./testcases/testcases.yaml
-2025-09-16 10:02:36,733 - UI_Automation - INFO - 从YAML文件加载了 1 个测试用例
-2025-09-16 10:03:32,392 - UI_Automation - INFO - 测试会话结束，浏览器已关闭

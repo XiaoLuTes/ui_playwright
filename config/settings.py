@@ -9,7 +9,7 @@ class Settings:
         "staging": "https://staging.example.com",  # 预生产环境URL
         "dev": "https://test-admin.gsrtech.com/"  # 测试环境URL
     }
-    URL = BASE_URL[ENV]
+    URL = "https://test-admin.gsrtech.com/"
 
     # 浏览器配置
     BROWSER = "chrome"  # 默认浏览器：chrome/firefox/edge/safari
@@ -17,8 +17,8 @@ class Settings:
     WINDOW_SIZE = (1920, 1080)  # 浏览器窗口大小
 
     # 等待时间设置（秒）
-    IMPLICIT_WAIT = 10  # 隐式等待全局超时
-    EXPLICIT_WAIT = 15  # 显式等待最大超时
+    IMPLICIT_WAIT = 15  # 隐式等待全局超时
+    EXPLICIT_WAIT = 30  # 显式等待最大超时
 
     # 测试用户凭证
     VALID_USER = {
