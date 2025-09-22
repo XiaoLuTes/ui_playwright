@@ -2,7 +2,7 @@ testcase.yaml文件格式：(测试用例)
 1、id    测试用例id
 2、name  测试用例名称
 3、steps 测试用例步骤
-    step_name   测试步骤名称(方便问题定位)
+    step_name   测试步骤名称
     element     元素名称(在config.element_locators.yaml文件统一管理、定义，这里引用)
     action      动作(目前封装了： input        输入文本
                                             必填项：element\action\data(需要输入的内容)

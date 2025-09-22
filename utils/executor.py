@@ -1,4 +1,3 @@
-
 import time
 from conftest import driver
 from utils.logger import logger
@@ -110,9 +109,13 @@ class Executor:
             if data == "存在" and not exists:
                 raise Exception(f"步骤'{step_name}'校验失败, {element_name}元素应存在,实际不存在")
             elif data == "不存在" and exists:
-                raise Exception(f"步骤'{step_name}'校验失败: {element_name}元素不应存在,实际存在")
-            elif data is None and not exists:
-                raise Exception(f"步骤'{step_name}'校验成功: {element_name}元素不存在")
+                raise Exception(f"步骤'{step_name}'校验失败: {element_name}元素应不存在,实际存在")
+            elif data == "不存在" and not exists:
+                logger.info(f"步骤'{step_name}'校验成功: {element_name}元素不存在")
+            elif data == "存在" and exists:
+                logger.info(f"步骤'{step_name}'校验成功: {element_name}元素存在")
+            else:
+                raise Exception(f"无法识别, 步骤：{step_name}, 判断：{data}, 应为'存在'or'不存在'")
 
         elif action == "upload" or action == "hidden_upload":
             page_object.upload_file(element_name, data, action)
