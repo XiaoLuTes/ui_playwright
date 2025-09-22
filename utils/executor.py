@@ -118,8 +118,7 @@ class Executor:
             page_object.upload_file(element_name, data, action)
 
         elif action == "wait":
-            sec = int(data)
-            time.sleep(sec)
+            time.sleep(int(data))
 
         else:
             raise Exception(f"步骤'{step_name}'不支持的操作类型: {action}")

@@ -49,12 +49,12 @@ class LoginPage(BasePage):
                 )
                 self.logger.info("成功导航到登录页面")
                 return True
+
             except TimeoutException as e:
                 self.logger.warning(f"导航到登录页面超时 (尝试 {times + 1}/{max_retry}次登录): {str(e)}")
                 if times == max_retry - 1:
                     self.logger.error("所有重试尝试均失败")
                     raise e
-
                 time.sleep(5)
 
             except Exception as e:
