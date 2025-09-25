@@ -28,7 +28,6 @@ testcase.yaml文件格式：(测试用例)
     data        输入文本
     expected    预期(只在input时使用,可输入true或false,校验当前元素所输入的文本是否正确)
 
-
 element_locators.yaml文件格式:(元素定位器)
 login_page      实例login_page,如果需要从login动作开始测试，元素都可以放在下面
     username_input:     元素名称(给到testcase-step使用的元素名称)
