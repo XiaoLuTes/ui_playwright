@@ -1,5 +1,0 @@
-"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"failed","Thu Sep 25 17:35:31 CST 2025","Thu Sep 25 17:35:47 CST 2025","16073","","","","","","尝试招聘非eor全流程 -测试用例2 - 非eor","
-        参数化测试用例 - 从YAML文件加载测试场景
-        :param test_case: 测试用例字典
-        "
