@@ -86,7 +86,7 @@ class BasePage:
         element = self.find_element(element_name, action)
         return element.text
 
-    @allure.step("获取元素值: {element_name}")
+    @allure.step("校验元素值: {element_name}")
     def get_element_value(self, element_name, action):
         """获取元素值"""
         element = self.find_element(element_name, action)

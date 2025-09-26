@@ -76,11 +76,23 @@ class Executor:
             return False
 
     @staticmethod
-    @allure.step("步骤参数")
     def execute_step(page_object, step_name, element_name, action, data, expected):
         """执行单个测试步骤"""
         # time.sleep(1)   # 等待1秒
-        logger.info(f"执行步骤: {step_name}, {element_name}, {action}, {data}")
+        with allure.step(step_name):
+            # 记录步骤参数作为附件
+            parameters = {
+                '元素名': element_name,
+                '动作': action,
+                '数据': data,
+                '预期结果': expected
+            }
+            allure.attach(
+                str(parameters),
+                "步骤参数",
+                allure.attachment_type.TEXT
+            )
+        logger.info(f"执行步骤: {step_name}")
         if action == "input" or action == "hidden_input":
             page_object.input_text(element_name, action, data)
             # 验证输入结果
