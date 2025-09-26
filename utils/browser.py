@@ -71,7 +71,7 @@ class Browser:
         # 设置浏览器窗口大小
         # width, height = self.config.get_window_size()
         (width, height) = self.settings.WINDOW_SIZE
-        print(width, height)
+        logger.info(f"设置浏览器窗口大小为{width}x{height}")
         self.driver.set_window_size(width, height)
         logger.info(f"浏览器初始化完成: {browser_name}")
         return self.driver
