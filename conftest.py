@@ -1,7 +1,11 @@
+# import shutil
+# import subprocess
+# from pathlib import Path
+
 import pytest
 from utils.browser import Browser
 from utils.logger import logger
-import allure
+# import allure
 from pages.login_page import LoginPage
 
 
@@ -41,29 +45,3 @@ def login_page(driver):
     # 创建登录页面实例
     return LoginPage(driver)
 
-@pytest.hookimpl(tryfirst=True, hookwrapper=True)
-def pytest_runtest_makereport(item, call):  # call参数由框架传递
-    """
-    pytest钩子函数 - 用于获取测试结果并在失败时截图
-    """
-    # 执行测试并获取结果
-    outcome = yield
-    rep = outcome.get_result()
-
-    # 检查是否是测试函数的调用阶段且测试失败
-    if rep.when == "call" and rep.failed:
-        # 获取driver实例(如果存在)
-        driver = getattr(item.funcargs.get('driver'), 'driver', None)
-        if driver:
-            # 在失败时截图
-            screenshot_name = f"failure_{rep.nodeid.replace('::', '_')}"
-            try:
-                # 使用Allure附加截图
-                allure.attach(
-                    driver.get_screenshot_as_png(),
-                    name=screenshot_name,
-                    attachment_type=allure.attachment_type.PNG
-                )
-                logger.info(f"测试失败，已截图: {screenshot_name}")
-            except Exception as e:
-                logger.error(f"截图失败: {str(e)}")

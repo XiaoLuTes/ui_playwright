@@ -197,4 +197,6 @@ test_cases:
     action: click
     data: null
     expected: null
-  result: '失败: 步骤''6、验证进入招聘平台''校验失败, jobManagement元素应存在,实际不存在'
+  result: '失败: Message: 元素查找超时: talent_button
+
+    '
