@@ -65,7 +65,7 @@ class BasePage:
                 self.take_screenshot(f"元素查找超时-{element_name}")
                 raise TimeoutException(error_msg)
 
-    @allure.step("输入文本: {element_name}")
+    @allure.step("对元素输入文本: {element_name}")
     def input_text(self, element_name, action, text):
         """输入文本"""
         logger.info(f"在元素 {element_name} 输入: {text}")

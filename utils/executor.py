@@ -56,7 +56,8 @@ class Executor:
                         raise Exception(f"未注册页面对象: {page_name}")
 
                 # 执行步骤
-                with allure.step(f"步骤{step_name}, {element_name} - {action}: {data}"):
+                with allure.step(f"步骤{step_name}"):
+                    # , {element_name} - {action}: {data}
                     self.execute_step(page_object, step_name, element_name, action, data, expected)
 
             # 测试结果为通过
@@ -75,6 +76,7 @@ class Executor:
             return False
 
     @staticmethod
+    @allure.step("步骤参数")
     def execute_step(page_object, step_name, element_name, action, data, expected):
         """执行单个测试步骤"""
         # time.sleep(1)   # 等待1秒
