@@ -165,7 +165,6 @@ class BasePage:
         :param action: 动作，这里用来判断是否是隐藏的元素
         :return: Boolean 表示是否上传成功
         """
-        allure.attach(f"上传文件: {data}", f"到元素: {element_name}")
         try:
             # 确保文件存在
             if not os.path.exists(data):
@@ -173,29 +172,29 @@ class BasePage:
                 raise FileNotFoundError(error_msg)
             # 获取文件的绝对路径（更可靠）
             absolute_path = os.path.abspath(data)
-            allure.attach("文件绝对路径", absolute_path, allure.attachment_type.TEXT)
+            allure.attach(absolute_path, "文件绝对路径", allure.attachment_type.TEXT)
             file_input = self.find_element(element_name, action)
             # 确保元素是文件输入类型
             input_type = file_input.get_attribute("type")
             if input_type and input_type.lower() != "file":
-                allure.attach("警告", f"元素类型不是'file',而是'{input_type}'", allure.attachment_type.TEXT)
+                allure.attach(f"元素类型不是'file',而是'{input_type}'", f"警告", allure.attachment_type.TEXT)
             # 发送文件路径
             file_input.send_keys(absolute_path)
         except FileNotFoundError as e:
             # 文件不存在异常
             error_msg = f"文件错误: {str(e)}"
-            allure.attach("错误信息", error_msg, allure.attachment_type.TEXT)
+            allure.attach(error_msg, "错误信息", allure.attachment_type.TEXT)
             self.take_screenshot(f"file_not_found_{os.path.basename(data)}")
             raise
         except TimeoutException as e:
             # 元素查找超时异常
             error_msg = f"文件输入元素查找超时: {str(e)}"
-            allure.attach("错误信息", error_msg, allure.attachment_type.TEXT)
+            allure.attach(error_msg, "错误信息", allure.attachment_type.TEXT)
             self.take_screenshot(f"file_input_timeout_{element_name[0]}_{element_name[1]}")
             raise
         except Exception as e:
             # 其他未知异常
             error_msg = f"文件上传过程中发生未知错误: {str(e)}"
-            allure.attach("错误信息", error_msg, allure.attachment_type.TEXT)
+            allure.attach(error_msg, "错误信息", allure.attachment_type.TEXT)
             self.take_screenshot(f"file_upload_error_{os.path.basename(data)}")
             raise

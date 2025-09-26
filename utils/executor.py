@@ -79,7 +79,7 @@ class Executor:
     def execute_step(page_object, step_name, element_name, action, data, expected):
         """执行单个测试步骤"""
         # time.sleep(1)   # 等待1秒
-        with allure.step(step_name):
+        with allure.step("步骤参数"):
             # 记录步骤参数作为附件
             parameters = {
                 '元素名': element_name,
