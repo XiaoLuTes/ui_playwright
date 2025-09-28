@@ -2,7 +2,7 @@
 import logging
 import os
 from datetime import datetime
-from config.settings import settings  # 导入设置
+from config.settings import settings
 
 
 def setup_logger():

@@ -170,7 +170,7 @@ class BasePage:
             if not os.path.exists(data):
                 error_msg = f"文件不存在: {data}"
                 raise FileNotFoundError(error_msg)
-            # 获取文件的绝对路径（更可靠）
+            # 获取文件的绝对路径
             absolute_path = os.path.abspath(data)
             allure.attach(absolute_path, "文件绝对路径", allure.attachment_type.TEXT)
             file_input = self.find_element(element_name, action)

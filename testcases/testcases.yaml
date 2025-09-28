@@ -197,6 +197,6 @@ test_cases:
     action: click
     data: null
     expected: null
-  result: '失败: Message: 隐藏元素查找超时: project_possessor
+  result: '失败: Message: 元素查找超时: talent_button
 
     '
