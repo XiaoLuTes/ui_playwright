@@ -82,10 +82,10 @@ class Executor:
         with allure.step("步骤参数"):
             # 记录步骤参数作为附件
             parameters = {
-                '元素名': element_name,
-                '动作': action,
-                '数据': data,
-                '预期结果': expected
+                'element_name': element_name,
+                'action': action,
+                'data': data,
+                'expected': expected
             }
             allure.attach(
                 str(parameters),
