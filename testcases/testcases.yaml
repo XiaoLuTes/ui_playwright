@@ -184,7 +184,7 @@ test_cases:
     expected: null
   - step_name: 37、验证项目负责人选择'卢毅'
     element: project_possessor
-    action: check_text
+    action: hidden_check_text
     data: 卢毅
     expected: null
   - step_name: 38、选择优先级C

@@ -20,7 +20,7 @@ login_page:
     value: "//*[@id='root-master']/div/div/div/div/ul/li[1]/div[1]"
   jobManagement:    # 岗位管理按钮
     by: "xpath"
-    value: "//*[@id='root']/div/div[2]/aside/div/div[1]/ul/li[3]"
+    value: "//*[@id='root']/div/div[2]/aside/div/div[1]/ul/li[3]/span"
   job_list:     # 岗位列表
     by: "xpath"
     value: "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div/div[2]"

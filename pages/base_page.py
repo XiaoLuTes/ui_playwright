@@ -184,17 +184,17 @@ class BasePage:
             # 文件不存在异常
             error_msg = f"文件错误: {str(e)}"
             allure.attach(error_msg, "错误信息", allure.attachment_type.TEXT)
-            self.take_screenshot(f"file_not_found_{os.path.basename(data)}")
+            self.take_screenshot(f"文件不存在_{os.path.basename(data)}")
             raise
         except TimeoutException as e:
             # 元素查找超时异常
             error_msg = f"文件输入元素查找超时: {str(e)}"
             allure.attach(error_msg, "错误信息", allure.attachment_type.TEXT)
-            self.take_screenshot(f"file_input_timeout_{element_name[0]}_{element_name[1]}")
+            self.take_screenshot(f"文件上传超时_{element_name}")
             raise
         except Exception as e:
-            # 其他未知异常
+            # 其他异常
             error_msg = f"文件上传过程中发生未知错误: {str(e)}"
             allure.attach(error_msg, "错误信息", allure.attachment_type.TEXT)
-            self.take_screenshot(f"file_upload_error_{os.path.basename(data)}")
+            self.take_screenshot(f"未知错误_{os.path.basename(data)}")
             raise
