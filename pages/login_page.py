@@ -14,13 +14,6 @@ class LoginPage(BasePage):
     继承自BasePage
     """
 
-    # 元素定位器 - 使用元组(By, value)格式
-    # USERNAME_INPUT = ("id", "username")
-    # PASSWORD_INPUT = ("id", "password")
-    # LOGIN_BUTTON = ("id", "loginBtn")
-    # ERROR_MSG = ("css selector", ".error-message")
-    # SUCCESS_MSG = ("css selector", ".welcome-message")
-
     def __init__(self, driver):
         """初始化登录页面"""
         super().__init__(self, driver)

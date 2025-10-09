@@ -39,21 +39,12 @@ login_page:
   contract_type_check:    # 合同类型选项栏校验用
     by: "xpath"
     value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/form/div/div[1]/div/div/div/div/div/div/div/div[2]/div/div/div[5]/div/div/div[2]/div/div/div/div/span"
-#  contract_type_1:    # 合同类型1.劳动合同
-#    by: "xpath"
-#    value:  "/html/body/div/div/div/div[@role ='listbox']/div[@aria-label='劳动合同']"
-#  contract_type_2: # 合同类型2.顾问合同
-#    by: "xpath"
-#    value: "//*[@id='fr-77z_contractType_list_1']"
   company_name: # 公司名称
     by: "xpath"
     value:  "//*[@id='fr-77z_nameofClient']"
   company_name_check:   # 校验公司名称用
     by: "xpath"
     value: "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/form/div/div[1]/div/div/div/div/div/div/div/div[2]/div/div/div[2]/div/div/div[2]/div/div/div/div/span"
-#  company_name_1:   # 公司名称:Louie1号客户
-#    by: "xpath"
-#    value:  "//*[@id='fr-77z_nameofClient_list_11']"
   requirement_type_1:   # 需求类型1、headhunter
     by: "xpath"
     value: "//*[@id='fr-77z_recruitmentType']/label[1]"
