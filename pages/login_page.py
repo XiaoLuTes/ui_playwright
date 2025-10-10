@@ -28,9 +28,6 @@ class LoginPage(BasePage):
         """打开登录页面"""
         login_url = self.config.URL
         locator = self.get_element_locator("username_input")
-        # logger.info(f"开始导航到登录页面: {login_url}")
-        # self.open(login_url)
-        # logger.info(f"已导航到登录页面: {login_url}")
         for times in range(max_retry):
             try:
                 self.logger.info(f"尝试导航到登录页面 (尝试 {times + 1}/{max_retry}次登录): {login_url}")
@@ -53,5 +50,4 @@ class LoginPage(BasePage):
                 self.logger.error(f"打开页面时发生错误: {str(e)}")
                 if times == max_retry - 1:
                     raise e
-            # self.driver.get(login_url)
         return False
