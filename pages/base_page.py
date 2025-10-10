@@ -58,12 +58,19 @@ class BasePage:
                 return WebDriverWait(self.driver, timeout).until(
                     ec.visibility_of_element_located(locator)
                 )
-            #  等待元素可见
             except TimeoutException:
-                error_msg = f"元素查找超时: {element_name}"
+                error_msg = f"元素查找超时: {element_name},尝试查找是否为隐藏元素"
                 logger.error(error_msg)
-                self.take_screenshot(f"元素查找超时-{element_name}")
-                raise TimeoutException(error_msg)
+                # 兼容隐藏元素，action未以hidden_开头(直接使用会导致框架效率过低)
+                try:
+                    return WebDriverWait(self.driver, timeout).until(
+                        ec.presence_of_element_located(locator)
+                    )
+                except TimeoutException:
+                    error_msg = f"尝试查找隐藏元素超时: {element_name}"
+                    logger.error(error_msg)
+                    self.take_screenshot(f"元素查找超时-{element_name}")
+                    raise TimeoutException(error_msg)
 
     @allure.step("对元素输入文本: {element_name}")
     def input_text(self, element_name, action, text):
@@ -177,7 +184,7 @@ class BasePage:
             # 确保元素是文件输入类型
             input_type = file_input.get_attribute("type")
             if input_type and input_type.lower() != "file":
-                allure.attach(f"元素类型不是'file',而是'{input_type}'", f"警告", allure.attachment_type.TEXT)
+                allure.attach(f"元素类型不是file',而是'{input_type}'", f"警告", allure.attachment_type.TEXT)
             # 发送文件路径
             file_input.send_keys(absolute_path)
         except FileNotFoundError as e:

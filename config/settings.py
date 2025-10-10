@@ -13,7 +13,7 @@ class Settings:
 
     # 浏览器配置
     BROWSER = "chrome"  # 默认浏览器：chrome/firefox/edge/safari
-    HEADLESS = True  # 是否使用无头模式（不显示浏览器界面）
+    HEADLESS = False  # 是否使用无头模式（不显示浏览器界面）
     WINDOW_SIZE = (1920, 1080)  # 浏览器窗口大小
 
     # 等待时间设置（秒）
