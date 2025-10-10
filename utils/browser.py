@@ -3,7 +3,7 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
-from config.settings import Settings
+from config.settings import Settings, settings
 # from config_reader import ConfigReader
 from utils.logger import logger
 
@@ -40,6 +40,7 @@ class Browser:
             chrome_options.add_argument("--disable-dev-shm-usage")  # 禁用/dev/shm使用
             chrome_options.add_argument('--memory-model=low-memory')    # 低内存模式
             chrome_options.add_argument('--disable-features=VizDisplayCompositor')
+            # chrome_options.add_argument(f'--force-device-scale-factor={settings.ZOOM}')  # 设置缩放
 
             # 使用WebDriver Manager自动管理驱动程序
             logger.info(f"正在配置webdriver-chrome")

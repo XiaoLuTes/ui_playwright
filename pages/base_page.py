@@ -84,6 +84,8 @@ class BasePage:
     def element_click(self, element_name, action):
         """点击元素"""
         element = self.find_element(element_name, action)
+        self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
+        logger.info(f"已滚动到元素: {element_name}")      # 防止其他元素遮挡导致无法点击
         element.click()
         logger.info(f"点击元素: {element_name}")
 
@@ -205,3 +207,14 @@ class BasePage:
             allure.attach(error_msg, "错误信息", allure.attachment_type.TEXT)
             self.take_screenshot(f"未知错误_{os.path.basename(data)}")
             raise
+
+    # def scroll_to_element(self, element_name, action):
+    #     """滚动到元素位置使其可见"""
+    #     try:
+    #         element = self.find_element(element_name, action)
+    #         self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
+    #         logger.info(f"已滚动到元素: {element_name}")
+    #         return True
+    #     except Exception as e:
+    #         logger.error(f"滚动到元素失败 {element_name}: {str(e)}")
+    #         return False

@@ -111,10 +111,42 @@ login_page:
   priority_C: # 优先级C
     by: "xpath"
     value:  "//*[@id='fr-77z_companyPriority']/label[3]"
-  submit:   # 提交
+  submit_confirm:   # 方案确认页-提交按钮
     by: "xpath"
     value:  "/html/body/div[1]/div/div[2]/div[2]/main/div/div/div/div/div/div/div[3]/div[2]/div/div[3]/button"
-
+  entry_contract: # 销售录入合同页
+    by: "xpath"
+    value:  "/html/body/div/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div/div[3]/div"
+  related_contract: # 关联合同
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/form/div/div[1]/div[2]/div/div[2]/div/div/div/div/span"
+  related_contract_check: # 关联合同-检查输入用
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/form/div/div[1]/div[2]/div/div[2]/div/div/div/div[1]/span/span[2]"
+  pricing_model:  # 收费模式
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/form/div/div[1]/div[3]/div/div[2]/div/div/div/div/span"
+  pricing_model_check:  # 收费模式-检查输入用
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/form/div/div[1]/div[3]/div/div[2]/div/div/div/div[1]/span"
+  exchange_type_offer: # 汇率类型-offer时间
+    by: "xpath"
+    value:  "//*[@id='exchangeRateType']/label[1]"
+  exchange_type_entry: # 汇率类型-入职时间
+    by: "xpath"
+    value: "//*[@id='exchangeRateType']/label[2]"
+  submit_contract: # 销售录入合同页-提交按钮
+    by: "xpath"
+    value: "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[3]/div[2]/div/div[2]/button"
+  taxrate_1: # 税率-6%
+    by: "xpath"
+    value:  "//*[@id='taxRate']/label[1]"
+  taxrate_2: # 税率-6.72%
+    by: "xpath"
+    value: "//*[@id='taxRate']/label[2]"
+  taxrate_3: # 税率-8%
+    by: "xpath"
+    value: "//*[@id='taxRate']/label[3]"
 
 
 dashboard_page:

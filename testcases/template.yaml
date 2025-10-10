@@ -1,21 +1,14 @@
-- element:
-  action:
-  data:
-  expected:
-- element:
-  action:
-  data:
-  expected:
-- element:
-  action:
-  data:
-  expected:
-
+  - step_name:
+    element:
+    action:
+    data:
+    expected:
 
   - id:
     name:
     steps:
-      - element:
+        step_name:
+        element:
         action:
         data:
         expected:

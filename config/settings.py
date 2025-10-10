@@ -13,8 +13,9 @@ class Settings:
 
     # 浏览器配置
     BROWSER = "chrome"  # 默认浏览器：chrome/firefox/edge/safari
-    HEADLESS = True  # 是否使用无头模式（不显示浏览器界面）
+    HEADLESS = False  # 是否使用无头模式（不显示浏览器界面）
     WINDOW_SIZE = (1920, 1080)  # 浏览器窗口大小
+    # ZOOM = 0.8  # 缩放大小, 1为100%
 
     # 等待时间设置（秒）
     IMPLICIT_WAIT = 15  # 隐式等待全局超时

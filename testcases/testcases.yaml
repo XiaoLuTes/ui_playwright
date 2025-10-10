@@ -193,8 +193,68 @@ test_cases:
     data: null
     expected: null
   - step_name: 39、点击提交
-    element: submit
+    element: submit_confirm
     action: click
     data: null
     expected: null
-  result: 通过
+  - step_name: 40、点击销售录入合同
+    element: entry_contract
+    action: click
+    data: null
+    expected: null
+  - step_name: 41、点击关联合同
+    element: related_contract
+    action: click
+    data: null
+    expected: null
+  - step_name: 42、向下一次
+    element: related_contract
+    action: down
+    data: '1'
+    expected: null
+  - step_name: 43、回车确认
+    element: related_contract
+    action: enter
+    data: null
+    expected: null
+  - step_name: 44、验证关联合同选择
+    element: related_contract_check
+    action: check_text
+    data: 一次开票
+    expected: null
+  - step_name: 45、选择收费模式
+    element: pricing_model
+    action: click
+    data: null
+    expected: null
+  - step_name: 46、向下一次
+    element: pricing_model
+    action: down
+    data: '1'
+    expected: null
+  - step_name: 47、回车确认
+    element: pricing_model
+    action: enter
+    data: null
+    expected: null
+  - step_name: 48、验证收费模式选择
+    element: pricing_model_check
+    action: check_text
+    data: 年薪30%
+    expected: null
+  - step_name: 49、汇率类型选择offer时间
+    element: exchange_type_offer
+    action: click
+    data: null
+    expected: null
+  - step_name: 50、税率选择6%
+    element: taxrate_1
+    action: click
+    data: null
+    expected: null
+  - step_name: 51、点击提交按钮
+    element: submit_contract
+    action: click
+    data: null
+    expected: null
+  result: '失败: 文本检查失败: 步骤''48、验证收费模式选择''预期包含 ''固定102CNY'', 实际: ''年薪30%.最低100CNY'''
