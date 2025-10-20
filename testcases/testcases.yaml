@@ -1,5 +1,5 @@
 test_cases:
-- id: 尝试招聘非eor全流程 -测试用例2
+- id: 尝试招聘非eor全流程 -测试用例
   name: 非eor
   steps:
   - step_name: 1、用户名输入
@@ -87,10 +87,10 @@ test_cases:
     action: click
     data: null
     expected: null
-  - step_name: 18、需求人数15人
+  - step_name: 18、需求人数2人
     element: recruitment_volume
     action: input
-    data: '15'
+    data: '2'
     expected: true
   - step_name: 19、选择非eor入职
     element: eor_not
@@ -172,10 +172,10 @@ test_cases:
     action: hidden_click
     data: null
     expected: null
-  - step_name: 35、向下3次
+  - step_name: 35、向下1次
     element: project_possessor
     action: down
-    data: '3'
+    data: '1'
     expected: null
   - step_name: 36、回车确认
     element: project_possessor
