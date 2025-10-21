@@ -162,6 +162,14 @@ login_page:
   assistant_list: # 参与人列表
     by: "xpath"
     value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div/div/div[2]/div/div/div/div/div/table/tbody/tr[2]"
+  local_library:  # 本地库
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[1]/div[1]/div/div[2]"
+  position_new:   # 创建的新岗位
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div/div[2]/div/div[2]/div/div/div/div/div/table/tbody/tr[2]/td[2]"
+
+
 
 dashboard_page:
   job_table:

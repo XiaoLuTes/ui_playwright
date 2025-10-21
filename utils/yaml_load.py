@@ -1,7 +1,7 @@
 import yaml
 from utils.logger import logger
 from config.settings import Settings
-from utils.common import read_yaml_raw, read_yaml
+from utils.common import read_yaml_raw, read_yaml, write_yaml
 
 
 class YamlLoad:
@@ -34,12 +34,9 @@ class YamlLoad:
             for test_case in data['test_cases']:
                 if test_case['id'] == test_case_id:
                     test_case['result'] = result
-                break
-
+                    break
             # 写回文件
-            with open(file_path, 'w', encoding='utf-8') as file:
-                yaml.dump(data, file, allow_unicode=True, sort_keys=False)
-
+            write_yaml(file_path, data)
             logger.info(f"更新测试用例 {test_case_id} 结果为: {result}")
             return True
         except Exception as e:

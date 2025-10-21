@@ -287,7 +287,7 @@ test_cases:
     action: check_text
     data: 招聘端测试
     expected: null
-  result: '失败: 文本检查失败: 步骤''16、校验公司选择''预期包含 ''louie测试3号客户'', 实际: '''''
+  result: 通过
 - id: 2
   name: 招聘候选人节点流转
   steps:
@@ -326,4 +326,19 @@ test_cases:
     action: click
     data: null
     expected: null
-  result: null
+  - step_name: 8、点击刚才创建的岗位
+    element: position_new
+    action: click
+    data: null
+    expected: null
+  - step_name: 9、点击本地库
+    element: local_library
+    action: click
+    data: null
+    expected: null
+  - step_name: 10、
+    element: jobManagement
+    action: click
+    data: null
+    expected: null
+  result: 通过
