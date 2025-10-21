@@ -1,7 +1,7 @@
 import yaml
 from utils.logger import logger
 from config.settings import Settings
-from utils.common import read_yaml
+from utils.common import read_yaml_raw, read_yaml
 
 
 class YamlLoad:
@@ -27,7 +27,7 @@ class YamlLoad:
         """更新测试用例结果"""
         file_path = self.setting.TESTCASES
         try:
-            data = read_yaml(file_path)
+            data = read_yaml_raw(file_path)
             # with open(file_path, 'r', encoding='utf-8') as file:
             #     data = yaml.safe_load(file)
             # 更新测试结果
