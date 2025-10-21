@@ -1,51 +1,71 @@
+# config/settings.py
+import os
+from typing import Dict, Any
 
 
 class Settings:
-    # 环境配置：支持多个环境切换
-    ENV = "dev"  # 默认使用测试环境
-    # 不同环境的基础URL配置
-    BASE_URL = {
-        "production": "https://prod.example.com",  # 生产环境URL
-        "staging": "https://staging.example.com",  # 预生产环境URL
-        "dev": "https://test-admin.gsrtech.com/"  # 测试环境URL
-    }
-    URL = "https://test-admin.gsrtech.com/"
+    """支持环境变量覆盖的配置类"""
 
-    # 浏览器配置
-    BROWSER = "chrome"  # 默认浏览器：chrome/firefox/edge/safari
-    HEADLESS = False  # 是否使用无头模式（不显示浏览器界面）
-    WINDOW_SIZE = (1920, 1080)  # 浏览器窗口大小
-    # ZOOM = 0.8  # 缩放大小, 1为100%
+    def __init__(self):
+        # 环境配置
+        self.ENV = self._get_env_var("ENV", "dev")
 
-    # 等待时间设置（秒）
-    IMPLICIT_WAIT = 15  # 隐式等待全局超时
-    EXPLICIT_WAIT = 30  # 显式等待最大超时
+        # 不同环境的基础URL配置
+        self.BASE_URL = {
+            "production": "https://admin.gsrtech.com/login",
+            "staging": "https://stage-admin.gsrtech.com/",
+            "dev": "https://test-admin.gsrtech.com/"
+        }
+        self.URL = self._get_env_var("URL", self.BASE_URL[self.ENV])
 
-    # 测试用户凭证
-    VALID_USER = {
-        "username": "testuser@example.com",  # 有效用户名
-        "password": "P@ssw0rd123"  # 有效密码
-    }
+        # 浏览器配置
+        self.BROWSER = self._get_env_var("BROWSER", "chrome")
+        self.HEADLESS = self._get_env_var("HEADLESS", "False").lower() == "true"
 
-    # API测试配置
-    API_BASE_URL = "https://api.example.com/v1"  # API基础地址
-    API_KEY = "your_api_key_here"  # API认证密钥
+        # 窗口大小处理
+        window_size_str = self._get_env_var("WINDOW_SIZE", "1920,1080")
+        self.WINDOW_SIZE = tuple(map(int, window_size_str.split(',')))
 
-    # 报告和截图配置
-    REPORT_PATH = "reports/"  # 测试报告保存路径
-    SCREENSHOT_ON_FAILURE = True  # 失败时自动截图
-    REPORT_ALLURE = "./reports/allure-results"
-    CLEAN_HISTORY = True
-    LOG_LEVEL = "INFO"
-    LOG__FILE = "./report.log"
-    SCREENSHOT_PATH = './reports/screenshots'
+        # 等待时间设置
+        self.IMPLICIT_WAIT = int(self._get_env_var("IMPLICIT_WAIT", "15"))
+        self.EXPLICIT_WAIT = int(self._get_env_var("EXPLICIT_WAIT", "30"))
 
-    # 文件位置
-    TESTCASES = "./testcases/testcases.yaml"
-    ELEMENT_LOCATORS = "./config/element_locators.yaml"
-    PAGES = '.testcases/testcases.yaml'
+        # 测试用户凭证
+        self.VALID_USER = {
+            "username": self._get_env_var("VALID_USERNAME", "testuser@example.com"),
+            "password": self._get_env_var("VALID_PASSWORD", "P@ssw0rd123")
+        }
+
+        # 报告和截图配置
+        self.REPORT_PATH = self._get_env_var("REPORT_PATH", "reports/")
+        self.SCREENSHOT_ON_FAILURE = self._get_env_var("SCREENSHOT_ON_FAILURE", "True").lower() == "true"
+        self.REPORT_ALLURE = self._get_env_var("REPORT_ALLURE", "./reports/allure-results")
+        self.CLEAN_HISTORY = self._get_env_var("CLEAN_HISTORY", "True").lower() == "true"
+        self.LOG_LEVEL = self._get_env_var("LOG_LEVEL", "INFO")
+        self.LOG_FILE = self._get_env_var("LOG_FILE", "./report.log")
+        self.SCREENSHOT_PATH = self._get_env_var("SCREENSHOT_PATH", "./reports/screenshots")
+
+        # 文件位置 - 可以通过Jenkins环境变量修改需要执行的测试用例文件
+        self.TESTCASES = self._get_env_var("TESTCASES_PATH", "./testcases/testcases.yaml")
+        self.ELEMENT_LOCATORS = self._get_env_var("ELEMENT_LOCATORS_PATH", "./config/element_locators.yaml")
+
+        # 打印当前配置（用于调试）
+        self._print_current_config()
+
+    def _get_env_var(self, var_name: str, default: str) -> str:
+        """从环境变量获取配置，如果没有则使用默认值"""
+        return os.getenv(var_name, default)
+
+    def _print_current_config(self):
+        """打印当前配置（用于调试）"""
+        print("=" * 50)
+        print("当前测试配置:")
+        print(f"环境: {self.ENV}")
+        print(f"测试用例文件: {self.TESTCASES}")
+        print(f"元素定位器文件: {self.ELEMENT_LOCATORS}")
+        print(f"基础URL: {self.URL}")
+        print(f"浏览器: {self.BROWSER}, 无头模式: {self.HEADLESS}")
+        print("=" * 50)
 
 
 settings = Settings()
-
-# print(settings.BASE_URL[settings.ENV])
