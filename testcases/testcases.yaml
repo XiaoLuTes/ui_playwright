@@ -10,7 +10,7 @@ test_cases:
   - step_name: 2、密码输入
     element: password_input
     action: input
-    data: 200412
+    data: '200412'
     expected: 输入框显示 ***
   - step_name: 3、验证码输入
     element: code_input
@@ -135,7 +135,7 @@ test_cases:
   - step_name: 27、job_title输入'自动化测试'
     element: job_title
     action: input
-    data: '自动化测试{replace_num}'
+    data: 自动化测试1761027697816
     expected: null
   - step_name: 28、点击国家/地区选项栏(使其可见)
     element: country_click
@@ -281,49 +281,64 @@ test_cases:
     element: assistant_enter
     action: click
     data: null
-    expected:
+    expected: null
   - step_name: 57、验证参与人列表包含'招聘端测试'
     element: assistant_list
     action: check_text
-    data: '招聘端测试'
+    data: 招聘端测试
     expected: null
-  result: '失败: 文本检查失败: 步骤''48、验证收费模式选择''预期包含 ''固定102CNY'', 实际: ''年薪30%.最低100CNY'''
+  result: "失败: Message: element click intercepted: Element <span class=\"ant-select-selection-search\"\
+    >...</span> is not clickable at point (452, 467). Other element would receive\
+    \ the click: <div class=\"ant-col ant-col-24 fr-obj-col css-sx1p5s css-var-rj\"\
+    \ style=\"padding-left: 12px; padding-right: 12px;\">...</div>\n  (Session info:\
+    \ chrome=140.0.7339.128); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementclickinterceptedexception\n\
+    Stacktrace:\n\tGetHandleVerifier [0x0x58c333+65459]\n\tGetHandleVerifier [0x0x58c374+65524]\n\
+    \t(No symbol) [0x0x3ad973]\n\t(No symbol) [0x0x3fdbc0]\n\t(No symbol) [0x0x3fbf23]\n\
+    \t(No symbol) [0x0x3f99c7]\n\t(No symbol) [0x0x3f8c66]\n\t(No symbol) [0x0x3ed195]\n\
+    \t(No symbol) [0x0x419dfc]\n\t(No symbol) [0x0x3ecbf4]\n\t(No symbol) [0x0x419fb4]\n\
+    \t(No symbol) [0x0x43b606]\n\t(No symbol) [0x0x419bf6]\n\t(No symbol) [0x0x3eb38e]\n\
+    \t(No symbol) [0x0x3ec274]\n\tGetHandleVerifier [0x0x80eda3+2697763]\n\tGetHandleVerifier\
+    \ [0x0x809ec7+2677575]\n\tGetHandleVerifier [0x0x5b4194+228884]\n\tGetHandleVerifier\
+    \ [0x0x5a49f8+165496]\n\tGetHandleVerifier [0x0x5ab18d+192013]\n\tGetHandleVerifier\
+    \ [0x0x5947d8+99416]\n\tGetHandleVerifier [0x0x594972+99826]\n\tGetHandleVerifier\
+    \ [0x0x57ebea+10346]\n\tBaseThreadInitThunk [0x0x76507ba9+25]\n\tRtlInitializeExceptionChain\
+    \ [0x0x7774c0cb+107]\n\tRtlClearBits [0x0x7774c04f+191]\n"
 - id: 2
   name: 招聘候选人节点流转
   steps:
-    - step_name: 1、用户名输入
-      element: username_input
-      action: input
-      data: 小卢
-      expected: 输入框显示 小卢
-    - step_name: 2、密码输入
-      element: password_input
-      action: input
-      data: Aa129889
-      expected: 输入框显示 ***
-    - step_name: 3、验证码输入
-      element: code_input
-      action: input
-      data: '1'
-      expected: true
-    - step_name: 4、点击登录
-      element: login_button
-      action: click
-      data: null
-      expected: null
-    - step_name: 5、点击招聘平台
-      element: talent_button
-      action: click
-      data: null
-      expected: null
-    - step_name: 6、验证进入招聘平台
-      element: jobManagement
-      action: check_exists
-      data: 存在
-      expected: null
-    - step_name: 7、点击进入岗位管理
-      element: jobManagement
-      action: click
-      data: null
-      expected: null
-  result:
+  - step_name: 1、用户名输入
+    element: username_input
+    action: input
+    data: 小卢
+    expected: 输入框显示 小卢
+  - step_name: 2、密码输入
+    element: password_input
+    action: input
+    data: Aa129889
+    expected: 输入框显示 ***
+  - step_name: 3、验证码输入
+    element: code_input
+    action: input
+    data: '1'
+    expected: true
+  - step_name: 4、点击登录
+    element: login_button
+    action: click
+    data: null
+    expected: null
+  - step_name: 5、点击招聘平台
+    element: talent_button
+    action: click
+    data: null
+    expected: null
+  - step_name: 6、验证进入招聘平台
+    element: jobManagement
+    action: check_exists
+    data: 存在
+    expected: null
+  - step_name: 7、点击进入岗位管理
+    element: jobManagement
+    action: click
+    data: null
+    expected: null
+  result: null

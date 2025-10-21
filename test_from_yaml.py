@@ -36,7 +36,7 @@ class TestLoginFromYAML:
 
         yield
 
-    @pytest.mark.parametrize("test_case", [pytest.param(tc, id=tc['id']) for tc in test_cases])
+    @pytest.mark.parametrize("test_case", [pytest.param(tc, id=str(tc['id'])) for tc in test_cases])
     def test_login_scenarios(self, test_case):
         """
         参数化测试用例 - 从YAML文件加载测试场景
