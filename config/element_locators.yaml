@@ -161,7 +161,7 @@ login_page:
     value:  "/html/body/div[3]/div/div[2]/div/div[1]/div/div[3]/button[2]"
   assistant_list: # 参与人列表
     by: "xpath"
-    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div/div/div[2]/div/div/div/div/div/table/tbody"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div/div/div[2]/div/div/div/div/div/table/tbody/tr[2]"
 
 dashboard_page:
   job_table:

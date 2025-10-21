@@ -287,23 +287,7 @@ test_cases:
     action: check_text
     data: 招聘端测试
     expected: null
-  result: "失败: Message: element click intercepted: Element <div role=\"tab\" aria-selected=\"\
-    false\" id=\"rc-tabs-0-tab-UserTask_1vvjfl9\" class=\"ant-tabs-tab-btn\" aria-controls=\"\
-    rc-tabs-0-panel-UserTask_1vvjfl9\" tabindex=\"0\">...</div> is not clickable at\
-    \ point (423, 138). Other element would receive the click: <div class=\"ant-spin-fullscreen\
-    \ css-sx1p5s css-var-rj\">...</div>\n  (Session info: chrome=140.0.7339.128);\
-    \ For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementclickinterceptedexception\n\
-    Stacktrace:\n\tGetHandleVerifier [0x0x58c333+65459]\n\tGetHandleVerifier [0x0x58c374+65524]\n\
-    \t(No symbol) [0x0x3ad973]\n\t(No symbol) [0x0x3fdbc0]\n\t(No symbol) [0x0x3fbf23]\n\
-    \t(No symbol) [0x0x3f99c7]\n\t(No symbol) [0x0x3f8c66]\n\t(No symbol) [0x0x3ed195]\n\
-    \t(No symbol) [0x0x419dfc]\n\t(No symbol) [0x0x3ecbf4]\n\t(No symbol) [0x0x419fb4]\n\
-    \t(No symbol) [0x0x43b606]\n\t(No symbol) [0x0x419bf6]\n\t(No symbol) [0x0x3eb38e]\n\
-    \t(No symbol) [0x0x3ec274]\n\tGetHandleVerifier [0x0x80eda3+2697763]\n\tGetHandleVerifier\
-    \ [0x0x809ec7+2677575]\n\tGetHandleVerifier [0x0x5b4194+228884]\n\tGetHandleVerifier\
-    \ [0x0x5a49f8+165496]\n\tGetHandleVerifier [0x0x5ab18d+192013]\n\tGetHandleVerifier\
-    \ [0x0x5947d8+99416]\n\tGetHandleVerifier [0x0x594972+99826]\n\tGetHandleVerifier\
-    \ [0x0x57ebea+10346]\n\tBaseThreadInitThunk [0x0x76507ba9+25]\n\tRtlInitializeExceptionChain\
-    \ [0x0x7774c0cb+107]\n\tRtlClearBits [0x0x7774c04f+191]\n"
+  result: '失败: 文本检查失败: 步骤''16、校验公司选择''预期包含 ''louie测试3号客户'', 实际: '''''
 - id: 2
   name: 招聘候选人节点流转
   steps:
