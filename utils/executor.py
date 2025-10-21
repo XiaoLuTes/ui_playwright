@@ -100,7 +100,7 @@ class Executor:
                 actual_value = page_object.get_element_value(element_name, action)
                 data_str = str(data)
                 if data_str not in actual_value:
-                    raise Exception(f"步骤'{step_name}'输入验证失败: 预期包含 '{data}', 实际: '{actual_value}'")
+                    raise Exception(f"步骤'{step_name}'输入验证失败: 预期包含 '{data_str}', 实际: '{actual_value}'")
 
         elif action == "click" or action == "hidden_click":
             page_object.element_click(element_name, action)
@@ -109,7 +109,7 @@ class Executor:
             actual_text = page_object.get_text(element_name, action)
             data_str = str(data)
             if data_str not in actual_text:
-                raise Exception(f"文本检查失败: 步骤'{step_name}'预期包含 '{data}', 实际: '{actual_text}'")
+                raise Exception(f"文本检查失败: 步骤'{step_name}'预期包含 '{data_str}', 实际: '{actual_text}'")
 
         elif action == "down":
             page_object.keyboard_down(data)
