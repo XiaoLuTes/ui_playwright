@@ -1,0 +1,45 @@
+pytest_ui_framework/
+├── config/                   # 配置文件
+│   ├── settings.py           # 全局配置
+│   └── element_locators.yaml # 元素定位器管理
+│
+├── pages/                    # 页面对象模型
+│   ├── _init_.py
+│   ├── base_page.py          # 页面基类(调用方法)
+│   ├── login_page.py         # 登录页面
+│   └── dashboard_page.py     # 仪表盘页面(暂时没用)
+│
+├── reports/                  # 测试报告
+│   ├── allure-reports        # allure测试报告
+│   ├── logs                  # 日志文件
+│   ├── screenshots           # 截图
+│   └── temp                  # allure测试报告引用文件
+│
+├── testcases/                # 测试用例文件夹
+│   ├── __init__.py
+│   ├── JD.pfd                # jd文件(招聘用)
+│   ├── template.yaml         # 测试用例模板
+│   └── testcases.yaml        # 测试用例
+│
+├── tests——useless/           # 无用文件夹(调试用)
+│   ├── chrome_find.py        # 寻找本地chrome(主要用来确认版本)
+│   ├── chrome_locations.txt  # 本地chrome报告
+│   ├── test.py               # 调试文件
+│   └── try.py                # 调试文件(方法类调试)
+│
+├── utils/                    # 工具类
+│   ├── _init_.py             #
+│   ├── browser.py            # 浏览器实例配置
+│   ├── common.py             # yaml用例读取
+│   ├── element_locator.py    # 读取元素定位器
+│   ├── executor.py           # 执行测试用例
+│   ├── logger.py             # 日志配置
+│   └── yaml_load.py          # 加载测试用例
+│
+├── conftest.py               # pytest fixture配置
+├── pytest.ini                # pytest配置文件
+├── README.txt                # 框架说明
+├── requirements.txt          # 依赖库
+├── run.py                    # run文件(Jenkins执行/本地调试用)
+└── test_from_yaml.py         # 测试执行文件(依赖这个文件串联各方法进行测试)
+

@@ -26,7 +26,7 @@ testcase.yaml文件格式：(测试用例)
                                wait         等待(例如文件上传等场景)
                                             必填：action\data(等待时长,填整数)
     data        输入文本
-    expected    预期(只在input时使用,可输入true或false,校验当前元素所输入的文本是否正确)
+    expected    预期(只在input时使用,可输入true,校验当前元素所输入的文本是否正确)
 
 element_locators.yaml文件格式:(元素定位器)
 login_page      实例login_page,如果需要从login动作开始测试，元素都可以放在下面
