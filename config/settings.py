@@ -49,7 +49,7 @@ class Settings:
                 "description": "招聘平台非eor岗位全流程"
             },
             "招聘平台新建编制": {
-                "TESTCASES_PATH": "./testcases/pt_new_position/new_preparation.yaml",
+                "TESTCASES_PATH": "./testcases/pt_new_preparation/new_preparation.yaml",
                 "PAGE_NAME": "pt_new_preparation",
                 "description": "招聘平台新发起编制流程"
             }
