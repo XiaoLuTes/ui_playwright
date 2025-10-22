@@ -167,23 +167,3 @@ pt_new_position:
   position_new:   # 创建的新岗位
     by: "xpath"
     value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div/div[2]/div/div[2]/div/div/div/div/div/table/tbody/tr[2]/td[2]"
-
-pt_new_preparation:
-  username_input:   # 姓名输入框
-    by: "id"
-    value: "username"
-  password_input:   # 密码输入框
-    by: "id"
-    value: "password"
-  code_input:   # 验证码输入框
-    by: "id"
-    value: "code"
-  login_button:   # 登录按钮
-    by: "xpath"
-    value: "//*[@id='root-master']/div/div/div/div[2]/form/button"
-  talent_button:    # 招聘平台按钮
-    by: "xpath"
-    value: "//*[@id='root-master']/div/div/div/div/ul/li[2]"
-  jobManagement: # 岗位管理按钮
-    by: "xpath"
-    value: "//*[@id='root']/div/div[2]/aside/div/div[1]/ul/li[3]/span"

@@ -17,3 +17,6 @@ pt_new_preparation:
   jobManagement: # 岗位管理按钮
     by: "xpath"
     value: "//*[@id='root']/div/div[2]/aside/div/div[1]/ul/li[3]/span"
+  position_new: # 创建的新岗位
+    by: "xpath"
+    value: "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div/div[2]/div/div[2]/div/div/div/div/div/table/tbody/tr[2]/td[2]"
