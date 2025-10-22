@@ -4,7 +4,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from pages.base_page import BasePage
 from utils.logger import logger
-from config.settings import settings
+from config.settings import Settings
 import allure
 
 
@@ -19,14 +19,14 @@ class LoginPage(BasePage):
         super().__init__(self, driver)
         # 获取配置
         self.logger = logger
-        self.config = settings
+        self.settings = Settings()
         # load_locator = ElementLocator()
         # self.locator = load_locator.load_locators()["login_page"]
 
     @allure.step("导航到登录页面")
     def navigate_to_login(self, max_retry=3):
         """打开登录页面"""
-        login_url = self.config.URL
+        login_url = self.settings.URL
         locator = self.get_element_locator("username_input")
         for times in range(max_retry):
             try:

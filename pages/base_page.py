@@ -211,6 +211,8 @@ class BasePage:
                 allure.attach(f"元素类型不是file',而是'{input_type}'", f"警告", allure.attachment_type.TEXT)
             # 发送文件路径
             file_input.send_keys(absolute_path)
+            # 等待5秒确保上传成功
+            time.sleep(5)
         except FileNotFoundError as e:
             # 文件不存在异常
             error_msg = f"文件错误: {str(e)}"

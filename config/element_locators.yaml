@@ -1,5 +1,5 @@
 
-login_page:
+pt_new_position:
   username_input:   # 姓名输入框
     by: "id"
     value: "username"

@@ -5,7 +5,7 @@ from utils.yaml_load import YamlLoad
 from utils.executor import Executor
 from pages.login_page import LoginPage
 from utils.logger import logger
-
+from config.settings import settings
 
 data_loader = YamlLoad()
 test_cases = data_loader.load_test_cases()
@@ -17,6 +17,8 @@ class TestLoginFromYAML:
     @pytest.fixture(scope="function", autouse=True)
     def setup_test(self, driver):
         """测试类级别初始化"""
+        # 获取page_name
+        self.page_name = settings.PAGE_NAME
         # 初始化页面对象
         self.login_page = LoginPage(driver)
         # self.dashboard_page = DashboardPage(driver)   # 导航页
@@ -25,7 +27,7 @@ class TestLoginFromYAML:
         self.executor = Executor(driver)
 
         # 注册页面对象
-        self.executor.register_page("login_page", self.login_page)
+        self.executor.register_page(self.page_name, self.login_page)
         # self.executor.register_page("dashboard_page", self.dashboard_page)    # 导航页
 
         # 导航到登录页面

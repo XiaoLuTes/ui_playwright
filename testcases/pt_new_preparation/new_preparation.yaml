@@ -1,0 +1,54 @@
+- id: 招聘平台-2
+  name: 发起编制流程
+  steps:
+  - step_name: 1、用户名输入
+    element: username_input
+    action: input
+    data: 小卢
+    expected: 输入框显示 小卢
+  - step_name: 2、密码输入
+    element: password_input
+    action: input
+    data: Aa129889
+    expected: 输入框显示 ***
+  - step_name: 3、验证码输入
+    element: code_input
+    action: input
+    data: '1'
+    expected: true
+  - step_name: 4、点击登录
+    element: login_button
+    action: click
+    data: null
+    expected: null
+  - step_name: 5、点击招聘平台
+    element: talent_button
+    action: click
+    data: null
+    expected: null
+  - step_name: 6、验证进入招聘平台
+    element: jobManagement
+    action: check_exists
+    data: 存在
+    expected: null
+  - step_name: 7、点击进入岗位管理
+    element: jobManagement
+    action: click
+    data: null
+    expected: null
+  - step_name: 8、点击刚才创建的岗位
+    element: position_new
+    action: click
+    data: null
+    expected: null
+  - step_name: 9、点击本地库
+    element: local_library
+    action: click
+    data: null
+    expected: null
+  - step_name: 10、
+    element: jobManagement
+    action: click
+    data: null
+    expected: null
+  result: 通过
