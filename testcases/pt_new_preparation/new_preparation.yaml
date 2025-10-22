@@ -42,4 +42,14 @@ test_cases:
     action: click
     data: null
     expected: null
+  - step_name: 9、点击初筛页全选按钮
+    element: choose_all
+    action: click
+    data: null
+    expected: null
+  - step_name: 10、点击下个环节按钮
+    element: next_round_first
+    action: click
+    data: null
+    expected: null
   result: 通过

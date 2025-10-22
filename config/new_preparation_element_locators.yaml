@@ -20,3 +20,46 @@ pt_new_preparation:
   position_new: # 创建的新岗位
     by: "xpath"
     value: "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div/div[2]/div/div[2]/div/div/div/div/div/table/tbody/tr[2]/td[2]"
+  choose_all:  # 全选
+    by: "xpath"
+    value:  "/html/body/div/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div[2]/div/div/div[2]/div/div[2]/div/div/div/div/div/div/div/div/div/div/div/div/div/table/thead/tr/th[1]/div/label/span"
+  next_round_first: # 初筛页-下一环节按钮
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div[2]/div/div/div/div/div[1]/button"
+  match:  # 匹配页
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div/div/div/div[2]/div"
+  next_round_match: # 匹配页-下一环节按钮
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div[2]/button"
+  choose_all_match: # 匹配页全选按钮
+    by: "xpath"
+    value:  "/html/body/div/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div[2]/div/div[2]/div[2]/div[2]/div/div/div/div/div/div/div/div/div/div/div/div/div/table/thead/tr/th[1]/div/label/span"
+  interview:  # 内部面试页
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div/div/div/div[3]/div"
+  next_round_interview: # 内部面试页-下一环节按钮
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div[2]/div/div[3]/div/div/div[2]/button"
+  choose_all_interview: # 内部面试页-全选按钮
+    by: "xpath"
+    value:  "/html/body/div/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div[2]/div/div[3]/div[2]/div[2]/div/form/div/div/div/div/div/div/div/div/div/div/div/div/table/thead/tr/th[1]/div/label/span"
+  recommend:  # 推荐页
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div/div/div/div[4]/div"
+  next_round_recommend: # 推荐页-下一环节按钮
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div[2]/div/div[4]/div/div/div[2]/button"
+  choose_all_recommend: # 推荐页-全选按钮
+    by: "xpath"
+    value:  "/html/body/div/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div[2]/div/div[4]/div[2]/div[2]/div/div[1]/div/div/div/div/div/div/div/div/table/thead/tr/th[1]/div/label/span"
+  three_interview:  # 三方面试页
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div/div/div/div[5]/div"
+  next_round_three: # 三方面试页-下一环节按钮
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div[2]/div/div[5]/div/div/div[2]/button"
+  choose_all_three: # 三方面试页-全选按钮
+    by: "xpath"
+    value:  "/html/body/div[1]/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div[2]/div/div[5]/div[2]/div[2]/div/form/div/div/div/div/div/div/div/div/div/div/div/div/table/thead/tr/th[1]/div/label/span"
+

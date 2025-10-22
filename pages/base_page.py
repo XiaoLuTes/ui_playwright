@@ -1,3 +1,4 @@
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.common.exceptions import TimeoutException
@@ -84,7 +85,7 @@ class BasePage:
     def element_click(self, element_name, action):
         """点击元素"""
         try:
-            element = self.find_element(element_name, action)
+            element = self.wait_for_element(element_name)
             self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
             logger.info(f"已滚动到元素: {element_name}")
             # 防止其他元素遮挡导致无法点击
@@ -232,13 +233,12 @@ class BasePage:
             self.take_screenshot(f"未知错误_{os.path.basename(data)}")
             raise
 
-    # def scroll_to_element(self, element_name, action):
-    #     """滚动到元素位置使其可见"""
-    #     try:
-    #         element = self.find_element(element_name, action)
-    #         self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
-    #         logger.info(f"已滚动到元素: {element_name}")
-    #         return True
-    #     except Exception as e:
-    #         logger.error(f"滚动到元素失败 {element_name}: {str(e)}")
-    #         return False
+    def wait_for_element(self, element_name):
+        locator = self.get_element_locator(element_name)
+        wait_time = self.settings.WAIT_TIME
+        try:
+            wait = WebDriverWait(self.driver, wait_time)
+            # 等待元素变更为可点击状态
+            return wait.until(ec.element_to_be_clickable(locator))
+        except TimeoutException as e:
+            logger.error(f"元素{wait_time}秒后仍为不可点击状态{element_name}")

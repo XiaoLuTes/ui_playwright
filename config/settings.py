@@ -27,6 +27,8 @@ class Settings:
         # 等待时间设置
         self.IMPLICIT_WAIT = int(self._get_env_var("IMPLICIT_WAIT", "15"))
         self.EXPLICIT_WAIT = int(self._get_env_var("EXPLICIT_WAIT", "30"))
+        # 等待元素可点击的时间
+        self.WAIT_TIME = int(self._get_env_var("WAIT_TIME", "10"))
 
         # 报告和截图配置
         self.REPORT_PATH = self._get_env_var("REPORT_PATH", "reports/")
@@ -36,10 +38,6 @@ class Settings:
         self.LOG_LEVEL = self._get_env_var("LOG_LEVEL", "INFO")
         self.LOG_FILE = self._get_env_var("LOG_FILE", "./report.log")
         self.SCREENSHOT_PATH = self._get_env_var("SCREENSHOT_PATH", "./reports/screenshots")
-
-        # # 文件位置 - 可以通过Jenkins环境变量修改需要执行的测试用例文件
-        # self.TESTCASES = self._get_env_var("TESTCASES_PATH", "./testcases/pt_new_position/pt_testcases.yaml")
-        # self.ELEMENT_LOCATORS = self._get_env_var("ELEMENT_LOCATORS_PATH", "./config/new_position_element_locators.yaml")
 
         # 项目管理
         self.PROJECT_CONFIGS = {
