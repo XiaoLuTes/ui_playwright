@@ -17,9 +17,10 @@ pytest_ui_framework/
 │
 ├── testcases/                # 测试用例文件夹
 │   ├── __init__.py
-│   ├── JD.pfd                # jd文件(招聘用)
-│   ├── template.yaml         # 测试用例模板
-│   └── testcases.yaml        # 测试用例
+├────── pt/                   # 招聘平台测试用例文件夹
+│      ├── JD.pfd             # jd文件
+│      └── testcases.yaml     # 测试用例
+│   └── template.yaml         # 测试用例模板
 │
 ├── tests——useless/           # 无用文件夹(调试用)
 │   ├── chrome_find.py        # 寻找本地chrome(主要用来确认版本)

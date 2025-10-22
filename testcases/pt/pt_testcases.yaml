@@ -1,5 +1,5 @@
 test_cases:
-- id: 1
+- id: 招聘平台-1
   name: 招聘非eor全流程
   steps:
   - step_name: 1、用户名输入
@@ -304,7 +304,7 @@ test_cases:
     \ [0x0x7047d8+99416]\n\tGetHandleVerifier [0x0x704972+99826]\n\tGetHandleVerifier\
     \ [0x0x6eebea+10346]\n\tBaseThreadInitThunk [0x0x76507ba9+25]\n\tRtlInitializeExceptionChain\
     \ [0x0x7774c0cb+107]\n\tRtlClearBits [0x0x7774c04f+191]\n"
-- id: 2
+- id: 招聘平台-2
   name: 招聘候选人节点流转
   steps:
   - step_name: 1、用户名输入
