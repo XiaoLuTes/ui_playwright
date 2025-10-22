@@ -240,5 +240,6 @@ class BasePage:
             wait = WebDriverWait(self.driver, wait_time)
             # 等待元素变更为可点击状态
             return wait.until(ec.element_to_be_clickable(locator))
-        except TimeoutException as e:
+        except TimeoutException:
             logger.error(f"元素{wait_time}秒后仍为不可点击状态{element_name}")
+            raise
