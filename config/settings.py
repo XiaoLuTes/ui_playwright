@@ -46,7 +46,7 @@ class Settings:
         self.SCREENSHOT_PATH = self._get_env_var("SCREENSHOT_PATH", "./reports/screenshots")
 
         # 文件位置 - 可以通过Jenkins环境变量修改需要执行的测试用例文件
-        self.TESTCASES = self._get_env_var("TESTCASES_PATH", "./testcases/testcases.yaml")
+        self.TESTCASES = self._get_env_var("TESTCASES_PATH", "./testcases/pt/pt_testcases.yaml")
         self.ELEMENT_LOCATORS = self._get_env_var("ELEMENT_LOCATORS_PATH", "./config/element_locators.yaml")
 
         # 打印当前配置（用于调试）

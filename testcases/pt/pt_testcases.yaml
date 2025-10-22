@@ -115,7 +115,7 @@ test_cases:
   - step_name: 23、上传文件
     element: fr_upload_jd
     action: hidden_upload
-    data: testcases/JD.pdf
+    data: testcases/pt/JD.pdf
     expected: JD
   - step_name: 24、等待5秒，等待上传完成
     element: fr_upload_jd
@@ -287,7 +287,23 @@ test_cases:
     action: check_text
     data: 招聘端测试
     expected: null
-  result: 通过
+  result: "失败: Message: element click intercepted: Element <div role=\"tab\" aria-selected=\"\
+    false\" id=\"rc-tabs-0-tab-UserTask_1vvjfl9\" class=\"ant-tabs-tab-btn\" aria-controls=\"\
+    rc-tabs-0-panel-UserTask_1vvjfl9\" tabindex=\"0\">...</div> is not clickable at\
+    \ point (423, 138). Other element would receive the click: <div class=\"ant-spin-fullscreen\
+    \ css-sx1p5s css-var-rj\">...</div>\n  (Session info: chrome=140.0.7339.128);\
+    \ For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementclickinterceptedexception\n\
+    Stacktrace:\n\tGetHandleVerifier [0x0x6fc333+65459]\n\tGetHandleVerifier [0x0x6fc374+65524]\n\
+    \t(No symbol) [0x0x51d973]\n\t(No symbol) [0x0x56dbc0]\n\t(No symbol) [0x0x56bf23]\n\
+    \t(No symbol) [0x0x5699c7]\n\t(No symbol) [0x0x568c66]\n\t(No symbol) [0x0x55d195]\n\
+    \t(No symbol) [0x0x589dfc]\n\t(No symbol) [0x0x55cbf4]\n\t(No symbol) [0x0x589fb4]\n\
+    \t(No symbol) [0x0x5ab606]\n\t(No symbol) [0x0x589bf6]\n\t(No symbol) [0x0x55b38e]\n\
+    \t(No symbol) [0x0x55c274]\n\tGetHandleVerifier [0x0x97eda3+2697763]\n\tGetHandleVerifier\
+    \ [0x0x979ec7+2677575]\n\tGetHandleVerifier [0x0x724194+228884]\n\tGetHandleVerifier\
+    \ [0x0x7149f8+165496]\n\tGetHandleVerifier [0x0x71b18d+192013]\n\tGetHandleVerifier\
+    \ [0x0x7047d8+99416]\n\tGetHandleVerifier [0x0x704972+99826]\n\tGetHandleVerifier\
+    \ [0x0x6eebea+10346]\n\tBaseThreadInitThunk [0x0x76507ba9+25]\n\tRtlInitializeExceptionChain\
+    \ [0x0x7774c0cb+107]\n\tRtlClearBits [0x0x7774c04f+191]\n"
 - id: 2
   name: 招聘候选人节点流转
   steps:
