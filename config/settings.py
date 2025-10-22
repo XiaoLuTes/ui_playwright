@@ -68,7 +68,7 @@ class Settings:
         self.ELEMENT_LOCATORS = self.project_config["ELEMENT_LOCATORS"]
 
         # 打印当前配置（用于调试）
-        self._print_current_config()
+        # self._print_current_config()
 
     def _get_env_var(self, var_name: str, default: str) -> str:
         """从环境变量获取配置，如果没有则使用默认值"""
@@ -85,17 +85,17 @@ class Settings:
         """获取所有可用项目列表"""
         return list(self.PROJECT_CONFIGS.keys())
 
-    def _print_current_config(self):
-        """打印当前配置"""
-        print("=" * 50)
-        print("当前测试配置:")
-        print(f"环境: {self.ENV}")
-        print(f"测试项目：{self.project_name}")
-        print(f"测试用例文件: {self.TESTCASES}")
-        print(f"元素定位器文件: {self.ELEMENT_LOCATORS}")
-        print(f"基础URL: {self.URL}")
-        print(f"浏览器: {self.BROWSER}, 无头模式: {self.HEADLESS}")
-        print("=" * 50)
+    # def _print_current_config(self):
+    #     """打印当前配置"""
+    #     print("=" * 50)
+    #     print("当前测试配置:")
+    #     print(f"环境: {self.ENV}")
+    #     print(f"测试项目：{self.project_name}")
+    #     print(f"测试用例文件: {self.TESTCASES}")
+    #     print(f"元素定位器文件: {self.ELEMENT_LOCATORS}")
+    #     print(f"基础URL: {self.URL}")
+    #     print(f"浏览器: {self.BROWSER}, 无头模式: {self.HEADLESS}")
+    #     print("=" * 50)
 
 
 settings = Settings()
