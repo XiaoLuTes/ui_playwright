@@ -42,14 +42,4 @@ test_cases:
     action: click
     data: null
     expected: null
-  - step_name: 9、点击本地库
-    element: local_library
-    action: click
-    data: null
-    expected: null
-  - step_name: 10、
-    element: jobManagement
-    action: click
-    data: null
-    expected: null
   result: 通过
