@@ -39,18 +39,20 @@ class Settings:
 
         # # 文件位置 - 可以通过Jenkins环境变量修改需要执行的测试用例文件
         # self.TESTCASES = self._get_env_var("TESTCASES_PATH", "./testcases/pt_new_position/pt_testcases.yaml")
-        # self.ELEMENT_LOCATORS = self._get_env_var("ELEMENT_LOCATORS_PATH", "./config/element_locators.yaml")
+        # self.ELEMENT_LOCATORS = self._get_env_var("ELEMENT_LOCATORS_PATH", "./config/new_position_element_locators.yaml")
 
         # 项目管理
         self.PROJECT_CONFIGS = {
             "招聘平台新建岗位": {
-                "TESTCASES_PATH": "./testcases/pt_new_position/pt_testcases.yaml",
                 "PAGE_NAME": "pt_new_position",
+                "TESTCASES_PATH": "./testcases/pt_new_position/pt_testcases.yaml",
+                "ELEMENT_LOCATORS": "./config/new_position_element_locators.yaml",
                 "description": "招聘平台非eor岗位全流程"
             },
             "招聘平台新建编制": {
-                "TESTCASES_PATH": "./testcases/pt_new_preparation/new_preparation.yaml",
                 "PAGE_NAME": "pt_new_preparation",
+                "TESTCASES_PATH": "./testcases/pt_new_preparation/new_preparation.yaml",
+                "ELEMENT_LOCATORS": "./config/new_preparation_element_locators.yaml",
                 "description": "招聘平台新发起编制流程"
             }
         }
@@ -63,7 +65,7 @@ class Settings:
         # 页面名称(根据项目获取)
         self.PAGE_NAME = self.project_config["PAGE_NAME"]
         # 元素定位器地址
-        self.ELEMENT_LOCATORS = self._get_env_var("ELEMENT_LOCATORS_PATH", "./config/element_locators.yaml")
+        self.ELEMENT_LOCATORS = self.project_config["ELEMENT_LOCATORS"]
 
         # 打印当前配置（用于调试）
         self._print_current_config()

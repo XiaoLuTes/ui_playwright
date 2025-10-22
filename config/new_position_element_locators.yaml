@@ -1,4 +1,3 @@
-
 pt_new_position:
   username_input:   # 姓名输入框
     by: "id"
@@ -168,8 +167,6 @@ pt_new_position:
   position_new:   # 创建的新岗位
     by: "xpath"
     value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div/div[2]/div/div[2]/div/div/div/div/div/table/tbody/tr[2]/td[2]"
-
-
 
 pt_new_preparation:
   username_input:   # 姓名输入框
