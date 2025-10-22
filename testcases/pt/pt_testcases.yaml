@@ -259,7 +259,7 @@ test_cases:
     expected: null
   - step_name: 52、点击招聘专员加入助理
     element: join_assistant
-    action: click
+    action: hidden_click
     data: null
     expected: null
   - step_name: 53、点击招聘专员加入助理页-添加按钮
