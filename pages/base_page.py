@@ -83,11 +83,33 @@ class BasePage:
     @allure.step("点击元素: {element_name}")
     def element_click(self, element_name, action):
         """点击元素"""
-        element = self.find_element(element_name, action)
-        self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
-        logger.info(f"已滚动到元素: {element_name}")      # 防止其他元素遮挡导致无法点击
-        element.click()
-        logger.info(f"点击元素: {element_name}")
+        try:
+            element = self.find_element(element_name, action)
+            self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
+            logger.info(f"已滚动到元素: {element_name}")
+            # 防止其他元素遮挡导致无法点击
+            element.click()
+            logger.info(f"点击元素: {element_name}")
+        except Exception as e:
+            e_str = str(e)
+            error_msg = f"点击元素失败: {element_name}, 错误：{e_str}"
+            logger.error(error_msg)
+            if "element click intercepted" in e_str or "not clickable" in e_str:
+                logger.info("检测到元素被遮挡，尝试使用JavaScript点击")
+                try:
+                    # 使用JavaScript点击作为备选方案
+                    element_retry = self.find_element(element_name, action)
+                    self.driver.execute_script("arguments[0].click();", element_retry)
+                    logger.info(f"通过JavaScript点击成功: {element_name}")
+                except Exception as js_e:
+                    js_error_msg = f"尝试JavaScript点击失败: {element_name}, 错误: {str(js_e)}"
+                    logger.error(js_error_msg)
+                    self.take_screenshot(f"点击失败-{element_name}")
+                    raise Exception(js_error_msg)
+            else:
+                # 其他类型的错误，直接截图并抛出
+                self.take_screenshot(f"点击失败-{element_name}")
+                raise e
 
     @allure.step("获取元素文本: {element_name}")
     def get_text(self, element_name, action):
