@@ -52,4 +52,34 @@ test_cases:
     action: click
     data: null
     expected: null
+  - step_name:
+    element:
+    action:
+    data:
+    expected:
+  - step_name:
+    element:
+    action:
+    data:
+    expected:
+  - step_name:
+    element:
+    action:
+    data:
+    expected:
+  - step_name:
+    element:
+    action:
+    data:
+    expected:
+  - step_name:
+    element:
+    action:
+    data:
+    expected:
+  - step_name:
+    element:
+    action:
+    data:
+    expected:
   result: 通过

@@ -6,13 +6,13 @@ class Settings:
 
     def __init__(self):
         # 环境配置
-        self.ENV = self._get_env_var("ENV", "dev")
+        self.ENV = self._get_env_var("ENV", "测试环境")
 
         # 不同环境的基础URL配置
         self.BASE_URL = {
-            "production": "https://admin.gsrtech.com/login",
-            "staging": "https://stage-admin.gsrtech.com/",
-            "dev": "https://test-admin.gsrtech.com/"
+            "生产环境": "https://admin.gsrtech.com",
+            "预生产环境": "https://stage-admin.gsrtech.com/",
+            "测试环境": "https://test-admin.gsrtech.com/"
         }
         self.URL = self._get_env_var("URL", self.BASE_URL[self.ENV])
 
@@ -44,13 +44,13 @@ class Settings:
             "招聘平台新建岗位": {
                 "PAGE_NAME": "pt_new_position",
                 "TESTCASES_PATH": "./testcases/pt_new_position/pt_testcases.yaml",
-                "ELEMENT_LOCATORS": "./config/new_position_element_locators.yaml",
+                "ELEMENT_LOCATORS": "./config/locators/new_position_element_locators.yaml",
                 "description": "招聘平台非eor岗位全流程"
             },
             "招聘平台新建编制": {
                 "PAGE_NAME": "pt_new_preparation",
                 "TESTCASES_PATH": "./testcases/pt_new_preparation/new_preparation.yaml",
-                "ELEMENT_LOCATORS": "./config/new_preparation_element_locators.yaml",
+                "ELEMENT_LOCATORS": "./config/locators/new_preparation_element_locators.yaml",
                 "description": "招聘平台新发起编制流程"
             }
         }
