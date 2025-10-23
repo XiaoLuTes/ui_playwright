@@ -82,8 +82,8 @@ class BasePage:
     @allure.step("点击元素: {element_name}")
     def element_click(self, element_name, action):
         """点击元素"""
-        element = self.find_element(element_name, action)
-        if element:
+        element_is_true = self.find_element(element_name, action)
+        if element_is_true:
             try:
                 element = self.wait_for_element_clickable(element_name)
                 self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
