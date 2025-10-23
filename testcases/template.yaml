@@ -2,7 +2,7 @@
     element:
     action:
     data:
-    expected:
+    expected: null
 
   - id:
     name:

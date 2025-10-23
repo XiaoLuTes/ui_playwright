@@ -25,8 +25,8 @@ class Settings:
         self.WINDOW_SIZE = tuple(map(int, window_size_str.split(',')))
 
         # 等待时间设置
-        self.IMPLICIT_WAIT = int(self._get_env_var("IMPLICIT_WAIT", "15"))
-        self.EXPLICIT_WAIT = int(self._get_env_var("EXPLICIT_WAIT", "30"))
+        self.IMPLICIT_WAIT = int(self._get_env_var("IMPLICIT_WAIT", "5"))
+        self.EXPLICIT_WAIT = int(self._get_env_var("EXPLICIT_WAIT", "10"))
         self.HIDDEN_FIND_WAIT = int(self._get_env_var("HIDDEN_WAIT", "3"))
 
         # 报告和截图配置
@@ -54,7 +54,7 @@ class Settings:
             }
         }
         # 获取当前项目
-        self.project_name = self._get_env_var("PROJECT_NAME", '招聘平台新建岗位')
+        self.project_name = self._get_env_var("PROJECT_NAME", '招聘平台新建编制')
         # 获取当前项目配置
         self.project_config = self.get_current_project_config(self.project_name)
         # 测试用例文件位置(根据项目获取)

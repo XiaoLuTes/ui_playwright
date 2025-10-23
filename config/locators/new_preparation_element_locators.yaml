@@ -62,4 +62,25 @@ pt_new_preparation:
   choose_all_three: # 三方面试页-全选按钮
     by: "xpath"
     value:  "/html/body/div[1]/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div[2]/div/div[5]/div[2]/div[2]/div/form/div/div/div/div/div/div/div/div/div/div/div/div/table/thead/tr/th[1]/div/label/span"
+  three_enter: # 三方面试页-弹窗确认按钮
+    by: "xpath"
+    value:  "/html/body/div[2]/div/div[2]/div/div[1]/div/div/div/div[2]/button[2]"
+  offer_info_enter: # offer时间录入弹窗确认按钮
+    by: "xpath"
+    value:  "/html/body/div[2]/div/div[2]/div/div[1]/div/div[3]/button[2]"
+  allow_offer:  # 可发offer人选页
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div/div/div/div[6]/div"
+  allow_offer_1:  # 可发offer人选页-第一候选人
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div[2]/div/div[2]/div[2]/div[2]/div/form/div/div/div/div/div/div/div/div/div/div/div/div/table/tbody/tr[2]/td/label/span"
+  allow_offer_enter:  # 可发offer人选页-批量发起子流程
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div[3]/button"
+  preparation:  # 编制管理
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/aside/div/div[1]/ul/li[4]/span"
+  preparation_view_1: # 编制管理第一条数据
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div/div[2]/div/div/div/div/div/div/div/table/tbody/tr[2]/td[8]/button"
 

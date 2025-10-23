@@ -26,10 +26,12 @@ testcase.yaml文件格式：(测试用例)
                                wait         等待(例如文件上传等场景)
                                             必填：action\data(等待时长,填整数)
     data        输入文本
+                可用变量：
+                        {replace_num}       提取时间戳作为随机数
     expected    预期(只在input时使用,可输入true,校验当前元素所输入的文本是否正确)
 
 element_locators.yaml文件格式:(元素定位器)
-login_page      实例login_page,如果需要从login动作开始测试，元素都可以放在下面
+login_page      实例名称，用于项目管理
     username_input:     元素名称(给到testcase-step使用的元素名称)
-    by:                 定位方式(如'id'、'xpath'、'css'等)
-    value:              定位内容(定位表达式)
+        by:             定位方式(如'id'、'xpath'、'css'等)
+        value:          定位内容(定位表达式)

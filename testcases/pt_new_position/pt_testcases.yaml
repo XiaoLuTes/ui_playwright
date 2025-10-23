@@ -87,10 +87,10 @@ test_cases:
     action: click
     data: null
     expected: null
-  - step_name: 18、需求人数2人
+  - step_name: 18、需求人数11人
     element: recruitment_volume
     action: input
-    data: '2'
+    data: '11'
     expected: true
   - step_name: 19、选择非eor入职
     element: eor_not
@@ -125,7 +125,7 @@ test_cases:
   - step_name: 25、输入AI描述
     element: ai_instruction
     action: input
-    data: autotest
+    data: auto{replace_num}
     expected: true
   - step_name: 26、job_title输入'自动化测试'
     element: job_title
@@ -282,6 +282,4 @@ test_cases:
     action: check_text
     data: 招聘端测试
     expected: null
-  result: '失败: Message: 尝试查找隐藏元素超时: talent_button
-
-    '
+  result: 通过
