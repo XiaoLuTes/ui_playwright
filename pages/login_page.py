@@ -28,12 +28,13 @@ class LoginPage(BasePage):
         """打开登录页面"""
         login_url = self.settings.URL
         locator = self.get_element_locator("username_input")
+        time_out = self.settings.EXPLICIT_WAIT
         for times in range(max_retry):
             try:
                 self.logger.info(f"尝试导航到登录页面 (尝试 {times + 1}/{max_retry}次登录): {login_url}")
                 self.open(login_url)
                 # 等待页面关键元素加载完成
-                WebDriverWait(self.driver, 30).until(
+                WebDriverWait(self.driver, time_out).until(
                     ec.presence_of_element_located(locator)
                 )
                 self.logger.info("成功导航到登录页面")
