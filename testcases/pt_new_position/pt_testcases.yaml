@@ -282,4 +282,13 @@ test_cases:
     action: check_text
     data: 招聘端测试
     expected: null
-  result: 通过
+  result: "失败: Message: \nStacktrace:\n\tGetHandleVerifier [0x0xddc333+65459]\n\t\
+    GetHandleVerifier [0x0xddc374+65524]\n\t(No symbol) [0x0xbfd973]\n\t(No symbol)\
+    \ [0x0xc476e7]\n\t(No symbol) [0x0xc47a8b]\n\t(No symbol) [0x0xc8dea2]\n\t(No\
+    \ symbol) [0x0xc69e44]\n\t(No symbol) [0x0xc8b606]\n\t(No symbol) [0x0xc69bf6]\n\
+    \t(No symbol) [0x0xc3b38e]\n\t(No symbol) [0x0xc3c274]\n\tGetHandleVerifier [0x0x105eda3+2697763]\n\
+    \tGetHandleVerifier [0x0x1059ec7+2677575]\n\tGetHandleVerifier [0x0xe04194+228884]\n\
+    \tGetHandleVerifier [0x0xdf49f8+165496]\n\tGetHandleVerifier [0x0xdfb18d+192013]\n\
+    \tGetHandleVerifier [0x0xde47d8+99416]\n\tGetHandleVerifier [0x0xde4972+99826]\n\
+    \tGetHandleVerifier [0x0xdcebea+10346]\n\tBaseThreadInitThunk [0x0x76507ba9+25]\n\
+    \tRtlInitializeExceptionChain [0x0x7774c0cb+107]\n\tRtlClearBits [0x0x7774c04f+191]\n"

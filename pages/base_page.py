@@ -18,9 +18,9 @@ class BasePage:
         self.driver = driver
         self.page_name = page_name
         self.locator = ElementLocator()
-        self.wait_timeout = 15
         self.locators = self.locator.load_locators()
         self.settings = settings
+        self.wait_timeout = self.settings.IMPLICIT_WAIT
 
     def get_element_locator(self, element_name):
         """获取元素定位器"""
@@ -84,7 +84,7 @@ class BasePage:
     def element_click(self, element_name, action):
         """点击元素"""
         try:
-            element = self.wait_for_element(element_name)
+            element = self.wait_for_element_clickable(element_name)
             self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
             logger.info(f"已滚动到元素: {element_name}")
             # 防止其他元素遮挡导致无法点击
@@ -231,10 +231,10 @@ class BasePage:
             self.take_screenshot(f"未知错误_{os.path.basename(data)}")
             raise
 
-    def wait_for_element(self, element_name):
+    def wait_for_element_clickable(self, element_name):
         # 等待元素可点击状态
         locator = self.get_element_locator(element_name)
-        wait_time = self.settings.WAIT_TIME
+        wait_time = self.settings.IMPLICIT_WAIT
         try:
             wait = WebDriverWait(self.driver, wait_time)
             return wait.until(ec.element_to_be_clickable(locator))

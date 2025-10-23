@@ -19,7 +19,7 @@ pt_new_preparation:
     value: "//*[@id='root']/div/div[2]/aside/div/div[1]/ul/li[3]/span"
   position_new: # 创建的新岗位
     by: "xpath"
-    value: "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div/div[2]/div/div[2]/div/div/div/div/div/table/tbody/tr[2]/td[2]"
+    value: "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div/div[2]/div/div[2]/div/div/div/div/div/table/tbody/tr[2]/td[2]/div"
   choose_all:  # 全选
     by: "xpath"
     value:  "/html/body/div/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div[2]/div/div/div[2]/div/div[2]/div/div/div/div/div/div/div/div/div/div/div/div/div/table/thead/tr/th[1]/div/label/span"
