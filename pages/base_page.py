@@ -21,6 +21,7 @@ class BasePage:
         self.locators = self.locator.load_locators()
         self.settings = settings
         self.wait_timeout = self.settings.IMPLICIT_WAIT
+        self.hidden_wait_timeout = self.settings.HIDDEN_FIND_WAIT
 
     def get_element_locator(self, element_name):
         """获取元素定位器"""
@@ -40,14 +41,14 @@ class BasePage:
         """查找元素"""
         locator = self.get_element_locator(element_name)
         timeout = self.wait_timeout
+        hidden_timeout = self.hidden_wait_timeout
         is_hidden_action = action.startswith("hidden_")
 
         if is_hidden_action:
             #  兼容隐藏元素(action标识以hidden_开头)
             try:
                 return WebDriverWait(self.driver, timeout).until(
-                    ec.presence_of_element_located(locator)
-                )
+                    ec.presence_of_element_located(locator))
             except TimeoutException:
                 error_msg = f"隐藏元素查找超时: {element_name}"
                 logger.error(error_msg)
@@ -56,18 +57,16 @@ class BasePage:
         else:
             try:
                 return WebDriverWait(self.driver, timeout).until(
-                    ec.visibility_of_element_located(locator)
-                )
+                    ec.visibility_of_element_located(locator))
             except TimeoutException:
                 error_msg = f"元素查找超时: {element_name},尝试查找是否为隐藏元素"
                 logger.error(error_msg)
                 # 兼容隐藏元素，action未以hidden_开头(直接使用会导致框架效率过低)
                 try:
-                    return WebDriverWait(self.driver, timeout).until(
-                        ec.presence_of_element_located(locator)
-                    )
+                    return WebDriverWait(self.driver, hidden_timeout).until(
+                        ec.presence_of_element_located(locator))
                 except TimeoutException:
-                    error_msg = f"尝试查找隐藏元素超时: {element_name}"
+                    error_msg = f"尝试查找隐藏元素失败: {element_name}"
                     logger.error(error_msg)
                     self.take_screenshot(f"元素查找超时-{element_name}")
                     raise TimeoutException(error_msg)
@@ -83,32 +82,34 @@ class BasePage:
     @allure.step("点击元素: {element_name}")
     def element_click(self, element_name, action):
         """点击元素"""
-        try:
-            element = self.wait_for_element_clickable(element_name)
-            self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
-            logger.info(f"已滚动到元素: {element_name}")
-            # 防止其他元素遮挡导致无法点击
-            element.click()
-            logger.info(f"点击元素: {element_name}")
-        except Exception as e:
-            e_str = str(e)
-            error_msg = f"点击元素失败: {element_name}, 错误：{e_str}"
-            logger.error(error_msg)
-            if "element click intercepted" in e_str or "not clickable" in e_str:
-                logger.info("检测到元素被遮挡，尝试使用JavaScript点击")
-                try:
-                    element_retry = self.find_element(element_name, action)
-                    self.driver.execute_script("arguments[0].click();", element_retry)
-                    logger.info(f"通过JavaScript点击成功: {element_name}")
-                except Exception as js_e:
-                    js_error_msg = f"尝试JavaScript点击失败: {element_name}, 错误: {str(js_e)}"
-                    logger.error(js_error_msg)
+        element = self.find_element(element_name, action)
+        if element:
+            try:
+                element = self.wait_for_element_clickable(element_name)
+                self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
+                logger.info(f"已滚动到元素: {element_name}")
+                # 防止其他元素遮挡导致无法点击
+                element.click()
+                logger.info(f"点击元素: {element_name}")
+            except Exception as e:
+                e_str = str(e)
+                error_msg = f"点击元素失败: {element_name}, 错误：{e_str}"
+                logger.error(error_msg)
+                if "element click intercepted" in e_str or "not clickable" in e_str:
+                    logger.info("检测到元素被遮挡，尝试使用JavaScript点击")
+                    try:
+                        element_retry = self.find_element(element_name, action)
+                        self.driver.execute_script("arguments[0].click();", element_retry)
+                        logger.info(f"通过JavaScript点击成功: {element_name}")
+                    except Exception as js_e:
+                        js_error_msg = f"尝试JavaScript点击失败: {element_name}, 错误: {str(js_e)}"
+                        logger.error(js_error_msg)
+                        self.take_screenshot(f"尝试JavaScript点击失败-{element_name}")
+                        raise Exception(js_error_msg)
+                else:
+                    # 其他类型的错误，直接截图并抛出
                     self.take_screenshot(f"点击失败-{element_name}")
-                    raise Exception(js_error_msg)
-            else:
-                # 其他类型的错误，直接截图并抛出
-                self.take_screenshot(f"点击失败-{element_name}")
-                raise e
+                    raise e
 
     @allure.step("获取元素文本: {element_name}")
     def get_text(self, element_name, action):

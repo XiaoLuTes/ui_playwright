@@ -27,6 +27,7 @@ class Settings:
         # 等待时间设置
         self.IMPLICIT_WAIT = int(self._get_env_var("IMPLICIT_WAIT", "15"))
         self.EXPLICIT_WAIT = int(self._get_env_var("EXPLICIT_WAIT", "30"))
+        self.HIDDEN_FIND_WAIT = int(self._get_env_var("HIDDEN_WAIT", "3"))
 
         # 报告和截图配置
         self.REPORT_PATH = self._get_env_var("REPORT_PATH", "reports/")
