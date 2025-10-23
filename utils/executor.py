@@ -16,7 +16,7 @@ class Executor:
         self.base_page = BasePage(self, driver)        # 引用页面操作
         self.page_mapping = {}  # 用于注册页面对象
         self.yaml_load = YamlLoad()   # 用于yaml用例引用
-        self.page_name = None  # 用于yaml用例引用
+        self.page_name = None
 
     def register_page(self, page_name, page_object):
         """注册页面对象"""

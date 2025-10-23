@@ -1,4 +1,3 @@
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.common.exceptions import TimeoutException
@@ -98,7 +97,6 @@ class BasePage:
             if "element click intercepted" in e_str or "not clickable" in e_str:
                 logger.info("检测到元素被遮挡，尝试使用JavaScript点击")
                 try:
-                    # 使用JavaScript点击作为备选方案
                     element_retry = self.find_element(element_name, action)
                     self.driver.execute_script("arguments[0].click();", element_retry)
                     logger.info(f"通过JavaScript点击成功: {element_name}")
@@ -234,11 +232,11 @@ class BasePage:
             raise
 
     def wait_for_element(self, element_name):
+        # 等待元素可点击状态
         locator = self.get_element_locator(element_name)
         wait_time = self.settings.WAIT_TIME
         try:
             wait = WebDriverWait(self.driver, wait_time)
-            # 等待元素变更为可点击状态
             return wait.until(ec.element_to_be_clickable(locator))
         except TimeoutException:
             logger.error(f"元素{wait_time}秒后仍为不可点击状态{element_name}")
