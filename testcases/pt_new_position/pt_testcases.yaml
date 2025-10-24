@@ -5,12 +5,13 @@ test_cases:
   - step_name: 1、用户名输入
     element: username_input
     action: input
-    data: 小卢
+    data: "{username}"
     expected: true
   - step_name: 2、密码输入
     element: password_input
     action: input
-    data: Aa129889
+    data: "{password}"
+    expected: true
   - step_name: 3、验证码输入
     element: code_input
     action: input
@@ -96,7 +97,7 @@ test_cases:
   - step_name: 23、上传文件
     element: hidden_fr_upload_jd
     action: upload
-    data: testcases/pt_new_position/JD.pdf
+    data: testcases/pt_new_position/JD-TG(Japan CA)-LS（JP-EN）.pdf
   - step_name: 24、验证上传是否成功
     element: fr_upload_list
     action: check_exists
@@ -117,7 +118,7 @@ test_cases:
   - step_name: 28、国家/地区选项栏模糊输入
     element: country
     action: input
-    data: American Samoa
+    data: japan
   - step_name: 29、回车确认
     element: country
     action: enter
@@ -125,11 +126,11 @@ test_cases:
   - step_name: 30、验证国家/地区选项栏
     element: country_check
     action: check_text
-    data: American Samoa
-  - step_name: 31、国家/城市栏输入American
+    data: Japan
+  - step_name: 31、国家/城市栏输入japan
     element: country_city
     action: input
-    data: American
+    data: japan
     expected: true
   - step_name: 32、点击start
     element: start
@@ -231,4 +232,6 @@ test_cases:
     element: assistant_list
     action: check_text
     data: 招聘端测试
-  result: 通过
+  result: '失败: Message: 尝试查找隐藏元素失败: talent_button
+
+    '

@@ -5,12 +5,12 @@ test_cases:
   - step_name: 1、用户名输入
     element: username_input
     action: input
-    data: 小卢
+    data: "{username}"
     expected: 输入框显示 小卢
   - step_name: 2、密码输入
     element: password_input
     action: input
-    data: Aa129889
+    data: "{password}"
   - step_name: 3、验证码输入
     element: code_input
     action: input
@@ -236,4 +236,12 @@ test_cases:
     element: submit
     action: click
     data: null
+  - step_name: 23、退回编制管理页
+    element: preparation
+    action: click
+    data: null
+  - step_name: 24、等待编制状态变更
+    element: instance_status
+    action: wait_text
+    data:  一次开票发起
   result: 通过

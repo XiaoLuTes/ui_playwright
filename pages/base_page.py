@@ -248,3 +248,51 @@ class BasePage:
         except TimeoutException:
             logger.error(f"元素{wait_time}秒后仍为不可点击状态{element_name}")
             raise
+
+    @allure.step("等待元素{element_name}的{real_action}变更为{expected_value}")
+    def wait_for_element_value(self, element_name, real_action, expected_value):
+        # 等待元素值或文本变化
+        timeout = self.settings.EXPLICIT_WAIT
+        refresh_time = self.settings.REFRESH_TIME
+        start_time = time.time()
+
+        def value_equals(_):
+            """
+            获取元素当前值与期望值比较
+            :param _:
+            :return: True or False
+            """
+            equals_element = self.find_element(element_name)
+            if real_action == "value":
+                old_value = equals_element.get_attribute('value')
+            elif real_action == "text":
+                old_value = equals_element.text
+            else:
+                old_value = equals_element.get_attribute('value')
+            return old_value == str(expected_value)
+
+        try:
+            while time.time() - start_time < timeout:
+                try:
+                    WebDriverWait(self.driver, refresh_time).until(value_equals)
+                    logger.info(f"元素 {element_name} 的值已变为: {expected_value}")
+                    break
+                except TimeoutException:
+                    if time.time() - start_time > timeout:
+                        raise
+                    logger.info(f"等待{refresh_time}秒后元素值不符合{expected_value},刷新页面后继续等待")
+                    self.driver.refresh()
+                    time.sleep(2)
+
+        except TimeoutException:
+            element = self.find_element(element_name)
+            if real_action == "value":
+                current_value = element.get_attribute('value')
+            elif real_action == "text":
+                current_value = element.text
+            else:
+                current_value = element.get_attribute('value')
+            error_msg = f"等待元素值变化超时: {element_name}, 期望: {expected_value}, 实际: {current_value}"
+            logger.error(error_msg)
+            self.take_screenshot(f"等待元素值变化超时-{element_name}")
+            raise TimeoutException(error_msg)

@@ -28,7 +28,7 @@ class LoginPage(BasePage):
         """打开登录页面"""
         login_url = self.settings.URL
         locator = self.get_element_locator("username_input")
-        time_out = self.settings.EXPLICIT_WAIT
+        time_out = self.settings.IMPLICIT_WAIT
         for times in range(max_retry):
             try:
                 self.logger.info(f"尝试导航到登录页面 (尝试 {times + 1}/{max_retry}次登录): {login_url}")

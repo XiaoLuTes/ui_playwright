@@ -122,4 +122,6 @@ pt_new_preparation:
   salary_currency:  # 薪资货币
     by: "xpath"
     value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/form/div/div[3]/div/div/div/div/div/div/div/div[2]/div/div/div[4]/div/div/div[2]/div/div/div/div/span/span[1]/input"
-
+  instance_status:  # 流程实例状态
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div/div[2]/div/div/div/div/div/div/div/table/tbody/tr[2]/td[4]"

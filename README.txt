@@ -23,6 +23,9 @@ testcase.yaml文件格式：(测试用例)
                                             必填项：element\action\data(文件路径,当前框架下的相对路径)
                                wait         等待(例如文件上传等场景)
                                             必填：action\data(等待时长,填整数)
+                               wait_text    等待元素text变更
+                               wait_value   等待元素值变更
+                                            (调用的同一个方法)
     data        输入文本
                 可用变量：
                         {replace_num}       提取时间戳作为随机数
