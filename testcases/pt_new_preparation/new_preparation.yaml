@@ -137,12 +137,12 @@ test_cases:
   - step_name: 1、用户名输入
     element: username_input
     action: input
-    data: 小卢
-    expected: 输入框显示 小卢
+    data: "{username}"
+    expected: True
   - step_name: 2、密码输入
     element: password_input
     action: input
-    data: Aa129889
+    data: "{password}"
   - step_name: 3、验证码输入
     element: code_input
     action: input
