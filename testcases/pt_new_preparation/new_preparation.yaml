@@ -1,6 +1,6 @@
 test_cases:
 - id: 招聘平台-2
-  name: 发起编制流程
+  name: 候选人节点流转
   steps:
   - step_name: 1、用户名输入
     element: username_input
@@ -15,7 +15,7 @@ test_cases:
     element: code_input
     action: input
     data: '1'
-    expected: True
+    expected: true
   - step_name: 4、点击登录
     element: login_button
     action: click
@@ -124,47 +124,116 @@ test_cases:
     element: allow_offer
     action: click
     data: null
-  - step_name: 26、选择第一位候选人
+  - step_name: 26、校验offer人选页数据展示
+    element: allow_offer
+    action: screenshot
+    data: offer人选页
+  result: '失败: Message: 尝试查找隐藏元素失败: talent_button
+
+    '
+- id: 招聘平台-3
+  name: 发起编制管理
+  steps:
+  - step_name: 1、用户名输入
+    element: username_input
+    action: input
+    data: 小卢
+    expected: 输入框显示 小卢
+  - step_name: 2、密码输入
+    element: password_input
+    action: input
+    data: Aa129889
+  - step_name: 3、验证码输入
+    element: code_input
+    action: input
+    data: '1'
+    expected: true
+  - step_name: 4、点击登录
+    element: login_button
+    action: click
+    data: null
+  - step_name: 5、点击招聘平台
+    element: talent_button
+    action: click
+    data: null
+  - step_name: 6、验证进入招聘平台
+    element: jobManagement
+    action: check_exists
+    data: 存在
+  - step_name: 7、点击进入岗位管理
+    element: jobManagement
+    action: click
+    data: null
+  - step_name: 8、点击刚才创建的岗位
+    element: position_new
+    action: click
+    data: null
+  - step_name: 9、进入可发offer人选页
+    element: allow_offer
+    action: click
+    data: null
+  - step_name: 9、选择第一位候选人
     element: allow_offer_1
     action: click
     data: null
-  - step_name: 27、发起子流程
+  - step_name: 10、点击发起子流程
     element: allow_offer_enter
     action: click
     data: null
-  - step_name: 28、进入编制管理
+  - step_name: 等待2秒
+    element: null
+    action: wait
+    data: '2'
+  - step_name: 11、进入编制管理
     element: preparation
     action: click
     data: null
-  - step_name: 29、点击第一条数据查看按钮
+  - step_name: 12、点击第一条数据查看按钮
     element: preparation_view_1
     action: click
     data: null
-  - step_name: 30、进入发送offer页
+  - step_name: 13、进入发送offer页
     element: send_offer
     action: click
     data: null
-  - step_name: 31、输入email
+  - step_name: 14、输入email
     element: email_input
     action: input
-    data: 'louie.lu@gsrtech.com'
-    expected: True
-  - step_name: 32、输入offer日期
+    data: louie.lu@gsrtech.com
+    expected: true
+  - step_name: 15、输入offer日期
     element: offer_date
     action: input
-    data: '2024-10-01'
-    expected: True
-  - step_name: 33、输入入职日期
+    data: '2025-02-10'
+    expected: true
+  - step_name: 16、输入入职日期
     element: entry_date
     action: input
-    data: '2024-10-02'
-    expected: True
-  - step_name: 34、选择没有保证期
+    data: '2025-02-11'
+    expected: true
+  - step_name: 17、选择没有保证期
     element: probation_not
     action: click
     data: null
-  - step_name: 35、薪资输入50000
-    element: probation_not
+  - step_name: 18、上传offer文件
+    element: hidden_offer_upload
+    action: upload
+    data: testcases/pt_new_preparation/JD.pdf
+  - step_name: 19、薪资输入50000
+    element: annual_salary
     action: input
     data: 50000
+    expected: true
+  - step_name: 20、薪资单位输入cny
+    element: salary_currency
+    action: input
+    data: CNY
+  - step_name: 21、回车确认薪资单位
+    element: salary_currency
+    action: enter
+    data: null
+  - step_name: 22、点击提交
+    element: submit
+    action: click
+    data: null
   result: 通过

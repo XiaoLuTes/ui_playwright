@@ -73,10 +73,10 @@ pt_new_preparation:
     value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div/div/div/div[6]/div"
   allow_offer_1:  # 可发offer人选页-第一候选人
     by: "xpath"
-    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div[2]/div/div[6]/div[2]/div[2]/div/form/div/div/div/div/div/div/div/div/div/div/div/div/table/tbody/tr[2]/td/label/span"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div[2]/div/div[2]/div[2]/div[2]/div/form/div/div/div/div/div/div/div/div/div/div/div/div/table/tbody/tr[2]/td/label/span"
   allow_offer_enter:  # 可发offer人选页-批量发起子流程
     by: "xpath"
-    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div[2]/div/div[6]/div/div/div[3]/button"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div[3]/button"
   preparation:  # 编制管理
     by: "xpath"
     value:  "//*[@id='root']/div/div[2]/aside/div/div[1]/ul/li[4]/span"
@@ -113,9 +113,13 @@ pt_new_preparation:
   probation_not:  # 保证期-否
     by: "xpath"
     value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/form/div/div[2]/div/div/div/div/div/div/div/div[2]/div/div/div[4]/div/div/div[2]/div/div/div/label[2]/span[1]"
-  offer_upload: # 简历上传
+  hidden_offer_upload: # offer上传
     by: "xpath"
     value:  "//*[@id='uploadFiles']/span/div/span/input"
   annual_salary:  # 薪资输入栏
     by: "xpath"
-    value:  ""
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/form/div/div[3]/div/div/div/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div[1]/div/div/div[2]/input"
+  salary_currency:  # 薪资货币
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/form/div/div[3]/div/div/div/div/div/div/div/div[2]/div/div/div[4]/div/div/div[2]/div/div/div/div/span/span[1]/input"
+

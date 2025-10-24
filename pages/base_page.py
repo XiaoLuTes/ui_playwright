@@ -74,11 +74,17 @@ class BasePage:
                     raise TimeoutException(error_msg)
 
     @allure.step("对元素输入文本: {element_name}")
-    def input_text(self, element_name, text):
+    def input_text(self, element_name, text, clear_first=True):
         """输入文本"""
         logger.info(f"在元素 {element_name} 输入: {text}")
         element_id = self.find_element(element_name)
-        element_id.clear()
+        if clear_first:
+            # element_id.clear()
+            current_value = element_id.get_attribute("value")
+            if current_value:
+                logger.info(f"输入框存在内容:'{current_value}',开始清空输入框内容")
+                element_id.send_keys(Keys.CONTROL + 'a')
+                element_id.send_keys(Keys.DELETE)
         element_id.send_keys(text)
 
     @allure.step("点击元素: {element_name}")
@@ -169,7 +175,6 @@ class BasePage:
             actions.send_keys(Keys.ARROW_DOWN)
         actions.perform()
         logger.info(f"输入向下指令: {times}次")
-        # time.sleep(3) # 等待元素显现
 
     @allure.step("模拟键盘向上按键")
     def keyboard_up(self, data):

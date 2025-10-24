@@ -139,6 +139,11 @@ class Executor:
         elif action == "wait":
             time.sleep(int(data))
 
+        elif action == "screenshot":
+            screenshot_name = data if data is not None else step_name
+            page_object.take_screenshot(screenshot_name)
+            return
+
         else:
             raise Exception(f"步骤'{step_name}'不支持的操作类型: {action}")
 
