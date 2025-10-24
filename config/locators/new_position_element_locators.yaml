@@ -68,7 +68,7 @@ pt_new_position:
   jd_upload:    # 点击上传jd按钮
     by: "xpath"
     value:  "//*[@id='jdAttachment']"
-  fr_upload_jd:   # 文件上传地址
+  hidden_fr_upload_jd:   # 文件上传地址
     by: "xpath"
     value:  "//*[@id='jdAttachment']/span/div/span/input"
   fr_upload_list:   # 文件上传列表
@@ -95,7 +95,7 @@ pt_new_position:
   start:    # 开始键
     by: "xpath"
     value:  "/html/body/div[1]/div/div[2]/div[2]/main/div/div/div/div/div/div/div[3]/div[2]/div/div[3]/button"
-  project_possessor:  # 岗位确认页-项目负责人
+  hidden_project_possessor:  # 岗位确认页-项目负责人
     by: "xpath"
     value:  "/html/body/div[1]/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/form/div/div[1]/div/div/div/div/div/div/div/div[2]/div/div/div[9]/div/div/div[2]/div/div/div/div/span/span[1]"
   project_possessor_check: # 岗位确认页-项目负责人
@@ -116,7 +116,7 @@ pt_new_position:
   entry_contract: # 销售录入合同页
     by: "xpath"
     value:  "/html/body/div/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div/div[3]/div"
-  join_assistant: # 招聘专员加入助理页
+  hidden_join_assistant: # 招聘专员加入助理页
     by: "xpath"
     value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[2]/div/div/div[1]/div[2]/div/div[2]/div"
   related_contract: # 关联合同

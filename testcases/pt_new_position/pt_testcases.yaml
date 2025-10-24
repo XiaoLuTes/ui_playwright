@@ -11,7 +11,6 @@ test_cases:
     element: password_input
     action: input
     data: Aa129889
-    expected: 输入框显示 ***
   - step_name: 3、验证码输入
     element: code_input
     action: input
@@ -21,72 +20,58 @@ test_cases:
     element: login_button
     action: click
     data: null
-    expected: null
   - step_name: 5、点击招聘平台
     element: talent_button
     action: click
     data: null
-    expected: null
   - step_name: 6、验证进入招聘平台
     element: jobManagement
     action: check_exists
     data: 存在
-    expected: null
   - step_name: 7、点击进入岗位管理
     element: jobManagement
     action: click
     data: null
-    expected: null
   - step_name: 8、新建岗位需求
     element: new_job
     action: click
     data: null
-    expected: null
   - step_name: 9、岗位类型选择-新建岗位
     element: customer_type_new
     action: click
     data: null
-    expected: null
   - step_name: 10、点击合同类型
     element: contract_type
     action: click
     data: null
-    expected: null
   - step_name: 11、合同类型输入'劳动合同'
     element: contract_type
     action: input
     data: 劳动合同
-    expected: null
   - step_name: 12、回车确认选择'劳动合同'
     element: contract_type
     action: enter
     data: null
-    expected: null
   - step_name: 13、验证合同选择
     element: contract_type_check
     action: check_text
     data: 劳动合同
-    expected: null
-  - step_name: 14、公司名称输入“louie1号测试客户”
+  - step_name: 14、公司名称输入"louie1号测试客户"
     element: company_name
     action: input
     data: louie测试1号客户
-    expected: null
   - step_name: 15、回车确认
     element: company_name
     action: enter
     data: null
-    expected: null
   - step_name: 16、校验公司选择
     element: company_name_check
     action: check_text
     data: louie测试1号客户
-    expected: null
   - step_name: 17、需求类型：猎头
     element: requirement_type_1
     action: click
     data: null
-    expected: null
   - step_name: 18、需求人数11人
     element: recruitment_volume
     action: input
@@ -96,32 +81,26 @@ test_cases:
     element: eor_not
     action: click
     data: null
-    expected: null
   - step_name: 20、岗位负责人栏输入"卢毅"
     element: project_manager
     action: input
     data: 卢毅
-    expected: null
   - step_name: 21、回车确认
     element: null
     action: enter
     data: null
-    expected: null
   - step_name: 22、校验岗位负责人选择
     element: project_manager_check
     action: check_text
     data: 卢毅
-    expected: null
   - step_name: 23、上传文件
-    element: fr_upload_jd
-    action: hidden_upload
+    element: hidden_fr_upload_jd
+    action: upload
     data: testcases/pt_new_position/JD.pdf
-    expected: JD
   - step_name: 24、验证上传是否成功
     element: fr_upload_list
     action: check_exists
     data: 存在
-    expected: null
   - step_name: 25、输入AI描述
     element: ai_instruction
     action: input
@@ -131,27 +110,22 @@ test_cases:
     element: job_title
     action: input
     data: 自动化测试{replace_num}
-    expected: null
   - step_name: 27、点击国家/地区选项栏(使其可见)
     element: country_click
     action: click
     data: null
-    expected: null
   - step_name: 28、国家/地区选项栏模糊输入
     element: country
     action: input
     data: American Samoa
-    expected: null
   - step_name: 29、回车确认
     element: country
     action: enter
     data: null
-    expected: null
   - step_name: 30、验证国家/地区选项栏
     element: country_check
     action: check_text
     data: American Samoa
-    expected: null
   - step_name: 31、国家/城市栏输入American
     element: country_city
     action: input
@@ -161,125 +135,100 @@ test_cases:
     element: start
     action: click
     data: null
-    expected: null
   - step_name: 33、点击项目负责人选项
-    element: project_possessor
-    action: hidden_click
+    element: hidden_project_possessor
+    action: click
     data: null
-    expected: null
   - step_name: 34、向下1次
-    element: project_possessor
+    element: hidden_project_possessor
     action: down
     data: '1'
-    expected: null
   - step_name: 35、回车确认
-    element: project_possessor
+    element: hidden_project_possessor
     action: enter
     data: null
-    expected: null
   - step_name: 36、验证项目负责人选择'卢毅'
     element: project_possessor_check
     action: check_text
     data: 卢毅
-    expected: null
   - step_name: 37、选择优先级C
     element: priority_C
     action: click
     data: null
-    expected: null
   - step_name: 38、点击提交
     element: submit_confirm
     action: click
     data: null
-    expected: null
   - step_name: 39、点击销售录入合同
     element: entry_contract
     action: click
     data: null
-    expected: null
   - step_name: 40、点击关联合同
     element: related_contract
     action: click
     data: null
-    expected: null
   - step_name: 41、向下一次
     element: related_contract
     action: down
     data: '1'
-    expected: null
   - step_name: 42、回车确认
     element: related_contract
     action: enter
     data: null
-    expected: null
   - step_name: 43、验证关联合同选择
     element: related_contract_check
     action: check_text
     data: 一次开票
-    expected: null
   - step_name: 44、选择收费模式
     element: pricing_model
     action: click
     data: null
-    expected: null
   - step_name: 45、向下一次
     element: pricing_model
     action: down
     data: '1'
-    expected: null
   - step_name: 46、回车确认
     element: pricing_model
     action: enter
     data: null
-    expected: null
   - step_name: 47、验证收费模式选择
     element: pricing_model_check
     action: check_text
     data: 年薪30%
-    expected: null
   - step_name: 48、汇率类型选择offer时间
     element: exchange_type_offer
     action: click
     data: null
-    expected: null
   - step_name: 49、税率选择6%
     element: taxrate_1
     action: click
     data: null
-    expected: null
   - step_name: 50、点击提交按钮
     element: submit_contract
     action: click
     data: null
-    expected: null
   - step_name: 51、点击招聘专员加入助理
-    element: join_assistant
-    action: hidden_click
+    element: hidden_join_assistant
+    action: click
     data: null
-    expected: null
   - step_name: 52、点击招聘专员加入助理页-添加按钮
     element: assistant_join_button
     action: click
     data: null
-    expected: null
   - step_name: 53、点击参与人选择框
     element: assistant_select
     action: click
     data: null
-    expected: null
   - step_name: 54、点击回车(添加'招聘端测试')
     element: assistant_select
     action: enter
     data: null
-    expected: null
   - step_name: 55、点击确认按钮
     element: assistant_enter
     action: click
     data: null
-    expected: null
   - step_name: 56、验证参与人列表包含'招聘端测试'
     element: assistant_list
     action: check_text
     data: 招聘端测试
-    expected: null
   result: 通过

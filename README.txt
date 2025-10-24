@@ -21,8 +21,6 @@ testcase.yaml文件格式：(测试用例)
                                             必填项：element\action
                                upload       上传文件(元素未隐藏时使用该方法,必须是input类型的元素)
                                             必填项：element\action\data(文件路径,当前框架下的相对路径)
-                               hidden_      元素隐藏时使用,方法前+'hidden_';例如：'hidden_upload'
-                                            元素管理不用加hidden_前缀
                                wait         等待(例如文件上传等场景)
                                             必填：action\data(等待时长,填整数)
     data        输入文本
@@ -35,3 +33,4 @@ login_page      实例名称，用于项目管理
     username_input:     元素名称(给到testcase-step使用的元素名称)
         by:             定位方式(如'id'、'xpath'、'css'等)
         value:          定位内容(定位表达式)
+    hidden_      元素隐藏时使用,元素名称前+'hidden_';例如：'hidden_upload'

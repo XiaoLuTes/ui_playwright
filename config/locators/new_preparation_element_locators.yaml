@@ -83,4 +83,39 @@ pt_new_preparation:
   preparation_view_1: # 编制管理第一条数据
     by: "xpath"
     value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div/div[2]/div/div/div/div/div/div/div/table/tbody/tr[2]/td[8]/button"
-
+  send_offer: # 发送offer
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/form/div/div[1]/div/div/div/div/div/div/div/div[2]/div/div/div[1]/div/div/div[2]/div/div/div/label[1]/span[1]"
+  identity_judge:  # 判断身份
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/form/div/div[1]/div/div/div/div/div/div/div/div[2]/div/div/div[1]/div/div/div[2]/div/div/div/label[2]/span[1]"
+  email_input:  # email输入栏
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/form/div/div[2]/div/div/div/div/div/div/div/div[2]/div/div/div[7]/div/div/div[2]/div/div/input"
+  submit: # 提交按钮
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[3]/div[2]/div/div[3]/button"
+  country_identity_judge: # 判断身份页-申请人国籍
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/form/div/div[1]/div/div/div/div/div/div/div/div[2]/div/div/div[3]/div/div/div[2]/div/div/div/div/span/span[1]/input"
+  country_visa: # 判断身份页-办签国家
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/form/div/div[1]/div/div/div/div/div/div/div/div[2]/div/div/div[5]/div/div/div[2]/div/div/div/div/span/span[1]/input"
+  card_visa:  # 居留卡/visa上传
+    by: "xpath"
+    value:  "//*[@id='card']/span/div/span/input"
+  offer_date: # offer日期
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/form/div/div[2]/div/div/div/div/div/div/div/div[2]/div/div/div[1]/div/div/div[2]/div/div/div/div/input"
+  entry_date: # 入职日期
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/form/div/div[2]/div/div/div/div/div/div/div/div[2]/div/div/div[2]/div/div/div[2]/div/div/div/div/input"
+  probation_not:  # 保证期-否
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/form/div/div[2]/div/div/div/div/div/div/div/div[2]/div/div/div[4]/div/div/div[2]/div/div/div/label[2]/span[1]"
+  offer_upload: # 简历上传
+    by: "xpath"
+    value:  "//*[@id='uploadFiles']/span/div/span/input"
+  annual_salary:  # 薪资输入栏
+    by: "xpath"
+    value:  ""

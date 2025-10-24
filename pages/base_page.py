@@ -37,14 +37,14 @@ class BasePage:
         self.driver.get(url)
         logger.info(f"页面已成功打开: {url}")
 
-    def find_element(self, element_name, action):
+    def find_element(self, element_name):
         """查找元素"""
         locator = self.get_element_locator(element_name)
         timeout = self.wait_timeout
         hidden_timeout = self.hidden_wait_timeout
-        is_hidden_action = action.startswith("hidden_")
+        is_hidden_element = element_name.startswith("hidden_")
 
-        if is_hidden_action:
+        if is_hidden_element:
             #  兼容隐藏元素(action标识以hidden_开头)
             try:
                 return WebDriverWait(self.driver, timeout).until(
@@ -74,17 +74,17 @@ class BasePage:
                     raise TimeoutException(error_msg)
 
     @allure.step("对元素输入文本: {element_name}")
-    def input_text(self, element_name, action, text):
+    def input_text(self, element_name, text):
         """输入文本"""
         logger.info(f"在元素 {element_name} 输入: {text}")
-        element_id = self.find_element(element_name, action)
+        element_id = self.find_element(element_name)
         element_id.clear()
         element_id.send_keys(text)
 
     @allure.step("点击元素: {element_name}")
-    def element_click(self, element_name, action):
+    def element_click(self, element_name):
         """点击元素"""
-        element_is_true = self.find_element(element_name, action)
+        element_is_true = self.find_element(element_name)
         if element_is_true:
             try:
                 element = self.wait_for_element_clickable(element_name)
@@ -100,7 +100,7 @@ class BasePage:
                 if "element click intercepted" in e_str or "not clickable" in e_str:
                     logger.info("检测到元素被遮挡，尝试使用JavaScript点击")
                     try:
-                        element_retry = self.find_element(element_name, action)
+                        element_retry = self.find_element(element_name)
                         self.driver.execute_script("arguments[0].click();", element_retry)
                         logger.info(f"通过JavaScript点击成功: {element_name}")
                     except Exception as js_e:
@@ -114,22 +114,22 @@ class BasePage:
                     raise e
 
     @allure.step("获取元素文本: {element_name}")
-    def get_text(self, element_name, action):
+    def get_text(self, element_name):
         """获取元素文本"""
-        element = self.find_element(element_name, action)
+        element = self.find_element(element_name)
         return element.text
 
     @allure.step("校验元素值: {element_name}")
-    def get_element_value(self, element_name, action):
+    def get_element_value(self, element_name):
         """获取元素值"""
-        element = self.find_element(element_name, action)
+        element = self.find_element(element_name)
         return element.get_attribute('value')
 
     @allure.step("检查元素是否存在: {element_name}")
-    def is_element_present(self, element_name, action):
+    def is_element_present(self, element_name):
         """检查元素是否存在"""
         try:
-            self.find_element(element_name, action)
+            self.find_element(element_name)
             return True
         except TimeoutException:
             return False
@@ -190,12 +190,11 @@ class BasePage:
         logger.info(f"点击enter键")
 
     @allure.step("上传文件: {data} 到元素: {element_name}")
-    def upload_file(self, element_name, data, action):
+    def upload_file(self, element_name, data):
         """
         使用已封装的find_element方法上传文件
         :param element_name: 文件输入元素
         :param data: 要上传的文件路径
-        :param action: 动作，这里用来判断是否是隐藏的元素
         :return: Boolean 表示是否上传成功
         """
         try:
@@ -206,7 +205,7 @@ class BasePage:
             # 获取文件的绝对路径
             absolute_path = os.path.abspath(data)
             allure.attach(absolute_path, "文件绝对路径", allure.attachment_type.TEXT)
-            file_input = self.find_element(element_name, action)
+            file_input = self.find_element(element_name)
             # 确保元素是文件输入类型
             input_type = file_input.get_attribute("type")
             if input_type and input_type.lower() != "file":

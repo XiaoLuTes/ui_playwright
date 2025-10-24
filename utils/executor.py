@@ -93,20 +93,20 @@ class Executor:
                 allure.attachment_type.TEXT
             )
         logger.info(f"执行步骤: {step_name}")
-        if action == "input" or action == "hidden_input":
-            page_object.input_text(element_name, action, data)
+        if action == "input":
+            page_object.input_text(element_name, data)
             # 验证输入结果
             if expected:
-                actual_value = page_object.get_element_value(element_name, action)
+                actual_value = page_object.get_element_value(element_name)
                 data_str = str(data)
                 if data_str not in actual_value:
                     raise Exception(f"步骤'{step_name}'输入验证失败: 预期包含 '{data_str}', 实际: '{actual_value}'")
 
-        elif action == "click" or action == "hidden_click":
-            page_object.element_click(element_name, action)
+        elif action == "click":
+            page_object.element_click(element_name)
 
-        elif action == "check_text" or action == "hidden_check_text":
-            actual_text = page_object.get_text(element_name, action)
+        elif action == "check_text":
+            actual_text = page_object.get_text(element_name)
             data_str = str(data)
             if data_str not in actual_text:
                 raise Exception(f"文本检查失败: 步骤'{step_name}'预期包含 '{data_str}', 实际: '{actual_text}'")
@@ -117,11 +117,11 @@ class Executor:
         elif action == "up":
             page_object.keyboard_up(data)
 
-        elif action == "enter" or action == "hidden_enter":
+        elif action == "enter":
             page_object.keyboard_enter()
 
-        elif action == "check_exists" or action == "hidden_check_exists":
-            exists = page_object.is_element_present(element_name, action)
+        elif action == "check_exists":
+            exists = page_object.is_element_present(element_name)
             if data == "存在" and not exists:
                 raise Exception(f"步骤'{step_name}'校验失败, {element_name}元素应存在,实际不存在")
             elif data == "不存在" and exists:
@@ -133,8 +133,8 @@ class Executor:
             else:
                 raise Exception(f"无法识别, 步骤：{step_name}, 判断：{data}, 应为'存在'or'不存在'")
 
-        elif action == "upload" or action == "hidden_upload":
-            page_object.upload_file(element_name, data, action)
+        elif action == "upload":
+            page_object.upload_file(element_name, data)
 
         elif action == "wait":
             time.sleep(int(data))
