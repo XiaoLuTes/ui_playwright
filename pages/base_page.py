@@ -252,6 +252,14 @@ class BasePage:
     @allure.step("等待元素{element_name}的{real_action}变更为{expected_value}")
     def wait_for_element_value(self, element_name, real_action, expected_value):
         # 等待元素值或文本变化
+        try:
+            self.find_element(element_name)
+        except TimeoutException:
+            error_msg = f"元素查找失败: {element_name}"
+            logger.error(error_msg)
+            self.take_screenshot(f"元素查找失败-{element_name}")
+            raise TimeoutException(error_msg)
+
         timeout = self.settings.EXPLICIT_WAIT
         refresh_time = self.settings.REFRESH_TIME
         start_time = time.time()
@@ -280,9 +288,16 @@ class BasePage:
                 except TimeoutException:
                     if time.time() - start_time > timeout:
                         raise
-                    logger.info(f"等待{refresh_time}秒后元素值不符合{expected_value},刷新页面后继续等待")
-                    self.driver.refresh()
-                    time.sleep(2)
+                    try:
+                        self.find_element(element_name)
+                        logger.info(f"等待{refresh_time}秒后元素值不符合{expected_value},刷新页面后继续等待")
+                        self.driver.refresh()
+                        time.sleep(2)
+                    except TimeoutException:
+                        error_msg = "元素在等待过程中消失"
+                        logger.error(error_msg)
+                        self.take_screenshot(f"元素在等待过程中消失-{element_name}")
+                        raise TimeoutException(error_msg)
 
         except TimeoutException:
             element = self.find_element(element_name)

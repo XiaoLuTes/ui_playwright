@@ -6,7 +6,7 @@ class Settings:
 
     def __init__(self):
         # 环境配置
-        self.ENV = self._get_env_var("ENV", "预生产环境")
+        self.ENV = self._get_env_var("ENV", "测试环境")
         # 不同环境的基础URL配置
         self.BASE_URL = {
             "生产环境": "https://admin.gsrtech.com",
@@ -30,7 +30,7 @@ class Settings:
             }
         }
         # 获取当前项目
-        self.project_name = self._get_env_var("PROJECT_NAME", '招聘平台新建岗位')
+        self.project_name = self._get_env_var("PROJECT_NAME", '招聘平台新建编制')
         # 获取当前项目配置
         self.project_config = self.get_current_project_config(self.project_name)
         # 测试用例文件位置(根据项目获取)

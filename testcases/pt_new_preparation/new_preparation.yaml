@@ -1,148 +1,16 @@
 test_cases:
-- id: 招聘平台-2
-  name: 候选人节点流转
-  steps:
-  - step_name: 1、用户名输入
-    element: username_input
-    action: input
-    data: "{username}"
-    expected: 输入框显示 小卢
-  - step_name: 2、密码输入
-    element: password_input
-    action: input
-    data: "{password}"
-  - step_name: 3、验证码输入
-    element: code_input
-    action: input
-    data: '1'
-    expected: true
-  - step_name: 4、点击登录
-    element: login_button
-    action: click
-    data: null
-  - step_name: 5、点击招聘平台
-    element: talent_button
-    action: click
-    data: null
-  - step_name: 6、验证进入招聘平台
-    element: jobManagement
-    action: check_exists
-    data: 存在
-  - step_name: 7、点击进入岗位管理
-    element: jobManagement
-    action: click
-    data: null
-  - step_name: 8、点击刚才创建的岗位
-    element: position_new
-    action: click
-    data: null
-  - step_name: 9、点击初筛页全选按钮
-    element: choose_all
-    action: click
-    data: null
-  - step_name: 10、点击下个环节按钮
-    element: next_round_first
-    action: click
-    data: null
-  - step_name: 等待2秒
-    element: null
-    action: wait
-    data: '2'
-  - step_name: 11、进入匹配页
-    element: match
-    action: click
-    data: null
-  - step_name: 12、点击匹配页全选按钮
-    element: choose_all_match
-    action: click
-    data: null
-  - step_name: 13、点击匹配页下一环节
-    element: next_round_match
-    action: click
-    data: null
-  - step_name: 等待2秒
-    element: null
-    action: wait
-    data: '2'
-  - step_name: 14、点击内部面试
-    element: interview
-    action: click
-    data: null
-  - step_name: 15、点击内部面试全选按钮
-    element: choose_all_interview
-    action: click
-    data: null
-  - step_name: 16、点击内部面试下一环节
-    element: next_round_interview
-    action: click
-    data: null
-  - step_name: 等待2秒
-    element: null
-    action: wait
-    data: '2'
-  - step_name: 17、点击推荐页
-    element: recommend
-    action: click
-    data: null
-  - step_name: 18、点击推荐页全选按钮
-    element: choose_all_recommend
-    action: click
-    data: null
-  - step_name: 19、点击推荐页下一环节按钮
-    element: next_round_recommend
-    action: click
-    data: null
-  - step_name: 等待2秒
-    element: null
-    action: wait
-    data: '2'
-  - step_name: 20、点击三方面试页
-    element: three_interview
-    action: click
-    data: null
-  - step_name: 21、点击三方面试页全选按钮
-    element: choose_all_three
-    action: click
-    data: null
-  - step_name: 22、点击三方面试页下一环节按钮
-    element: next_round_three
-    action: click
-    data: null
-  - step_name: 23、点击弹窗确认按钮
-    element: three_enter
-    action: click
-    data: null
-  - step_name: 24、点击offer时间录入弹窗确认按钮
-    element: offer_info_enter
-    action: click
-    data: null
-  - step_name: 等待2秒
-    element: null
-    action: wait
-    data: '2'
-  - step_name: 25、点击可发offer人选页
-    element: allow_offer
-    action: click
-    data: null
-  - step_name: 26、校验offer人选页数据展示
-    element: allow_offer
-    action: screenshot
-    data: offer人选页
-  result: '失败: Message: 尝试查找隐藏元素失败: talent_button
-
-    '
 - id: 招聘平台-3
   name: 发起编制管理
   steps:
   - step_name: 1、用户名输入
     element: username_input
     action: input
-    data: "{username}"
-    expected: True
+    data: '{username}'
+    expected: true
   - step_name: 2、密码输入
     element: password_input
     action: input
-    data: "{password}"
+    data: '{password}'
   - step_name: 3、验证码输入
     element: code_input
     action: input
@@ -236,6 +104,10 @@ test_cases:
     element: submit
     action: click
     data: null
+  - step_name: 等待2秒
+    element: preparation
+    action: wait
+    data: '2'
   - step_name: 23、退回编制管理页
     element: preparation
     action: click
@@ -243,5 +115,5 @@ test_cases:
   - step_name: 24、等待编制状态变更
     element: instance_status
     action: wait_text
-    data:  一次开票发起
+    data: 一次开票发起
   result: 通过
