@@ -73,10 +73,10 @@ pt_new_preparation:
     value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div/div/div/div[6]/div"
   allow_offer_1:  # 可发offer人选页-第一候选人
     by: "xpath"
-    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div[2]/div/div[2]/div[2]/div[2]/div/form/div/div/div/div/div/div/div/div/div/div/div/div/table/tbody/tr[2]/td/label/span"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div[2]/div/div[6]/div[2]/div[2]/div/form/div/div/div/div/div/div/div/div/div/div/div/div/table/tbody/tr[2]/td/label/span"
   allow_offer_enter:  # 可发offer人选页-批量发起子流程
     by: "xpath"
-    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div[3]/button"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div[2]/div/div[6]/div/div/div[3]/button"
   preparation:  # 编制管理
     by: "xpath"
     value:  "//*[@id='root']/div/div[2]/aside/div/div[1]/ul/li[4]/span"

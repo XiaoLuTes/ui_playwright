@@ -60,11 +60,13 @@ class BasePage:
                     ec.visibility_of_element_located(locator))
             except TimeoutException:
                 error_msg = f"元素查找超时: {element_name},尝试查找是否为隐藏元素"
-                logger.error(error_msg)
+                logger.warning(error_msg)
                 # 兼容隐藏元素，action未以hidden_开头(直接使用会导致框架效率过低)
                 try:
-                    return WebDriverWait(self.driver, hidden_timeout).until(
+                    find_hidden_element = WebDriverWait(self.driver, hidden_timeout).until(
                         ec.presence_of_element_located(locator))
+                    logger.info(f"查找到隐藏元素：{element_name}")
+                    return find_hidden_element
                 except TimeoutException:
                     error_msg = f"尝试查找隐藏元素失败: {element_name}"
                     logger.error(error_msg)

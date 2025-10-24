@@ -52,69 +52,124 @@ test_cases:
     action: click
     data: null
     expected: null
+  - step_name: 等待2秒
+    element: null
+    action: wait
+    data: '2'
+    expected: null
   - step_name: 11、进入匹配页
     element: match
     action: click
-    data:
-    expected:
+    data: null
+    expected: null
   - step_name: 12、点击匹配页全选按钮
     element: choose_all_match
     action: click
-    data:
-    expected:
+    data: null
+    expected: null
   - step_name: 13、点击匹配页下一环节
     element: next_round_match
     action: click
-    data:
-    expected:
+    data: null
+    expected: null
+  - step_name: 等待2秒
+    element: null
+    action: wait
+    data: '2'
+    expected: null
   - step_name: 14、点击内部面试
     element: interview
     action: click
-    data:
-    expected:
+    data: null
+    expected: null
   - step_name: 15、点击内部面试全选按钮
     element: choose_all_interview
     action: click
-    data:
-    expected:
+    data: null
+    expected: null
   - step_name: 16、点击内部面试下一环节
     element: next_round_interview
     action: click
-    data:
-    expected:
+    data: null
+    expected: null
+  - step_name: 等待2秒
+    element: null
+    action: wait
+    data: '2'
+    expected: null
   - step_name: 17、点击推荐页
     element: recommend
     action: click
-    data:
+    data: null
     expected: null
   - step_name: 18、点击推荐页全选按钮
     element: choose_all_recommend
     action: click
-    data:
-    expected:
+    data: null
+    expected: null
   - step_name: 19、点击推荐页下一环节按钮
     element: next_round_recommend
     action: click
-    data:
-    expected:
+    data: null
+    expected: null
+  - step_name: 等待2秒
+    element: null
+    action: wait
+    data: '2'
+    expected: null
   - step_name: 20、点击三方面试页
     element: three_interview
     action: click
-    data:
-    expected:
+    data: null
+    expected: null
   - step_name: 21、点击三方面试页全选按钮
     element: choose_all_three
     action: click
-    data:
-    expected:
+    data: null
+    expected: null
   - step_name: 22、点击三方面试页下一环节按钮
     element: next_round_three
     action: click
-    data:
-    expected:
-  - step_name:
-    element:
-    action:
-    data:
-    expected:
+    data: null
+    expected: null
+  - step_name: 23、点击弹窗确认按钮
+    element: three_enter
+    action: click
+    data: null
+    expected: null
+  - step_name: 24、点击offer时间录入弹窗确认按钮
+    element: offer_info_enter
+    action: click
+    data: null
+    expected: null
+  - step_name: 等待2秒
+    element: null
+    action: wait
+    data: '2'
+    expected: null
+  - step_name: 25、点击可发offer人选页
+    element: allow_offer
+    action: click
+    data: null
+    expected: null
+  - step_name: 26、选择第一位候选人
+    element: allow_offer_1
+    action: click
+    data: null
+    expected: null
+  - step_name: 27、发起子流程
+    element: allow_offer_enter
+    action: click
+    data: null
+    expected: null
+  - step_name: 28、进入编制管理
+    element: preparation
+    action: click
+    data: null
+    expected: null
+  - step_name: 29、点击第一条数据查看按钮
+    element: preparation_view_1
+    action: click
+    data: null
+    expected: null
   result: 通过
