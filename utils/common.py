@@ -1,5 +1,4 @@
 import yaml
-import time
 from config.settings import settings
 
 def read_yaml_raw(file_path):
@@ -12,7 +11,7 @@ def read_yaml(file_path):
     # 读取yaml用例并把{replace_num}替换为时间戳
     with open(file_path, mode='r', encoding="utf-8") as a:
         content = a.read()
-        timestamp = int(time.time() * 1000)
+        timestamp = settings.TIME_STAMP
         username = settings.USER
         password = settings.PASSWORD
         replacements = {

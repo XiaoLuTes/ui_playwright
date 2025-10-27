@@ -1,4 +1,5 @@
 import os
+import time
 
 
 class Settings:
@@ -76,6 +77,9 @@ class Settings:
         self.LOG_LEVEL = self._get_env_var("LOG_LEVEL", "INFO")
         self.LOG_FILE = self._get_env_var("LOG_FILE", "./report.log")
         self.SCREENSHOT_PATH = self._get_env_var("SCREENSHOT_PATH", "./reports/screenshots")
+
+        # 时间戳设置
+        self.TIME_STAMP = int(time.time() * 1000)
 
         # 打印当前配置（用于调试）
         # self._print_current_config()
