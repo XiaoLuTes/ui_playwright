@@ -329,10 +329,8 @@ class BasePage:
             # 记录开始执行的日志
             logger.info(f"执行SQL验证: {sql}")
             logger.info(f"期望结果: {expected}")
-            allure.attach(str(sql), "sql语句", allure.attachment_type.TEXT)
-            allure.attach(str(expected), "期望结果", allure.attachment_type.TEXT)
-
             result = self._db_utils.execute_query(sql)
+            allure.attach(str(result), "SQL执行结果", allure.attachment_type.TEXT)
             # 获取数据库sql执行结果后,执行验证
             verification_passed = self.parse_and_verify_expected(result, expected)
             if verification_passed:
@@ -392,7 +390,7 @@ class BasePage:
             actual_value = list(result[0].values())[0]
             return str(actual_value) == expected
 
-        # 默认情况下，检查结果是否非空
+        # 都不包含情况下，检查结果是否非空
         return len(result) > 0
 
     def verify_contains(self, result, expected_value: str) -> bool:
@@ -404,7 +402,6 @@ class BasePage:
         Returns:
             bool: 是否包含期望值
         """
-
         for row in result:
             # 遍历每一行中的每个值
             for value in row.values():
@@ -435,7 +432,6 @@ class BasePage:
             match = True  # 假设当前行匹配
             # 检查每个期望的字段值对
             for field, expected_value in expected_pairs.items():
-                # 如果字段不存在或值不匹配
                 if field not in row or str(row[field]) != expected_value:
                     match = False
                     break
@@ -462,9 +458,8 @@ class BasePage:
             error_msg = f"数据库更新超时: {str(e)}"
             logger.error(error_msg)
             self.take_screenshot("数据库更新超时")
-            raise  # 重新抛出超时错误
+            raise
         except Exception as e:
-            # 处理其他所有异常
             error_msg = f"数据库更新执行失败: {str(e)}"
             logger.error(error_msg)
             self.take_screenshot("数据库更新失败")

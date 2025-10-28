@@ -51,7 +51,7 @@ class DatabaseUtils:
             with self.connection.cursor() as cursor:
                 cursor.execute(query, params or ())
                 result = cursor.fetchall()  # 获取查询结果
-                logger.info(f"SQL执行成功: {query}")
+                logger.info(f"SQL执行成功")
                 return result
         except Exception as e:
             logger.error(f"查询执行失败: {e}, SQL: {query}")

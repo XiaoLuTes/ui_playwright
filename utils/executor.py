@@ -23,9 +23,9 @@ class Executor:
         """确保数据库连接建立"""
         if self._db_utils is None:
             from utils.database import DatabaseUtils
+            logger.info("创建数据库连接")
             self._db_utils = DatabaseUtils()
             self._db_utils.connect()
-            logger.info("创建数据库连接")
 
             # 设置到所有已注册的页面
             for page_name, page in self.page_mapping.items():
