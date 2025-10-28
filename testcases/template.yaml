@@ -4,6 +4,13 @@
     data:
     expected: "action为input时，带入这个字段，且值非false时会去校验输入的文本"
 
+  - step_name:
+    element:
+    action:
+    data:
+    expected:
+
+
   - id:
     name:
     steps:

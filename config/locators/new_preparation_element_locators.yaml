@@ -20,9 +20,9 @@ pt_new_preparation:
   position_new: # 创建的新岗位
     by: "xpath"
     value: "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div/div[2]/div/div[2]/div/div/div/div/div/table/tbody/tr[2]/td[2]/div"
-  choose_all:  # 全选
+  choose_1:  # 勾选列表第一个
     by: "xpath"
-    value:  "/html/body/div/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div[2]/div/div/div[2]/div/div[2]/div/div/div/div/div/div/div/div/div/div/div/div/div/table/thead/tr/th[1]/div/label/span"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div[2]/div/div/div[2]/div/div/div/div/div/div/div/div/div/div/div/div/div/div/div/table/tbody/tr[2]/td[1]/label/span"
   next_round_first: # 初筛页-下一环节按钮
     by: "xpath"
     value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div[2]/div/div/div/div/div[1]/button"
@@ -125,3 +125,30 @@ pt_new_preparation:
   instance_status:  # 流程实例状态
     by: "xpath"
     value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div/div[2]/div/div/div/div/div/div/div/table/tbody/tr[2]/td[4]"
+  invoice:  # 开票按钮
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/button[1]"
+  exchange_rate:  # 修改汇率
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/button[2]"
+  hidden_invoice_redemption: # 发票赎期天数
+    by: "xpath"
+    value:  "/html/body/div[2]/div/div[2]/div/div[1]/div/div[2]/form/div/div[12]/div[1]/div[2]/div/div/div[2]/div/div/div/div/span"
+  hidden_invoice_days:  # 发票天数
+    by: "xpath"
+    value:  "//*[@id='invoiceRedemptionDays']"
+  hidden_settlement_currency:  # 发票结算币种
+    by: "xpath"
+    value:  "//*[@id='settlementCurrency']"
+  invoice_submit: # 提交开票
+    by: "xpath"
+    value:  "/html/body/div[2]/div/div[2]/div/div[1]/div/div[2]/form/div/div[14]/button[2]"
+  end_invoice_submit:  # 第一次开票结束页-提交
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[3]/div[2]/div/div/button[./span='L_提交']"
+  after_onboarding: # 入职回访页、保证期-提交
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[3]/div[2]/div/div/button[./span='提 交']"
+
+
+
