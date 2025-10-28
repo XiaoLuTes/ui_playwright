@@ -124,7 +124,6 @@ class Executor:
         logger.info(f"执行步骤: {step_name}")
         if action == "input":
             page_object.input_text(element_name, data)
-            # 验证输入结果
             if expected:
                 actual_value = page_object.get_element_value(element_name)
                 data_str = str(data)
@@ -178,12 +177,12 @@ class Executor:
         elif action == "wait_value":
             page_object.wait_for_element_value(element_name, "value", data)
 
-        elif action == "mysql":
+        elif action == "sql":
             # 遇到mysql步骤时，确保数据库连接已建立
             self._ensure_database_connection()
             page_object.verify_mysql_data(data, expected)
 
-        elif action == "mysql_update":
+        elif action == "sql_update":
             # 遇到mysql_update步骤时，确保数据库连接已建立
             self._ensure_database_connection()
             result = page_object.execute_mysql_update(data)

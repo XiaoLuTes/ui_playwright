@@ -8,7 +8,12 @@ test_cases:
     data: '{username}'
   - step_name: 2、数据库验证
     element: null
-    action: mysql
+    action: sql
     data: SELECT * FROM atc_re_template WHERE template_code='ATC0000000000001';
     expected: template_name=全局模板,template_id=1
+  - step_name: 3、再次校验数据库
+    element: null
+    action: sql
+    data: SELECT * FROM gsr_approval_users WHERE approval_name='louie1';
+    expected: 'contains: 卢毅'
   result: 通过

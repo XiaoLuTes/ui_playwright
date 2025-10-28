@@ -5,12 +5,12 @@ test_cases:
   - step_name: 1、用户名输入
     element: username_input
     action: input
-    data: "{username}"
+    data: '{username}'
     expected: true
   - step_name: 2、密码输入
     element: password_input
     action: input
-    data: "{password}"
+    data: '{password}'
     expected: true
   - step_name: 3、验证码输入
     element: code_input
@@ -232,6 +232,4 @@ test_cases:
     element: assistant_list
     action: check_text
     data: 招聘端测试
-  result: '失败: Message: 尝试查找隐藏元素失败: talent_button
-
-    '
+  result: 通过
