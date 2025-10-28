@@ -22,11 +22,18 @@ class BasePage:
         self.settings = settings
         self.wait_timeout = self.settings.IMPLICIT_WAIT
         self.hidden_wait_timeout = self.settings.HIDDEN_FIND_WAIT
+        self.db_timeout = self.settings.DB_TIMEOUT
+        self._db_utils = None
 
     def get_element_locator(self, element_name):
         """获取元素定位器"""
         page_name_str = self.find_element_page(element_name)
         return self.locator.get_locator(page_name_str, element_name)
+
+    def set_db_utils(self, db_utils):
+        """设置数据库工具实例"""
+        self._db_utils = db_utils
+        logger.debug(f"页面 '{self.page_name}' 设置数据库工具")
 
     @allure.step("打开页面: {url}")
     def open(self, url):
@@ -270,13 +277,12 @@ class BasePage:
             :param _:
             :return: True or False
             """
-            equals_element = self.find_element(element_name)
             if real_action == "value":
-                old_value = equals_element.get_attribute('value')
+                old_value = self.get_element_value(element_name)
             elif real_action == "text":
-                old_value = equals_element.text
+                old_value = self.get_text(element_name)
             else:
-                old_value = equals_element.get_attribute('value')
+                old_value = self.get_element_value(element_name)
             return old_value == str(expected_value)
 
         try:
@@ -300,14 +306,166 @@ class BasePage:
                         raise TimeoutException(error_msg)
 
         except TimeoutException:
-            element = self.find_element(element_name)
             if real_action == "value":
-                current_value = element.get_attribute('value')
+                current_value = self.get_element_value(element_name)
             elif real_action == "text":
-                current_value = element.text
+                current_value = self.get_text(element_name)
             else:
-                current_value = element.get_attribute('value')
+                current_value = self.get_element_value(element_name)
             error_msg = f"等待元素值变化超时: {element_name}, 期望: {expected_value}, 实际: {current_value}"
             logger.error(error_msg)
             self.take_screenshot(f"等待元素值变化超时-{element_name}")
             raise TimeoutException(error_msg)
+
+    @allure.step("执行数据库验证")
+    def verify_mysql_data(self, sql: str, expected: str):
+        """
+        执行SQL查询并验证结果
+        Args:
+            sql (str): 要执行的SQL查询语句
+            expected (str): 期望的结果，支持多种格式
+        """
+        try:
+            # 记录开始执行的日志
+            logger.info(f"执行SQL验证: {sql}")
+            logger.info(f"期望结果: {expected}")
+            allure.attach(str(sql), "sql语句", allure.attachment_type.TEXT)
+            allure.attach(str(expected), "期望结果", allure.attachment_type.TEXT)
+
+            result = self._db_utils.execute_query(sql)
+            # 获取数据库sql执行结果后,执行验证
+            verification_passed = self.parse_and_verify_expected(result, expected)
+            if verification_passed:
+                logger.info("数据库验证成功")  # 验证通过日志
+            else:
+                # 验证失败，准备错误信息
+                error_msg = f"数据库验证失败: SQL={sql}, 期望={expected}, 实际结果={result}"   # 截图记录失败状态
+                raise AssertionError(error_msg)  # 抛出断言错误
+
+        except TimeoutError as e:
+            # 处理超时错误
+            error_msg = f"数据库验证超时: {str(e)}"
+            logger.error(error_msg)
+            self.take_screenshot("数据库验证超时")
+            raise  # 重新抛出超时错误
+        except Exception as e:
+            # 处理其他所有异常
+            error_msg = f"数据库验证执行失败: {str(e)}"
+            logger.error(error_msg)
+            self.take_screenshot("数据库验证异常")
+            raise  # 重新抛出异常
+
+    def parse_and_verify_expected(self, result, expected: str) -> bool:
+        """
+        解析期望结果并进行验证
+        Args:
+            result: 数据库查询结果
+            expected (str): 期望结果字符串
+        Returns:
+            bool: 验证是否通过
+        """
+        # 如果expected为空
+        if expected.lower() in ["empty", "[]", "null", "none"]:
+            return len(result) == 0
+
+        # expected以count:开头(需要计数)
+        if expected.startswith("count:"):
+            expected_count = int(expected.split(":")[1].strip())
+            return len(result) == expected_count
+
+        # expected以count>开头(大于某数)
+        if expected.startswith("count>:"):
+            min_count = int(expected.split(":")[1].strip())
+            return len(result) > min_count
+
+        # expected以contains:开头(包含)
+        if expected.startswith("contains:"):
+            expected_value = expected.split(":", 1)[1].strip()
+            return self.verify_contains(result, expected_value)
+
+        # 字段值验证 - 格式: "字段=值" 或 "字段1=值1,字段2=值2"
+        if "=" in expected and not expected.startswith(("count", "contains")):
+            return self.verify_field_values(result, expected)
+
+        # 直接值比较（用于单值查询）- 当结果只有一行一列时
+        if len(result) == 1 and len(result[0]) == 1:
+            actual_value = list(result[0].values())[0]
+            return str(actual_value) == expected
+
+        # 默认情况下，检查结果是否非空
+        return len(result) > 0
+
+    def verify_contains(self, result, expected_value: str) -> bool:
+        """
+        验证结果中包含特定值
+        Args:
+            result: 数据库查询结果
+            expected_value (str): 期望包含的值
+        Returns:
+            bool: 是否包含期望值
+        """
+
+        for row in result:
+            # 遍历每一行中的每个值
+            for value in row.values():
+                # 检查期望值是否出现在当前值的字符串形式中
+                if expected_value in str(value):
+                    return True
+        return False
+
+    def verify_field_values(self, result, expected: str) -> bool:
+        """
+        验证字段值
+        Args:
+            result: 数据库查询结果
+            expected (str): 期望的字段值对
+        Returns:
+            bool: 是否有行匹配所有期望的字段值
+        """
+        # 解析期望的字段值对
+        expected_pairs = {}  # 创建空字典存储字段值对
+        for pair in expected.split(","):  # 按逗号分割多个字段值对
+            if "=" in pair:
+                key, value = pair.split("=", 1)  # 按等号分割字段名和值
+                expected_pairs[key.strip()] = value.strip()
+        if not expected_pairs:
+            return False
+        # 检查是否有行匹配所有期望的字段值
+        for row in result:
+            match = True  # 假设当前行匹配
+            # 检查每个期望的字段值对
+            for field, expected_value in expected_pairs.items():
+                # 如果字段不存在或值不匹配
+                if field not in row or str(row[field]) != expected_value:
+                    match = False
+                    break
+            if match:
+                return True
+        return False
+
+    @allure.step("执行数据库更新操作")
+    def execute_mysql_update(self, sql: str):
+        """
+        执行数据库更新操作（INSERT, UPDATE, DELETE）
+        Args:
+            sql (str): 要执行的SQL语句
+        Returns:
+            int: 影响的行数
+        """
+        try:
+            logger.info(f"执行数据库更新: {sql}")
+            affected_rows = self._db_utils.execute_update(sql, timeout=self.db_timeout)
+            logger.info(f"数据库更新成功，影响行数: {affected_rows}")
+            return affected_rows  # 返回影响的行数
+        except TimeoutError as e:
+            # 处理超时错误
+            error_msg = f"数据库更新超时: {str(e)}"
+            logger.error(error_msg)
+            self.take_screenshot("数据库更新超时")
+            raise  # 重新抛出超时错误
+        except Exception as e:
+            # 处理其他所有异常
+            error_msg = f"数据库更新执行失败: {str(e)}"
+            logger.error(error_msg)
+            self.take_screenshot("数据库更新失败")
+            raise  # 重新抛出异常

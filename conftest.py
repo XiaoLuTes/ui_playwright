@@ -1,7 +1,6 @@
 import pytest
 from utils.browser import Browser
 from utils.logger import logger
-# import allure
 from pages.login_page import LoginPage
 
 
@@ -40,4 +39,3 @@ def login_page(driver):
     """
     # 创建登录页面实例
     return LoginPage(driver)
-

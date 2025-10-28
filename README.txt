@@ -26,10 +26,23 @@ testcase.yaml文件格式：(测试用例)
                                wait_text    等待元素text变更
                                wait_value   等待元素值变更
                                             (调用的同一个方法)
+                               mysql        执行sql语句(查询)
+                                            必填项：action\data(具体的sql)
+                                                    expected(预期结果)可为空,代表查询数据为空
+                               mysql_update 执行sql语句(更新)
+                                            必填项：action\data(具体的sql)\expected(预期结果)
+                                                    expected(预期结果)可为空,代表查询数据为空
     data        输入文本
                 可用变量：
                         {replace_num}       提取时间戳作为随机数
-    expected    预期(只在input时使用,可输入true,校验当前元素所输入的文本是否正确)
+    expected    预期(只在input、mysql、mysql_update时使用)
+                    1、input时，可输入true,校验当前元素所输入的文本是否正确
+                    2、mysql、mysql_update时：
+                             1、为空("empty", "[]", "null", "none")
+                             2、count(=,>),计数,结果总数为多少行
+                             3、contains(),包含,只要返回的所有行的任一值包含就判断通过
+                             4、多条件判断(template_id=1,template_name=全局模板)
+                                某一行需要同时满足多个条件,多个条件用','分割
 
 element_locators.yaml文件格式:(元素定位器)
 login_page      实例名称，用于项目管理

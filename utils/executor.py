@@ -17,11 +17,41 @@ class Executor:
         self.page_mapping = {}  # 用于注册页面对象
         self.yaml_load = YamlLoad()   # 用于yaml用例引用
         self.page_name = None
+        self._db_utils = None  # 数据库工具
+
+    def _ensure_database_connection(self):
+        """确保数据库连接建立"""
+        if self._db_utils is None:
+            from utils.database import DatabaseUtils
+            self._db_utils = DatabaseUtils()
+            self._db_utils.connect()
+            logger.info("创建数据库连接")
+
+            # 设置到所有已注册的页面
+            for page_name, page in self.page_mapping.items():
+                page.set_db_utils(self._db_utils)
+                logger.debug(f"设置数据库连接到页面: {page_name}")
+
+    def _close_database_connection(self):
+        """关闭数据库连接"""
+        if self._db_utils:
+            try:
+                self._db_utils.close()
+            except Exception as e:
+                logger.warning(f"关闭数据库连接时发生错误: {e}")
+            finally:
+                self._db_utils = None
+            # 清除所有页面的数据库引用
+            for page_name, page in self.page_mapping.items():
+                page.set_db_utils(None)
 
     def register_page(self, page_name, page_object):
         """注册页面对象"""
         self.page_mapping[page_name] = page_object
         logger.info(f"注册页面对象: {page_name}")
+        if self._db_utils:
+            page_object.set_db_utils(self._db_utils)
+            logger.info(f"注册数据库对象")
 
     def execute_test_case(self, test_case):
         """
@@ -70,13 +100,12 @@ class Executor:
             error_msg = str(e)
             self.yaml_load.update_test_result(test_case_id, f"失败: {error_msg}")
             logger.error(f"测试用例执行失败: {test_case_id} - {error_msg}")
-            # if page_object is not None:
-            #     page_object.take_screenshot(f"screenshot_{test_case_id}.png")
-            # self.driver.save_screenshot(f"screenshot_{test_case_id}.png")
             return False
+        finally:
+            self._close_database_connection()
+            logger.info(f"测试用例:{test_case_id}执行完成")
 
-    @staticmethod
-    def execute_step(page_object, step_name, element_name, action, data, expected):
+    def execute_step(self, page_object, step_name, element_name, action, data, expected):
         """执行单个测试步骤"""
         # time.sleep(1)   # 等待1秒
         with allure.step("步骤参数"):
@@ -148,6 +177,18 @@ class Executor:
 
         elif action == "wait_value":
             page_object.wait_for_element_value(element_name, "value", data)
+
+        elif action == "mysql":
+            # 遇到mysql步骤时，确保数据库连接已建立
+            self._ensure_database_connection()
+            page_object.verify_mysql_data(data, expected)
+
+        elif action == "mysql_update":
+            # 遇到mysql_update步骤时，确保数据库连接已建立
+            self._ensure_database_connection()
+            result = page_object.execute_mysql_update(data)
+            if expected and str(result) != expected:
+                raise AssertionError(f"数据库更新影响行数不匹配，期望: {expected}, 实际: {result}")
 
         else:
             raise Exception(f"步骤'{step_name}'不支持的操作类型: {action}")

@@ -15,6 +15,7 @@ class Settings:
             "测试环境": "https://test-admin.gsrtech.com/"
         }
         self.URL = self._get_env_var("URL", self.BASE_URL[self.ENV])
+
         # 项目配置
         self.PROJECT_CONFIGS = {
             "招聘平台新建岗位": {
@@ -28,10 +29,16 @@ class Settings:
                 "TESTCASES_PATH": "./testcases/pt_new_preparation/new_preparation.yaml",
                 "ELEMENT_LOCATORS": "./config/locators/new_preparation_element_locators.yaml",
                 "description": "招聘平台新发起编制流程"
+            },
+            "数据库测试": {
+                "PAGE_NAME": "pt_new_preparation",
+                "TESTCASES_PATH": "./testcases/test_database/test_database.yaml",
+                "ELEMENT_LOCATORS": "./config/locators/new_preparation_element_locators.yaml",
+                "description": "测试下数据库链接"
             }
         }
         # 获取当前项目
-        self.project_name = self._get_env_var("PROJECT_NAME", '招聘平台新建编制')
+        self.project_name = self._get_env_var("PROJECT_NAME", '数据库测试')
         # 获取当前项目配置
         self.project_config = self.get_current_project_config(self.project_name)
         # 测试用例文件位置(根据项目获取)
@@ -55,6 +62,28 @@ class Settings:
         self.USER = self._get_env_var("USER", self.USER_LIST[self.ENV])
         self.PASSWORD = self._get_env_var("PASSWORD", self.PASSWORD_LIST[self.ENV])
 
+        # 数据库配置
+        self.DB_HOST_LIST = {
+            "测试环境": "43.154.110.127"
+        }
+        self.DB_USER_LIST = {
+            "测试环境": "gsr_db"
+        }
+        self.DB_PASSWORD_LIST = {
+            "测试环境": "gsr666666"
+        }
+        self.DB_PORT_LIST = {
+            "测试环境": "3306"
+        }
+        self.DB_NAME_LIST = {
+            "测试环境": "gsr"
+        }
+        self.DB_HOST = self._get_env_var("DB_HOST", self.DB_HOST_LIST[self.ENV])
+        self.DB_USER = self._get_env_var("DB_USER", self.DB_USER_LIST[self.ENV])
+        self.DB_PASSWORD = self._get_env_var("DB_PASSWORD", self.DB_PASSWORD_LIST[self.ENV])
+        self.DB_PORT = self._get_env_var("DB_PORT", self.DB_PORT_LIST[self.ENV])
+        self.DB_NAME = self._get_env_var("DB_NAME", self.DB_NAME_LIST[self.ENV])
+
         # 浏览器配置
         self.BROWSER = self._get_env_var("BROWSER", "chrome")
         self.HEADLESS = self._get_env_var("HEADLESS", "False").lower() == "true"
@@ -64,10 +93,11 @@ class Settings:
         self.WINDOW_SIZE = tuple(map(int, window_size_str.split(',')))
 
         # 等待时间设置
-        self.IMPLICIT_WAIT = int(self._get_env_var("IMPLICIT_WAIT", "5"))
+        self.IMPLICIT_WAIT = int(self._get_env_var("IMPLICIT_WAIT", "10"))
         self.HIDDEN_FIND_WAIT = int(self._get_env_var("HIDDEN_WAIT", "3"))
         self.EXPLICIT_WAIT = int(self._get_env_var("EXPLICIT_WAIT", "120"))
         self.REFRESH_TIME = int(self._get_env_var("REFRESH_TIME", "15"))
+        self.DB_TIMEOUT = int(self._get_env_var("DB_TIMEOUT", "20"))
 
         # 报告和截图配置
         self.REPORT_PATH = self._get_env_var("REPORT_PATH", "reports/")
