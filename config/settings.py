@@ -32,7 +32,7 @@ class Settings:
             },
             "数据库测试": {
                 "PAGE_NAME": "pt_new_preparation",
-                "TESTCASES_PATH": "./testcases/test_database/test_database.yaml",
+                "TESTCASES_PATH": "testcases/test_database/test_database.yaml",
                 "ELEMENT_LOCATORS": "./config/locators/new_preparation_element_locators.yaml",
                 "description": "测试下数据库链接"
             }
