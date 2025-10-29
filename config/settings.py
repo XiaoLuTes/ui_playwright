@@ -139,6 +139,7 @@ class Settings:
     #     print(f"元素定位器文件: {self.ELEMENT_LOCATORS}")
     #     print(f"基础URL: {self.URL}")
     #     print(f"浏览器: {self.BROWSER}, 无头模式: {self.HEADLESS}")
+    #     print(f"数据库配置: 服务器:{self.DB_HOST},端口:{self.DB_PORT},用户名:{self.DB_USER},库:{self.DB_NAME}")
     #     print("=" * 50)
 
 

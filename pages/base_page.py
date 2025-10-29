@@ -430,7 +430,6 @@ class BasePage:
         # 检查是否有行匹配所有期望的字段值
         for row in result:
             match = True  # 假设当前行匹配
-            # 检查每个期望的字段值对
             for field, expected_value in expected_pairs.items():
                 if field not in row or str(row[field]) != expected_value:
                     match = False
