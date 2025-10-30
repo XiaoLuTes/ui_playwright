@@ -24,6 +24,11 @@ class BasePage:
         self.hidden_wait_timeout = self.settings.HIDDEN_FIND_WAIT
         self.db_timeout = self.settings.DB_TIMEOUT
         self._db_utils = None
+        self.page_manager = None
+
+    def set_page_manager(self, page_manager):
+        """引用页面管理器"""
+        self.page_manager = page_manager
 
     def get_element_locator(self, element_name):
         """获取元素定位器"""
@@ -145,6 +150,7 @@ class BasePage:
             self.find_element(element_name)
             return True
         except TimeoutException:
+            logger.error(f"未找到指定元素: {element_name}")
             return False
 
     @allure.step("截图")

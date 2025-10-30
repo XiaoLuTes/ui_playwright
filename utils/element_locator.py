@@ -29,10 +29,10 @@ class ElementLocator:
             logger.error(f"未找到元素定位器: {page_name_str}.{element_name}")
             raise
 
-    def get_all_page_locators(self, page_name):
-        """获取指定页面的所有元素定位器"""
-        try:
-            return self.locators[page_name]
-        except KeyError:
-            logger.error(f"未找到页面定位器: {page_name}")
-            return {}
+    # def get_all_page_locators(self, page_name):
+    #     """获取指定页面的所有元素定位器"""
+    #     try:
+    #         return self.locators[page_name]
+    #     except KeyError:
+    #         logger.error(f"未找到页面定位器: {page_name}")
+    #         return {}

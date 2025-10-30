@@ -40,7 +40,6 @@ class DatabaseUtils:
         args:
             query(str): 要执行的sql语句
             param: sql语句的参数，默认为空
-
         return:
             List[Dict[str, Any]]: 查询结果列表，每个结果都是一个字典
         """

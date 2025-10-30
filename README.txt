@@ -48,7 +48,7 @@ testcase.yaml文件格式：(测试用例)
     clear_first 是否需要先清空输入栏,默认为是(只在input时使用)
 
 element_locators.yaml文件格式:(元素定位器)
-login_page      实例名称，用于项目管理
+gsr_admin_page      实例名称，用于项目管理
     username_input:     元素名称(给到testcase-step使用的元素名称)
         by:             定位方式(如'id'、'xpath'、'css'等)
         value:          定位内容(定位表达式)

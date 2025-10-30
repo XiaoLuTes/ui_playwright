@@ -19,34 +19,44 @@ class Settings:
         # 项目配置
         self.PROJECT_CONFIGS = {
             "招聘平台新建岗位": {
-                "PAGE_NAME": "pt_new_position",
+                "PAGE_NAME": ["gsr_admin_page"],
                 "TESTCASES_PATH": "./testcases/pt_new_position/pt_testcases.yaml",
                 "ELEMENT_LOCATORS": "./config/locators/new_position_element_locators.yaml",
-                "description": "招聘平台非eor岗位全流程"
+                "description": "招聘平台非eor岗位全流程",
             },
             "招聘平台新建编制": {
-                "PAGE_NAME": "pt_new_preparation",
+                "PAGE_NAME": ["gsr_admin_page"],
                 "TESTCASES_PATH": "./testcases/pt_new_preparation/new_preparation.yaml",
-                "ELEMENT_LOCATORS": "./config/locators/new_preparation_element_locators.yaml",
+                "ELEMENT_LOCATORS": "./config/locators/gsr_admin_page.yaml",
                 "description": "招聘平台新发起编制流程"
             },
             "数据库测试": {
-                "PAGE_NAME": "pt_new_preparation",
+                "PAGE_NAME": ["gsr_admin_page"],
                 "TESTCASES_PATH": "testcases/test_database/test_database.yaml",
-                "ELEMENT_LOCATORS": "./config/locators/new_preparation_element_locators.yaml",
+                "ELEMENT_LOCATORS": "./config/locators/gsr_admin_page.yaml",
                 "description": "测试下数据库链接"
             }
         }
+        # 页面url映射
+        self.PAGE_URLS = {
+            "gsr_admin_page": self.URL  # 登录页面URL
+            # 可以继续添加其他页面的URL配置...
+        }
+        # 页面类映射
+        self.PAGE_CLASSES = {
+            "gsr_admin_page": "GsrAdminPage"
+            # 可以继续添加其他页面映射...
+        }
         # 获取当前项目
-        self.project_name = self._get_env_var("PROJECT_NAME", '数据库测试')
+        self.CURRENT_PROJECT = self._get_env_var("CURRENT_PROJECT", '数据库测试')
         # 获取当前项目配置
-        self.project_config = self.get_current_project_config(self.project_name)
+        self.PROJECT_CONFIG = self.get_current_project_config(self.CURRENT_PROJECT)
         # 测试用例文件位置(根据项目获取)
-        self.TESTCASES = self.project_config["TESTCASES_PATH"]
+        self.TESTCASES = self.PROJECT_CONFIG["TESTCASES_PATH"]
         # 页面名称(根据项目获取)
-        self.PAGE_NAME = self.project_config["PAGE_NAME"]
+        self.PAGE_NAME = self.PROJECT_CONFIG["PAGE_NAME"]
         # 元素定位器地址
-        self.ELEMENT_LOCATORS = self.project_config["ELEMENT_LOCATORS"]
+        self.ELEMENT_LOCATORS = self.PROJECT_CONFIG["ELEMENT_LOCATORS"]
 
         # 账号密码配置
         self.USER_LIST = {

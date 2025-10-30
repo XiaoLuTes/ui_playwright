@@ -1,4 +1,4 @@
-pt_new_preparation:
+gsr_admin_page:
   username_input:   # 姓名输入框
     by: "id"
     value: "username"

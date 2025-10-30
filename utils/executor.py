@@ -1,23 +1,29 @@
 import time
-from conftest import driver
+# from conftest import driver
 from utils.logger import logger
 import allure
 from utils.element_locator import ElementLocator
+from utils.page_manager import PageManager
 from utils.yaml_load import YamlLoad
-from pages.base_page import BasePage
+# from pages.base_page import BasePage
 
 
 class Executor:
-    def __init__(self, driver):
+    def __init__(self, driver, page_manager=None):
         self.test_result = None  # 用于写入测试结果
         self.driver = driver  # 实例主体
         self.data_loader = ElementLocator()
         self.locators = self.data_loader.load_locators()    # 用于页面元素定位器引用
-        self.base_page = BasePage(self, driver)        # 引用页面操作
-        self.page_mapping = {}  # 用于注册页面对象
+        self.page_manager = PageManager(driver)
         self.yaml_load = YamlLoad()   # 用于yaml用例引用
         self.page_name = None
         self._db_utils = None  # 数据库工具
+        if page_manager is not None:
+            self.page_manager = page_manager
+            logger.info(f"执行器使用外部页面管理器")
+        else:
+            self.page_manager = PageManager(driver)
+            logger.info(f"执行器创建新的页面管理器")
 
     def _ensure_database_connection(self):
         """确保数据库连接建立"""
@@ -26,9 +32,8 @@ class Executor:
             logger.info("创建数据库连接")
             self._db_utils = DatabaseUtils()
             self._db_utils.connect()
-
             # 设置到所有已注册的页面
-            for page_name, page in self.page_mapping.items():
+            for page_name, page in self.page_manager.pages.items():
                 page.set_db_utils(self._db_utils)
                 logger.debug(f"设置数据库连接到页面: {page_name}")
 
@@ -42,13 +47,17 @@ class Executor:
             finally:
                 self._db_utils = None
             # 清除所有页面的数据库引用
-            for page_name, page in self.page_mapping.items():
+            for page_name, page in self.page_manager.pages.items():
                 page.set_db_utils(None)
 
-    def register_page(self, page_name, page_object):
+    def register_page(self, page_name, page_object=None):
         """注册页面对象"""
-        self.page_mapping[page_name] = page_object
-        logger.info(f"注册页面对象: {page_name}")
+        if page_object:
+            # 如果提供了页面对象，直接存储
+            self.page_manager.pages[page_name] = page_object
+        else:
+            # 否则动态注册页面
+            self.page_manager.register_page(page_name)
         if self._db_utils:
             page_object.set_db_utils(self._db_utils)
             logger.info(f"注册数据库对象")
@@ -81,13 +90,12 @@ class Executor:
                         raise Exception(f"找不到元素 {element_name} 对应的页面")
 
                 # 获取页面对象
-                    page_object = self.page_mapping.get(page_name)
+                    page_object = self.page_manager.get_page(page_name)
                     if not page_object:
                         raise Exception(f"未注册页面对象: {page_name}")
 
                 # 执行步骤
                 with allure.step(f"步骤{step_name}"):
-                    # , {element_name} - {action}: {data}
                     self.execute_step(page_object, step_name, element_name, action, data, expected)
 
             # 测试结果为通过
@@ -107,7 +115,6 @@ class Executor:
 
     def execute_step(self, page_object, step_name, element_name, action, data, expected):
         """执行单个测试步骤"""
-        # time.sleep(1)   # 等待1秒
         with allure.step("步骤参数"):
             # 记录步骤参数作为附件
             parameters = {

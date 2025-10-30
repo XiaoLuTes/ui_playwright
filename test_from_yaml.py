@@ -1,14 +1,13 @@
 import pytest
 import allure
-# from pages.dashboard_page import DashboardPage
+from utils.logger import logger
+from utils.page_manager import PageManager
 from utils.yaml_load import YamlLoad
 from utils.executor import Executor
-from pages.login_page import LoginPage
-from utils.logger import logger
-from config.settings import settings
 
 data_loader = YamlLoad()
 test_cases = data_loader.load_test_cases()
+
 
 @allure.feature("YAML驱动登录测试")
 class TestLoginFromYAML:
@@ -17,24 +16,15 @@ class TestLoginFromYAML:
     @pytest.fixture(scope="function", autouse=True)
     def setup_test(self, driver):
         """测试类级别初始化"""
-        # 获取page_name
-        self.page_name = settings.PAGE_NAME
-        # 初始化页面对象
-        self.login_page = LoginPage(driver)
-        # self.dashboard_page = DashboardPage(driver)   # 导航页
+        self.driver = driver
+        self.page_manager = PageManager(driver)
+        self.executor = Executor(driver, self.page_manager)
 
-        # 初始化测试执行器
-        self.executor = Executor(driver)
+        # 初始化所有页面
+        project_pages = self.page_manager.initialize_project_pages()
+        logger.info(f"初始化完成，已注册页面: {list(project_pages.keys())}")
 
-        # 注册页面对象
-        self.executor.register_page(self.page_name, self.login_page)
-        # self.executor.register_page("dashboard_page", self.dashboard_page)    # 导航页
-
-        # 导航到登录页面
-        self.login_page.navigate_to_login()
-        logger.info("测试类初始化完成")
-        # board页面先验证登录成功
-        # self.dashboard_page.verify_login_success()    # 导航页
+        self.try_login()
 
         yield
 
@@ -52,3 +42,22 @@ class TestLoginFromYAML:
 
         # 断言测试结果
         assert result, f"测试用例 {test_case['id']} 执行失败: {result}"
+
+    def try_login(self):
+        """尝试登陆"""
+        try:
+            login_page = self.page_manager.get_page("gsr_admin_page")
+            if hasattr(login_page, 'perform_login'):
+                # 导航到登录页面
+                self.page_manager.navigate_to_page("gsr_admin_page")
+                # 执行登录
+                login_page.perform_login()
+        except Exception as e:
+            # 如果是其他页面，跳过登录
+            if "gsr_admin_page" not in self.page_manager.pages:
+                logger.info("当前项目不需要登录，跳过登录步骤")
+                return
+            if hasattr(self, 'driver'):
+                from pages.base_page import BasePage
+                BasePage("error", self.driver).take_screenshot("登录失败")
+            pytest.fail(f"登录失败: 测试中止{str(e)}")

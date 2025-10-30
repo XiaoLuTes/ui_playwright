@@ -2,10 +2,10 @@ test_cases:
 - id: 测试数据库
   name: 数据库
   steps:
-  - step_name: 1、用户名输入
-    element: username_input
-    action: input
-    data: '{username}'
+  - step_name: 5、点击招聘平台
+    element: talent_button
+    action: click
+    data: null
   - step_name: 2、数据库验证
     element: null
     action: sql

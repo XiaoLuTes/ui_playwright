@@ -2,24 +2,6 @@ test_cases:
 - id: 招聘平台-2
   name: 候选人节点流转
   steps:
-  - step_name: 1、用户名输入
-    element: username_input
-    action: input
-    data: '{username}'
-    expected: 输入框显示 小卢
-  - step_name: 2、密码输入
-    element: password_input
-    action: input
-    data: '{password}'
-  - step_name: 3、验证码输入
-    element: code_input
-    action: input
-    data: '1'
-    expected: true
-  - step_name: 4、点击登录
-    element: login_button
-    action: click
-    data: null
   - step_name: 5、点击招聘平台
     element: talent_button
     action: click

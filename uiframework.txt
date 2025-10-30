@@ -6,8 +6,7 @@ pytest_ui_framework/
 ├── pages/                    # 页面对象模型
 │   ├── _init_.py
 │   ├── base_page.py          # 页面基类(调用方法)
-│   ├── login_page.py         # 登录页面
-│   └── dashboard_page.py     # 仪表盘页面(暂时没用)
+│   └── gsr_admin_page.py     # 管理端
 │
 ├── reports/                  # 测试报告
 │   ├── allure-reports        # allure测试报告

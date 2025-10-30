@@ -8,9 +8,9 @@ from config.settings import Settings
 import allure
 
 
-class LoginPage(BasePage):
+class GsrAdminPage(BasePage):
     """
-    登录页面对象 - 封装登录页面相关操作
+    管理端页面对象 - 封装登录页面相关操作
     继承自BasePage
     """
 
@@ -20,8 +20,6 @@ class LoginPage(BasePage):
         # 获取配置
         self.logger = logger
         self.settings = Settings()
-        # load_locator = ElementLocator()
-        # self.locator = load_locator.load_locators()["login_page"]
 
     @allure.step("导航到登录页面")
     def navigate_to_login(self, max_retry=3):
@@ -52,3 +50,42 @@ class LoginPage(BasePage):
                 if times == max_retry - 1:
                     raise e
         return False
+
+    @allure.step("执行登录操作")
+    def perform_login(self):
+        """执行登录操作"""
+        try:
+            self.input_text("username_input", self.settings.USER)
+            self.input_text("password_input", self.settings.PASSWORD)
+            self.input_text("code_input", '1')
+            self.element_click("login_button")
+            # 等待登录成功 - 检查登录后页面元素
+            self.is_element_present("talent_button")
+            self.logger.info("登录成功")
+            # 如果提供了executor，则在登录成功后注册项目所需的页面对象
+            # if executor:
+            #     self.register_project_pages(executor)
+            return True
+        except Exception as e:
+            self.logger.error(f"登录失败: {str(e)}")
+            self.take_screenshot("登录失败")
+            raise e
+
+    @allure.step("确保已登录")
+    def ensure_logged_in(self):
+        """确保用户已登录"""
+        try:
+            # 检查是否已经登录（通过检查登录后的元素是否存在）
+            if self.is_element_present("talent_button"):
+                self.logger.info("用户已登录")
+                return True
+            else:
+                self.logger.info("用户未登录，开始执行登录")
+                # 导航到登录页面
+                self.navigate_to_login()
+                # 执行登录
+                return self.perform_login()
+        except Exception as e:
+            self.logger.error(f"确保登录状态失败: {str(e)}")
+            self.take_screenshot("确保登录状态失败")
+            raise e
