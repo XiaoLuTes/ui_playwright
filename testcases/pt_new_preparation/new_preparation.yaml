@@ -206,6 +206,10 @@ test_cases:
     element: invoice
     action: click
     data: null
+  - step_name: 等待1秒
+    element:
+    action: wait
+    data: '1'
   - step_name: 48、点击发票赎期天数选择栏
     element: hidden_invoice_redemption
     action: click
@@ -251,7 +255,7 @@ test_cases:
     action: wait
     data: "1"
   - step_name: 56、入职回访-提交按钮
-    element: end_invoice_submit
+    element: submit
     action: click
     data: null
   - step_name: 57、退回编制管理页
