@@ -254,6 +254,10 @@ test_cases:
     element: preparation_view_1
     action: click
     data: null
+  - step_name: 等待1秒
+    element: null
+    action: wait
+    data: "1"
   - step_name: 59、成功交付页点击提交
     element: after_onboarding
     action: click
