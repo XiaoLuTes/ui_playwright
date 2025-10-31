@@ -230,10 +230,18 @@ test_cases:
     element: invoice_submit
     action: click
     data: null
+  - step_name: 等待1秒
+    element: null
+    action: wait
+    data: "1"
   - step_name: 54、点击查看按钮
     element: preparation_view_1
     action: click
     data: null
+  - step_name: 等待1秒
+    element: null
+    action: wait
+    data: "1"
   - step_name: 55、点击提交按钮
     element: end_invoice_submit
     action: click
