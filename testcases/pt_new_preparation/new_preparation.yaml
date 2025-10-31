@@ -172,7 +172,7 @@ test_cases:
   - step_name: 40、薪资输入50000
     element: annual_salary
     action: input
-    data: 50000
+    data: '50000'
     expected: true
   - step_name: 41、薪资单位输入USD
     element: salary_currency
@@ -238,6 +238,10 @@ test_cases:
     element: end_invoice_submit
     action: click
     data: null
+  - step_name: 等待1秒
+    element: null
+    action: wait
+    data: "1"
   - step_name: 56、退回编制管理页
     element: preparation
     action: click
@@ -254,6 +258,10 @@ test_cases:
     element: after_onboarding
     action: click
     data: null
+  - step_name: 等待1秒
+    element: null
+    action: wait
+    data: "1"
   - step_name: 60、过保回访页点击提交
     element: end_invoice_submit
     action: click

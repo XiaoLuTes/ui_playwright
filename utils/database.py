@@ -32,7 +32,7 @@ class DatabaseUtils:
             return self.connection
         except Exception as e:
             logger.error(f"数据库连接失败: {e}")
-            raise
+            raise Exception
 
     def execute_query(self, query: str, params=None) -> List[Dict[str, Any]]:
         """
