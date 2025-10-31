@@ -230,10 +230,10 @@ test_cases:
     element: invoice_submit
     action: click
     data: null
-  - step_name: 等待1秒
+  - step_name: 等待2秒
     element: null
     action: wait
-    data: "1"
+    data: "2"
   - step_name: 54、点击查看按钮
     element: preparation_view_1
     action: click
@@ -250,15 +250,19 @@ test_cases:
     element: null
     action: wait
     data: "1"
-  - step_name: 56、退回编制管理页
+  - step_name: 56、入职回访-提交按钮
+    element: end_invoice_submit
+    action: click
+    data: null
+  - step_name: 57、退回编制管理页
     element: preparation
     action: click
     data: null
-  - step_name: 57、等待流程实例状态变更为'成功交付'
+  - step_name: 58、等待流程实例状态变更为'成功交付'
     element: instance_status
     action: wait_text
     data: 成功交付
-  - step_name: 58、点击查看按钮
+  - step_name: 59、点击查看按钮
     element: preparation_view_1
     action: click
     data: null
@@ -266,7 +270,7 @@ test_cases:
     element: null
     action: wait
     data: "1"
-  - step_name: 59、成功交付页点击提交
+  - step_name: 60、成功交付页点击提交
     element: after_onboarding
     action: click
     data: null
@@ -274,11 +278,11 @@ test_cases:
     element: null
     action: wait
     data: "1"
-  - step_name: 60、过保回访页点击提交
+  - step_name: 61、过保回访页点击提交
     element: end_invoice_submit
     action: click
     data: null
-  - step_name: 61、验证流程实例状态为'结束'
+  - step_name: 62、验证流程实例状态为'结束'
     element: instance_status
     action: check_text
     data: 结束
