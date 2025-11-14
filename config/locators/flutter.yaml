@@ -1,0 +1,24 @@
+gsr_admin_page:
+  username_input:   # 姓名输入框
+    by: "id"
+    value: "username"
+  password_input:   # 密码输入框
+    by: "id"
+    value: "password"
+  code_input:   # 验证码输入框
+    by: "id"
+    value: "code"
+  login_button:   # 登录按钮
+    by: "xpath"
+    value: "//*[@id='root-master']/div/div/div/div[2]/form/button"
+  talent_button:    # 招聘平台按钮
+    by: "xpath"
+    value: "//*[@id='root-master']/div/div/div/div/ul/li[2]"
+flutter_page:
+  user_input:
+    x: 0.3
+    y: 0.3
+  pswd_input:
+    x: 45
+    y: 50
+

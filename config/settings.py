@@ -1,7 +1,6 @@
 import os
 import time
 
-
 class Settings:
     """支持环境变量覆盖的配置类"""
 
@@ -9,20 +8,26 @@ class Settings:
         # 环境配置
         self.ENV = self._get_env_var("ENV", "测试环境")
         # 不同环境的基础URL配置
-        self.BASE_URL = {
+        self.BASE_URLS = {
             "生产环境": "https://admin.gsrtech.com",
             "预生产环境": "https://stage-admin.gsrtech.com/",
             "测试环境": "https://test-admin.gsrtech.com/"
         }
-        self.URL = self._get_env_var("URL", self.BASE_URL[self.ENV])
+        self.OMIN_URLS = {
+            "生产环境": "",
+            "预生产环境": "",
+            "测试环境": "https://test-omni.gsrtech.com/"
+        }
+        self.URL = self.BASE_URLS[self.ENV]
+        self.OMIN_URL = self.OMIN_URLS[self.ENV]
 
         # 项目配置
         self.PROJECT_CONFIGS = {
             "招聘平台新建岗位": {
-                "PAGE_NAME": ["gsr_admin_page"],
-                "TESTCASES_PATH": "./testcases/pt_new_position/pt_testcases.yaml",
-                "ELEMENT_LOCATORS": "./config/locators/new_position_element_locators.yaml",
-                "description": "招聘平台非eor岗位全流程",
+                "PAGE_NAME": ["gsr_admin_page"],  # 页面对象
+                "TESTCASES_PATH": "./testcases/pt_new_position/pt_testcases.yaml",  # 测试用例路径
+                "ELEMENT_LOCATORS": "./config/locators/new_position_element_locators.yaml",  # 元素定位器路径
+                "description": "招聘平台非eor岗位全流程",  # 项目描述
             },
             "招聘平台新建编制": {
                 "PAGE_NAME": ["gsr_admin_page"],
@@ -30,25 +35,27 @@ class Settings:
                 "ELEMENT_LOCATORS": "./config/locators/gsr_admin_page.yaml",
                 "description": "招聘平台新发起编制流程"
             },
-            "数据库测试": {
-                "PAGE_NAME": ["gsr_admin_page"],
+            "flutter页面测试": {
+                "PAGE_NAME": ["gsr_admin_page", "flutter_page"],
                 "TESTCASES_PATH": "testcases/test_database/test_database.yaml",
-                "ELEMENT_LOCATORS": "./config/locators/gsr_admin_page.yaml",
+                "ELEMENT_LOCATORS": "./config/locators/flutter.yaml",
                 "description": "测试下数据库链接"
             }
         }
         # 页面url映射
         self.PAGE_URLS = {
-            "gsr_admin_page": self.URL  # 登录页面URL
+            "gsr_admin_page": self.URL,  # 登录页面URL
+            "flutter_page": self.OMIN_URL
             # 可以继续添加其他页面的URL配置...
         }
         # 页面类映射
         self.PAGE_CLASSES = {
-            "gsr_admin_page": "GsrAdminPage"
+            "gsr_admin_page": "GsrAdminPage",
+            "flutter_page": "FlutterPage"
             # 可以继续添加其他页面映射...
         }
         # 获取当前项目
-        self.CURRENT_PROJECT = self._get_env_var("CURRENT_PROJECT", '数据库测试')
+        self.CURRENT_PROJECT = self._get_env_var("CURRENT_PROJECT", 'flutter页面测试')
         # 获取当前项目配置
         self.PROJECT_CONFIG = self.get_current_project_config(self.CURRENT_PROJECT)
         # 测试用例文件位置(根据项目获取)

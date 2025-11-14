@@ -14,9 +14,9 @@ class GsrAdminPage(BasePage):
     继承自BasePage
     """
 
-    def __init__(self, driver):
+    def __init__(self, page_name, driver):
         """初始化登录页面"""
-        super().__init__(self, driver)
+        super().__init__(page_name, driver)
         # 获取配置
         self.logger = logger
         self.settings = Settings()

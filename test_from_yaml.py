@@ -24,7 +24,7 @@ class TestLoginFromYAML:
         project_pages = self.page_manager.initialize_project_pages()
         logger.info(f"初始化完成，已注册页面: {list(project_pages.keys())}")
 
-        self.try_login()
+        # self.try_login()
 
         yield
 
@@ -43,21 +43,21 @@ class TestLoginFromYAML:
         # 断言测试结果
         assert result, f"测试用例 {test_case['id']} 执行失败: {result}"
 
-    def try_login(self):
-        """尝试登陆"""
-        try:
-            login_page = self.page_manager.get_page("gsr_admin_page")
-            if hasattr(login_page, 'perform_login'):
-                # 导航到登录页面
-                self.page_manager.navigate_to_page("gsr_admin_page")
-                # 执行登录
-                login_page.perform_login()
-        except Exception as e:
-            # 如果是其他页面，跳过登录
-            if "gsr_admin_page" not in self.page_manager.pages:
-                logger.info("当前项目不需要登录，跳过登录步骤")
-                return
-            if hasattr(self, 'driver'):
-                from pages.base_page import BasePage
-                BasePage("error", self.driver).take_screenshot("登录失败")
-            pytest.fail(f"登录失败: 测试中止{str(e)}")
+    # def try_login(self):
+    #     """尝试登陆"""
+    #     try:
+    #         login_page = self.page_manager.get_page("gsr_admin_page")
+    #         if hasattr(login_page, 'perform_login'):
+    #             # 导航到登录页面
+    #             self.page_manager.navigate_to_page("gsr_admin_page")
+    #             # 执行登录
+    #             login_page.perform_login()
+    #     except Exception as e:
+    #         # 如果是其他页面，跳过登录
+    #         if "gsr_admin_page" not in self.page_manager.pages:
+    #             logger.info("当前项目不需要登录，跳过登录步骤")
+    #             return
+    #         if hasattr(self, 'driver'):
+    #             from pages.base_page import BasePage
+    #             BasePage("error", self.driver).take_screenshot("登录失败")
+    #         pytest.fail(f"登录失败: 测试中止{str(e)}")

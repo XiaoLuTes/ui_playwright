@@ -24,7 +24,10 @@ class ElementLocator:
         """获取元素定位器"""
         try:
             locator_info = self.locators[page_name_str][element_name]
-            return [locator_info['by'], locator_info['value']]
+            if page_name_str == "flutter_page":
+                return [locator_info['x'], locator_info['y']]
+            else:
+                return [locator_info['by'], locator_info['value']]
         except KeyError:
             logger.error(f"未找到元素定位器: {page_name_str}.{element_name}")
             raise

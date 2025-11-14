@@ -1,19 +1,22 @@
 test_cases:
 - id: 测试数据库
   name: 数据库
+  page: flutter_page
   steps:
-  - step_name: 5、点击招聘平台
-    element: talent_button
-    action: click
+  - step_name: 1、尝试flutter点击
+    element: user_input
+    action: flutter_click
     data: null
-  - step_name: 2、数据库验证
-    element: null
-    action: sql
-    data: SELECT * FROM atc_re_template WHERE template_code='ATC0000000000001';
-    expected: template_name=全局模板,template_id=1
-  - step_name: 3、再次校验数据库
-    element: null
-    action: sql
-    data: SELECT * FROM gsr_approval_users WHERE approval_name='louie1';
-    expected: 'contains: 卢毅'
-  result: 通过
+  - step_name: 2、尝试flutter输入
+    element: pswd_input
+    action: flutter_input
+    data:
+      start: element_start
+      end: element_end
+    expected: null
+  - step_name: 3、尝试click方法
+    element: code_input
+    action: click
+  result: '失败: Message: 尝试查找隐藏元素失败: code_input
+
+    '

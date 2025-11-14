@@ -16,9 +16,8 @@ class PageManager:
         if page_class is None:
             # 动态导入页面类
             page_class = self.import_page_class(page_name)
-
         if page_class:
-            page_instance = page_class(self.driver)
+            page_instance = page_class(page_name, self.driver)
             if hasattr(page_instance, 'set_page_manager'):
                 page_instance.set_page_manager(self)
             self.pages[page_name] = page_instance
@@ -35,7 +34,7 @@ class PageManager:
         """动态导入页面类"""
         try:
             class_mapping = settings.PAGE_CLASSES
-            class_name = class_mapping.get(page_name, f"{page_name.replace('_page', '').title().replace('_', '')}Page")
+            class_name = class_mapping.get(page_name)
             if not class_name:
                 return None
             module_path = f"pages.{page_name}"
@@ -76,7 +75,6 @@ class PageManager:
             if hasattr(page_obj, 'open'):
                 page_obj.open(page_url)
             else:
-                # 使用基类的open方法
                 from pages.base_page import BasePage
                 base_page = BasePage(page_name, self.driver)
                 base_page.open(page_url)

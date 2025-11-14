@@ -184,7 +184,7 @@ class BasePage:
         """模拟键盘输入向下，用于选择框滑动，使元素可见"""
         actions = ActionChains(self.driver)
         times = int(data)
-        for _ in range(times):  # 按下多少次什么箭头
+        for _ in range(times):
             actions.send_keys(Keys.ARROW_DOWN)
         actions.perform()
         logger.info(f"输入向下指令: {times}次")
@@ -194,7 +194,7 @@ class BasePage:
         """模拟键盘输入向下，用于选择框滑动，使元素可见"""
         actions = ActionChains(self.driver)
         times = int(data)
-        for _ in range(times):  # 按下多少次什么箭头
+        for _ in range(times):
             actions.send_keys(Keys.ARROW_UP)
         actions.perform()
         logger.info(f"输入向下指令: {times}次")

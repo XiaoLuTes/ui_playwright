@@ -68,13 +68,23 @@ class Executor:
         :param test_case: 测试用例字典
         :return: 执行结果 (True/False)
         """
-        page_object = None
+        test_case_page = test_case['page']
+        page_object = self.page_manager.get_page(test_case_page)
+        if not page_object:
+            raise Exception(f"未注册页面对象: {test_case_page}")
         test_case_id = test_case['id']
         test_case_name = test_case['name']
 
         logger.info(f"开始执行测试用例: {test_case_id} - {test_case_name}")
 
         try:
+            if test_case_page:
+                logger.info(f"导航到指定测试页面: {test_case_page}")
+                if not self.page_manager.navigate_to_page(test_case_page):
+                    raise Exception(f"无法导航到指定页面: {test_case_page}")
+            else:
+                logger.info(f"未指定测试页面，使用默认页面：gsr_admin_page")
+                self.page_manager.navigate_to_page("gsr_admin_page")
             # 执行测试步骤
             for step in test_case['steps']:
                 step_name = step['step_name']
@@ -83,16 +93,15 @@ class Executor:
                 data = step.get('data', '')
                 expected = step.get('expected', '')
 
-                # 查找元素所在的页面
-                if element_name is not None:
-                    page_name = self.find_element_page(element_name)
-                    if not page_name:
-                        raise Exception(f"找不到元素 {element_name} 对应的页面")
-
-                # 获取页面对象
-                    page_object = self.page_manager.get_page(page_name)
-                    if not page_object:
-                        raise Exception(f"未注册页面对象: {page_name}")
+                # # 查找元素所在的页面（实现同一用例在不同页面操作可能要用）
+                # if element_name is not None:
+                #     page_name = self.find_element_page(element_name)
+                #     if not page_name:
+                #         raise Exception(f"找不到元素 {element_name} 对应的页面")
+                # # 获取页面对象
+                # page_object = self.page_manager.get_page(test_case_page)
+                # if not page_object:
+                #     raise Exception(f"未注册页面对象: {test_case_page}")
 
                 # 执行步骤
                 with allure.step(f"步骤{step_name}"):
@@ -196,12 +205,24 @@ class Executor:
             if expected and str(result) != expected:
                 raise AssertionError(f"数据库更新影响行数不匹配，期望: {expected}, 实际: {result}")
 
+        elif action == "flutter_click":
+            page_object.click_by_relative_coordinates(element_name)
+
+        elif action == "flutter_input":
+            page_object.input_text_by_coordinates(element_name, data)
+
+        elif action == "flutter_upload":
+            page_object.upload_file_by_coordinates(element_name, data)
+
+        elif action == "flutter_drag":
+            page_object.drag_and_drop(element_name, data)
+
         else:
             raise Exception(f"步骤'{step_name}'不支持的操作类型: {action}")
 
-    def find_element_page(self, element_name):
-        """查找元素所在的页面"""
-        for page_name, elements in self.locators.items():
-            if element_name in elements:
-                return page_name
-        return None
+    # def find_element_page(self, element_name):
+    #     """查找元素所在的页面"""
+    #     for page_name, elements in self.locators.items():
+    #         if element_name in elements:
+    #             return page_name
+    #     return None

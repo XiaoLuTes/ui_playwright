@@ -9,3 +9,5 @@ allure-python-commons~=2.13.5
 utils~=1.0.2
 PyMySQL~=1.1.0
 mysql-connector-python~=9.5.0
+PyAutoGUI~=0.9.54
+requests~=2.32.4

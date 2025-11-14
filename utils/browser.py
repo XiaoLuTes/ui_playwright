@@ -1,8 +1,9 @@
+import os
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
-from selenium.webdriver.firefox.service import Service as FirefoxService
-from webdriver_manager.chrome import ChromeDriverManager
-from webdriver_manager.firefox import GeckoDriverManager
+# from selenium.webdriver.firefox.service import Service as FirefoxService
+# from webdriver_manager.chrome import ChromeDriverManager
+# from webdriver_manager.firefox import GeckoDriverManager
 from config.settings import Settings
 from utils.logger import logger
 
@@ -37,39 +38,41 @@ class Browser:
                 chrome_options.add_argument("--headless=new")  # 新版无头模式
             chrome_options.add_argument("--no-sandbox")  # 禁用沙箱
             chrome_options.add_argument("--disable-dev-shm-usage")  # 禁用/dev/shm使用
-            chrome_options.add_argument('--memory-model=low-memory')    # 低内存模式
-            chrome_options.add_argument('--disable-features=VizDisplayCompositor')
-            # chrome_options.add_argument(f'--force-device-scale-factor={settings.ZOOM}')  # 设置缩放
 
-            # 使用WebDriver Manager自动管理驱动程序
-            logger.info(f"正在配置webdriver-chrome")
+            driver_path = self._get_chrome_driver_path()
+            logger.info(f"使用本地ChromeDriver: {driver_path}")
+
             self.driver = webdriver.Chrome(
-                service=ChromeService(ChromeDriverManager().install()),
+                service=ChromeService(driver_path),
                 options=chrome_options
             )
-        elif browser_name == "firefox":
-            # 配置Firefox选项
-            firefox_options = webdriver.FirefoxOptions()
-            if headless:
-                firefox_options.add_argument("--headless")
 
             # 使用WebDriver Manager自动管理驱动程序
-            logger.info(f"正在配置webdriver-firefox")
-            self.driver = webdriver.Firefox(
-                service=FirefoxService(GeckoDriverManager().install()),
-                options=firefox_options
-            )
+            # logger.info(f"正在配置webdriver-chrome")
+            # self.driver = webdriver.Chrome(
+            #     service=ChromeService(ChromeDriverManager().install()),
+            #     options=chrome_options
+            # )
+        # elif browser_name == "firefox":
+        #     # 配置Firefox选项
+        #     firefox_options = webdriver.FirefoxOptions()
+        #     if headless:
+        #         firefox_options.add_argument("--headless")
+
+            # 使用WebDriver Manager自动管理驱动程序
+            # logger.info(f"正在配置webdriver-firefox")
+            # self.driver = webdriver.Firefox(
+            #     service=FirefoxService(GeckoDriverManager().install()),
+            #     options=firefox_options
+            # )
         else:
             # 不支持的浏览器类型抛出异常
             raise ValueError(f"不支持的浏览器类型: {browser_name}")
 
         # 配置浏览器超时设置
-        # self.driver.implicitly_wait(self.config.get_implicit_wait()) # 隐式超时
-        # self.driver.set_page_load_timeout(self.config.get_page_load_timeout()) # 显式超时
         self.driver.implicitly_wait(self.settings.IMPLICIT_WAIT)  # 隐式超时
         self.driver.set_page_load_timeout(self.settings.EXPLICIT_WAIT)  # 显式超时
         # 设置浏览器窗口大小
-        # width, height = self.config.get_window_size()
         (width, height) = self.settings.WINDOW_SIZE
         logger.info(f"设置浏览器窗口大小为{width}x{height}")
         self.driver.set_window_size(width, height)
@@ -87,5 +90,25 @@ class Browser:
                 logger.error(f"关闭浏览器时出错: {str(e)}")
             finally:
                 self.driver = None
+
+    def _get_chrome_driver_path(self):
+        """获取ChromeDriver路径"""
+        # 检查项目内的drivers目录
+        project_driver_path = "./drivers/chromedriver-win64//chromedriver.exe"  # Windows
+        if os.path.exists(project_driver_path):
+            return project_driver_path
+
+        project_driver_path = "./drivers/chromedriver/chromedriver"  # Linux/Mac
+        if os.path.exists(project_driver_path):
+            return project_driver_path
+
+        # 检查系统PATH
+        import shutil
+        if shutil.which("chromedriver"):
+            return "chromedriver"
+
+        raise FileNotFoundError(
+            "未找到ChromeDriver。请运行 get_drivers.py 或手动下载驱动。"
+        )
 
 # Browser().get_driver()
