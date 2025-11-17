@@ -1,6 +1,6 @@
 test_cases:
-- id: 测试数据库
-  name: 数据库
+- id: 测试用例1-打开flutter_page
+  name: flutter页面
   page: flutter_page
   steps:
   - step_name: 1、尝试flutter点击
@@ -14,9 +14,12 @@ test_cases:
       start: element_start
       end: element_end
     expected: null
-  - step_name: 3、尝试click方法
+  result: 通过
+- id: 测试用例2-打开gsr_admin_page
+  name: admin页面
+  page: gsr_admin_page
+  steps:
+  - step_name: 1、尝试click方法
     element: code_input
     action: click
-  result: '失败: Message: 尝试查找隐藏元素失败: code_input
-
-    '
+  result: 通过

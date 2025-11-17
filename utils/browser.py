@@ -91,7 +91,8 @@ class Browser:
             finally:
                 self.driver = None
 
-    def _get_chrome_driver_path(self):
+    @staticmethod
+    def _get_chrome_driver_path():
         """获取ChromeDriver路径"""
         # 检查项目内的drivers目录
         project_driver_path = "./drivers/chromedriver-win64/chromedriver.exe"  # Windows

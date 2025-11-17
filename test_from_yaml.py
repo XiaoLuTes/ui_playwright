@@ -19,8 +19,6 @@ class TestLoginFromYAML:
         self.driver = driver
         self.page_manager = PageManager(driver)
         self.executor = Executor(driver, self.page_manager)
-
-        # 初始化所有页面
         project_pages = self.page_manager.initialize_project_pages()
         logger.info(f"初始化完成，已注册页面: {list(project_pages.keys())}")
 
@@ -36,11 +34,7 @@ class TestLoginFromYAML:
         """
         # 设置Allure报告中的测试用例名称
         allure.dynamic.title(f"{test_case['id']} - {test_case['name']}")
-
-        # 执行测试用例
         result = self.executor.execute_test_case(test_case)
-
-        # 断言测试结果
         assert result, f"测试用例 {test_case['id']} 执行失败: {result}"
 
     # def try_login(self):

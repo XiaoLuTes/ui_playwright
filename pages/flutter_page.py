@@ -57,7 +57,7 @@ class FlutterPage(BasePage):
         abs_x, abs_y = self.get_element_xy(element_name)  # 获取相对百分比
         return self.click_by_coordinates(abs_x, abs_y)
 
-    @allure.step("基于相对坐标输入文本: (element_name) -> {text}")
+    @allure.step("基于相对坐标输入文本: {element_name} -> {text}")
     def input_text_by_coordinates(self, element_name, text, clear_first=True):
         """
         基于相对坐标进行文本输入
@@ -203,9 +203,9 @@ class FlutterPage(BasePage):
             logger.error(error_msg)
             raise
 
-    @allure.step("获取绝对坐标")
     def get_element_xy(self, element_name):
-        x, y = self.get_element_locator(element_name)  # 获取相对百分比
+        """获取绝对坐标"""
+        x, y = self.get_element_locator(element_name)
         x = float(x)
         y = float(y)
         try:

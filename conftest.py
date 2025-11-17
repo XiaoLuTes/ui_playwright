@@ -16,7 +16,7 @@ def browser():
     browser_manager.quit_driver()
     logger.info("测试会话结束，浏览器已关闭")
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="session")
 def driver(browser):
     """
     pytest 函数级fixture - 每个测试函数执行前获取driver

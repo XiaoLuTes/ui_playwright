@@ -1,11 +1,9 @@
 import time
-# from conftest import driver
 from utils.logger import logger
 import allure
 from utils.element_locator import ElementLocator
 from utils.page_manager import PageManager
 from utils.yaml_load import YamlLoad
-# from pages.base_page import BasePage
 
 
 class Executor:
@@ -107,13 +105,11 @@ class Executor:
                 with allure.step(f"步骤{step_name}"):
                     self.execute_step(page_object, step_name, element_name, action, data, expected)
 
-            # 测试结果为通过
             self.yaml_load.update_test_result(test_case_id, "通过")
             logger.info(f"测试用例执行通过: {test_case_id}")
             return True
 
         except Exception as e:
-            # 测试结果为失败
             error_msg = str(e)
             self.yaml_load.update_test_result(test_case_id, f"失败: {error_msg}")
             logger.error(f"测试用例执行失败: {test_case_id} - {error_msg}")
