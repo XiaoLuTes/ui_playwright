@@ -147,7 +147,7 @@ class BasePage:
         """检查元素是否存在"""
         locator = self.get_element_locator(element_name)
         if timeout is None:
-            timeout = 3
+            timeout = self.wait_timeout
         try:
             WebDriverWait(self.driver, timeout).until(
                 ec.visibility_of_element_located(locator))
