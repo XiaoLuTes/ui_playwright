@@ -14,6 +14,9 @@ pt_new_position:
   talent_button:    # 招聘平台按钮
     by: "xpath"
     value: "//*[@id='root-master']/div/div/div/div/ul/li[2]"
+  user_part: # 用户中心（右上角）
+    by: "xpath"
+    value: "//div[@id='root']/div/div/div[2]/header[2]/div/div[3]/div/div/div/div[@class='ant-space-item'][2]"
   admin_button:   # 管理端按钮
     by: "xpath"
     value: "//*[@id='root-master']/div/div/div/div/ul/li[1]/div[1]"
@@ -164,6 +167,45 @@ pt_new_position:
   local_library:  # 本地库
     by: "xpath"
     value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[1]/div[1]/div/div[2]"
-  position_new:   # 创建的新岗位
+  email_subject: # 岗位确认节点-邮箱标题
     by: "xpath"
-    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div/div[2]/div/div[2]/div/div/div/div/div/table/tbody/tr[2]/td[2]"
+    value: "//*[@id='fr-ees_emailSubject']"
+  email_template:
+    by: "xpath" # 岗位确认节点-邮件模板
+    value: "//*[@id='fr-ees_emailTemplate']"
+  position_new: # 创建的新岗位
+    by: "xpath"
+    value: "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div/div[2]/div/div[2]/div/div/div/div/div/table/tbody/tr[2]/td[2]/div"
+  candidate_list: # 候选人列表
+    by: "xpath"
+    value:  "//tbody[@class='ant-table-tbody']/tr[2]"
+  choose_all: # 全选列表
+    by: "xpath"
+    value: "//*[@class='ant-table-selection']/label/span"
+  candidate_1: # 第一位候选人
+    by: "xpath"
+    value:  "//tbody[@class= 'ant-table-tbody']/tr[2]"
+  choose_1: # 勾选第一位候选人
+    by: "xpath"
+    value:  "//tbody[@class='ant-table-tbody']/tr[2]/td[1]/label/span"
+  next_round_first: # 初筛页-下一环节按钮
+    by: "xpath"
+    value: "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div[2]/div/div/div/div/div[1]/button"
+  match: # 匹配页
+    by: "xpath"
+    value: "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div/div/div/div[2]/div"
+  change_email: # 更改邮箱按钮
+    by: "xpath"
+    value:  "//tbody[@class='ant-table-tbody']/tr[2]/td[5]/div/button"
+  email_input:  # 输入邮箱栏
+    by: "xpath"
+    value:  "//input[@placeholder='请输入邮箱地址']"
+  email_save: # 保存邮箱
+    by: "xpath"
+    value: "//div[@class='ant-modal-footer']/button[2]"
+  send_email: # 发送邮件
+    by: "xpath"
+    value: "//div[@class='ant-tabs-content-holder']/div/div[2]/div[1]/div/div[4]/button"
+  sure_send:  # 确认发送邮件
+    by: "xpath"
+    value:  "//div[@class='ant-modal-confirm-btns']/button[2]"

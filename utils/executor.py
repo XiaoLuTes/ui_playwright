@@ -173,6 +173,9 @@ class Executor:
             else:
                 raise Exception(f"无法识别, 步骤：{step_name}, 判断：{data}, 应为'存在'or'不存在'")
 
+        elif action == "wait_exists":
+            page_object.wait_for_element_appear(element_name)
+
         elif action == "upload":
             page_object.upload_file(element_name, data)
 
@@ -190,12 +193,10 @@ class Executor:
             page_object.wait_for_element_value(element_name, "value", data)
 
         elif action == "sql":
-            # 遇到mysql步骤时，确保数据库连接已建立
             self._ensure_database_connection()
             page_object.verify_mysql_data(data, expected)
 
         elif action == "sql_update":
-            # 遇到mysql_update步骤时，确保数据库连接已建立
             self._ensure_database_connection()
             result = page_object.execute_mysql_update(data)
             if expected and str(result) != expected:

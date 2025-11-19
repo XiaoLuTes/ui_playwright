@@ -1,6 +1,7 @@
 from utils.logger import logger
 from config.settings import settings
 import importlib
+from utils.windows_Switch_Helper import WindowSwitchHelper
 
 
 class PageManager:
@@ -72,12 +73,14 @@ class PageManager:
         page_url = self.settings.PAGE_URLS.get(page_name)
         if page_url:
             page_obj = self.get_page(page_name)
-            if hasattr(page_obj, 'open'):
-                page_obj.open(page_url)
+            if page_name == "gsr_admin_page":
+                page_obj.ensure_logged_in()
+                WindowSwitchHelper.switch_to_window_by_url(page_obj, page_url)
             else:
                 from pages.base_page import BasePage
                 base_page = BasePage(page_name, self.driver)
                 base_page.open(page_url)
+                WindowSwitchHelper.switch_to_window_by_url(page_obj, page_url)
             return True
         else:
             logger.error(f"未找到页面 {page_name} 的URL配置")

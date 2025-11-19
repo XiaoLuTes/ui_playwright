@@ -24,9 +24,6 @@ class Browser:
     def get_driver(self):
         if self.driver is not None:
             return self.driver
-        # 获取浏览器配置
-        # browser_name = self.config.get_browser_name()
-        # headless = self.config.get_headless_mode()
         browser_name = self.settings.BROWSER
         headless = self.settings.HEADLESS
         logger.info(f"正在初始化浏览器: {browser_name}, 无头模式: {headless}")

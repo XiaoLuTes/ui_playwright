@@ -55,7 +55,7 @@ class Settings:
             # 可以继续添加其他页面映射...
         }
         # 获取当前项目
-        self.CURRENT_PROJECT = self._get_env_var("CURRENT_PROJECT", 'flutter页面测试')
+        self.CURRENT_PROJECT = self._get_env_var("CURRENT_PROJECT", '招聘平台新建岗位')
         # 获取当前项目配置
         self.PROJECT_CONFIG = self.get_current_project_config(self.CURRENT_PROJECT)
         # 测试用例文件位置(根据项目获取)
@@ -115,6 +115,7 @@ class Settings:
         self.EXPLICIT_WAIT = int(self._get_env_var("EXPLICIT_WAIT", "120"))
         self.REFRESH_TIME = int(self._get_env_var("REFRESH_TIME", "15"))
         self.DB_TIMEOUT = int(self._get_env_var("DB_TIMEOUT", "20"))
+        self.WAIT_ELEMENT_APPEAR = int(self._get_env_var("WAIT_ELEMENT_APPEAR", "120"))
 
         # 报告和截图配置
         self.REPORT_PATH = self._get_env_var("REPORT_PATH", "reports/")

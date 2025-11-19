@@ -26,12 +26,14 @@ testcase.yaml文件格式：(测试用例)
                                wait_text    等待元素text变更
                                wait_value   等待元素value变更
                                             (调用的同一个方法)
-                               sql        执行sql语句(查询)
+                               sql          执行sql语句(查询)
                                             必填项：action\data(具体的sql)
                                                     expected(预期结果)可为空,代表查询数据为空
-                               sql_update 执行sql语句(更新)
+                               sql_update   执行sql语句(更新)
                                             必填项：action\data(具体的sql)\expected(预期结果)
                                                     expected(预期结果)可为空,代表查询数据为空
+                               wait_exists  等待元素出现
+                                            必填项：action\element
     data        输入文本
                 可用变量：
                         {replace_num}       提取时间戳作为随机数(每次测试仅生成一次)

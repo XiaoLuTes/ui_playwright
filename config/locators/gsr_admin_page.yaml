@@ -11,6 +11,9 @@ gsr_admin_page:
   login_button:   # 登录按钮
     by: "xpath"
     value: "//*[@id='root-master']/div/div/div/div[2]/form/button"
+  user_part: # 用户中心（右上角）
+    by: "xpath"
+    value:  "//div[@id='root']/div/div/div[2]/header[2]/div/div[3]/div/div/div/div[@class='ant-space-item'][2]"
   talent_button:    # 招聘平台按钮
     by: "xpath"
     value: "//*[@id='root-master']/div/div/div/div/ul/li[2]"
@@ -149,6 +152,4 @@ gsr_admin_page:
   after_onboarding: # 入职回访页、保证期-提交
     by: "xpath"
     value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[3]/div[2]/div/div/button[./span='提 交']"
-
-
 

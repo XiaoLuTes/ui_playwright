@@ -143,14 +143,18 @@ class BasePage:
         element = self.find_element(element_name)
         return element.get_attribute('value')
 
-    @allure.step("检查元素是否存在: {element_name}")
-    def is_element_present(self, element_name):
+    def is_element_present(self, element_name, timeout=None):
         """检查元素是否存在"""
+        locator = self.get_element_locator(element_name)
+        if timeout is None:
+            timeout = 3
         try:
-            self.find_element(element_name)
+            WebDriverWait(self.driver, timeout).until(
+                ec.visibility_of_element_located(locator))
+            logger.info(f"查找到元素：{element_name}")
             return True
         except TimeoutException:
-            logger.error(f"未找到指定元素: {element_name}")
+            logger.info(f"未找到指定元素: {element_name}")
             return False
 
     @allure.step("截图")
@@ -337,27 +341,26 @@ class BasePage:
             logger.info(f"期望结果: {expected}")
             result = self._db_utils.execute_query(sql)
             allure.attach(str(result), "SQL执行结果", allure.attachment_type.TEXT)
-            # 获取数据库sql执行结果后,执行验证
             verification_passed = self.parse_and_verify_expected(result, expected)
             if verification_passed:
-                logger.info("数据库验证成功")  # 验证通过日志
+                logger.info("数据库验证成功")
             else:
                 # 验证失败，准备错误信息
-                error_msg = f"数据库验证失败: SQL={sql}, 期望={expected}, 实际结果={result}"   # 截图记录失败状态
-                raise AssertionError(error_msg)  # 抛出断言错误
+                error_msg = f"数据库验证失败: SQL={sql}, 期望={expected}, 实际结果={result}"
+                raise AssertionError(error_msg)
 
         except TimeoutError as e:
             # 处理超时错误
             error_msg = f"数据库验证超时: {str(e)}"
             logger.error(error_msg)
             self.take_screenshot("数据库验证超时")
-            raise  # 重新抛出超时错误
+            raise
         except Exception as e:
             # 处理其他所有异常
             error_msg = f"数据库验证执行失败: {str(e)}"
             logger.error(error_msg)
             self.take_screenshot("数据库验证异常")
-            raise  # 重新抛出异常
+            raise
 
     def parse_and_verify_expected(self, result, expected: str) -> bool:
         """
@@ -399,7 +402,8 @@ class BasePage:
         # 都不包含情况下，检查结果是否非空
         return len(result) > 0
 
-    def verify_contains(self, result, expected_value: str) -> bool:
+    @staticmethod
+    def verify_contains(result, expected_value: str) -> bool:
         """
         验证结果中包含特定值
         Args:
@@ -416,7 +420,8 @@ class BasePage:
                     return True
         return False
 
-    def verify_field_values(self, result, expected: str) -> bool:
+    @staticmethod
+    def verify_field_values(result, expected: str) -> bool:
         """
         验证字段值
         Args:
@@ -469,3 +474,35 @@ class BasePage:
             logger.error(error_msg)
             self.take_screenshot("数据库更新失败")
             raise  # 重新抛出异常
+
+    def wait_for_element_appear(self, element_name):
+        start_time = time.time()
+        last_refresh_time = start_time
+        total_timeout = self.settings.WAIT_ELEMENT_APPEAR
+        refresh_interval = self.settings.REFRESH_TIME
+        attempt_count = 0
+        logger.info(f"开始等待元素出现: {element_name}, 总超时时间: {total_timeout}秒")
+
+        while (time.time() - start_time) < total_timeout:
+            attempt_count += 1
+            current_time = time.time()
+            elapsed_time = current_time - start_time
+            logger.debug(f"第{attempt_count}次尝试查找元素: {element_name}, 已等待{elapsed_time:.1f}秒")
+            # 使用原有的方法检查元素是否存在
+            if self.is_element_present(element_name, timeout=3):
+                total_elapsed = time.time() - start_time
+                logger.info(f"成功找到元素: {element_name}, 总耗时{total_elapsed:.1f}秒, 共尝试{attempt_count}次")
+                return True
+            if current_time - last_refresh_time >= refresh_interval:
+                logger.info(f"刷新页面，已等待{elapsed_time:.1f}秒")
+                try:
+                    self.driver.refresh()
+                    last_refresh_time = time.time()
+                except Exception as e:
+                    logger.warning(f"刷新页面时出现异常: {e}")
+            time.sleep(2)
+
+        error_msg = f"在{total_timeout}秒总超时时间内未找到元素: {element_name}, 共尝试{attempt_count}次"
+        self.take_screenshot(f"等待元素{element_name}出现超时")
+        logger.error(error_msg)
+        raise TimeoutException(error_msg)

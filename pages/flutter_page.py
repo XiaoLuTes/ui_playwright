@@ -49,23 +49,11 @@ class FlutterPage(BasePage):
 
     @allure.step("基于相对坐标点击: (element_name)")
     def click_by_relative_coordinates(self, element_name):
-        """
-        基于相对坐标进行点击（百分比）
-        Args:
-            element_name: 元素名称（获取x，y轴）
-        """
         abs_x, abs_y = self.get_element_xy(element_name)  # 获取相对百分比
         return self.click_by_coordinates(abs_x, abs_y)
 
     @allure.step("基于相对坐标输入文本: {element_name} -> {text}")
     def input_text_by_coordinates(self, element_name, text, clear_first=True):
-        """
-        基于相对坐标进行文本输入
-        Args:
-            element_name:
-            text: 要输入的文本
-            clear_first: 是否先清空输入框，默认True
-        """
         abs_x, abs_y = self.get_element_xy(element_name)
         try:
 
@@ -95,13 +83,6 @@ class FlutterPage(BasePage):
 
     @allure.step("点击坐标后选择文件上传: ({x}, {y}) -> {file_path}")
     def upload_file_by_coordinates(self, element_name, file_path, wait_after_click=2):
-        """
-        基于相对坐标点击后选择文件上传
-        Args:
-            element_name: 元素（获取坐标）
-            file_path: 要上传的文件路径
-            wait_after_click: 点击后等待时间，默认2秒
-        """
         abs_x, abs_y = self.get_element_xy(element_name)
         try:
             # 确保文件存在
@@ -114,13 +95,10 @@ class FlutterPage(BasePage):
             logger.info(f"准备上传文件: {absolute_path}")
             self.click_by_coordinates(abs_x, abs_y)
             logger.info(f"已点击坐标 ({abs_x}, {abs_y}) 触发文件选择对话框")
-            # 等待文件选择对话框打开
             time.sleep(wait_after_click)
-            # 输入文件路径
             logger.info("在文件选择对话框中输入文件路径")
             pyautogui.write(absolute_path, interval=0.05)
             time.sleep(0.5)
-            # 按回车确认选择
             pyautogui.press('enter')
             logger.info("按Enter键确认文件选择")
             time.sleep(3)
@@ -140,13 +118,6 @@ class FlutterPage(BasePage):
 
     @allure.step("拖拽操作: 从({start_element})到({end_element})")
     def drag_and_drop(self, start_element, end_element, duration=1.0):
-        """
-        基于坐标进行拖拽操作
-        Args:
-            start_element: 起始点坐标
-            end_element: 结束点坐标
-            duration: 拖拽持续时间（秒），默认1秒
-        """
         start_x, start_y = self.get_element_xy(start_element)
         end_x, end_y = self.get_element_xy(end_element)
         try:
@@ -165,18 +136,9 @@ class FlutterPage(BasePage):
 
     @allure.step("滚动操作: 在({element_name})位置滚动{clicks}次")
     def scroll_at_coordinates(self, element_name, clicks, direction='down'):
-        """
-        在指定坐标位置进行滚动操作
-        Args:
-            element_name: 元素（获取绝对位置）
-            clicks: 滚动次数（正数向下，负数向上）
-            direction: 滚动方向 ('down' 或 'up')
-        """
         abs_x, abs_y = self.get_element_xy(element_name)
         try:
-            # 移动到指定位置
             pyautogui.moveTo(abs_x, abs_y)
-            # 根据方向和次数进行滚动
             if direction == 'down':
                 scroll_amount = abs(clicks)
             else:
@@ -191,8 +153,8 @@ class FlutterPage(BasePage):
             self.take_screenshot(f"滚动操作失败")
             raise
 
-    @allure.step("获取当前鼠标位置")
-    def get_current_mouse_position(self):
+    @staticmethod
+    def get_current_mouse_position():
         """获取当前鼠标位置坐标"""
         try:
             x, y = pyautogui.position()
@@ -213,7 +175,6 @@ class FlutterPage(BasePage):
                 error_msg = f"相对坐标百分比超出范围: ({x}, {y})"
                 logger.error(error_msg)
                 raise ValueError(error_msg)
-            # 计算绝对坐标
             abs_x = int(self.screen_width * x / 100)
             abs_y = int(self.screen_height * y / 100)
             logger.info(f"相对坐标 ({x}, {y}) 转换为绝对坐标: ({abs_x}, {abs_y})")
