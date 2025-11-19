@@ -67,7 +67,7 @@ class Browser:
             raise ValueError(f"不支持的浏览器类型: {browser_name}")
 
         # 配置浏览器超时设置
-        self.driver.implicitly_wait(self.settings.IMPLICIT_WAIT)  # 隐式超时
+        # self.driver.implicitly_wait(self.settings.IMPLICIT_WAIT)  # 隐式超时
         self.driver.set_page_load_timeout(self.settings.EXPLICIT_WAIT)  # 显式超时
         # 设置浏览器窗口大小
         (width, height) = self.settings.WINDOW_SIZE

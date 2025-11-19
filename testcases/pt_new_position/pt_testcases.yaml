@@ -87,7 +87,7 @@ test_cases:
   - step_name: 21、输入AI描述
     element: ai_instruction
     action: input
-    data: auto{replace_num}
+    data: auto
     expected: true
   - step_name: 22、job_title输入'自动化测试'
     element: job_title
@@ -286,6 +286,4 @@ test_cases:
     element: email_save
     action: click
     data: null
-  result: '失败: Message: 在120秒总超时时间内未找到元素: choose_1, 共尝试10次
-
-    '
+  result: '失败: ''NoneType'' object has no attribute ''is_displayed'''
