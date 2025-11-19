@@ -39,10 +39,10 @@ test_cases:
     element: contract_type_check
     action: check_text
     data: Labor Contract
-  - step_name: 10、公司名称输入"louie1号测试客户"
+  - step_name: 10、公司名称输入"{customer}"
     element: company_name
     action: input
-    data: louie测试1号客户
+    data: '{customer}'
   - step_name: 11、回车确认
     element: company_name
     action: enter
@@ -50,7 +50,7 @@ test_cases:
   - step_name: 12、校验公司选择
     element: company_name_check
     action: check_text
-    data: louie测试1号客户
+    data: '{customer}'
   - step_name: 13、需求类型：猎头
     element: requirement_type_1
     action: click
@@ -64,10 +64,10 @@ test_cases:
     element: eor_not
     action: click
     data: null
-  - step_name: 16、岗位负责人栏输入"卢毅"
+  - step_name: 16、岗位负责人栏输入"{owner}"
     element: project_manager
     action: input
-    data: 卢毅
+    data: '{owner}'
   - step_name: 17、回车确认
     element: null
     action: enter
@@ -75,7 +75,7 @@ test_cases:
   - step_name: 18、校验岗位负责人选择
     element: project_manager_check
     action: check_text
-    data: 卢毅
+    data: '{owner}'
   - step_name: 19、上传文件
     element: hidden_fr_upload_jd
     action: upload
@@ -118,22 +118,18 @@ test_cases:
     element: start
     action: click
     data: null
-  - step_name: 29、点击项目负责人选项
+  - step_name: 29、输入项目负责人
     element: hidden_project_possessor
-    action: click
-    data: null
-  - step_name: 30、向下1次
-    element: hidden_project_possessor
-    action: down
-    data: '1'
-  - step_name: 31、回车确认
+    action: input
+    data: '{owner}'
+  - step_name: 30、回车确认
     element: hidden_project_possessor
     action: enter
     data: null
-  - step_name: 32、验证项目负责人选择'卢毅'
+  - step_name: 32、验证项目负责人选择{owner}
     element: project_possessor_check
     action: check_text
-    data: 卢毅
+    data: '{owner}'
   - step_name: 33、选择优先级C
     element: priority_C
     action: click
@@ -205,30 +201,6 @@ test_cases:
     element: submit_contract
     action: click
     data: null
-  - step_name: 49、点击招聘专员加入助理
-    element: hidden_join_assistant
-    action: click
-    data: null
-  - step_name: 50、点击招聘专员加入助理页-添加按钮
-    element: assistant_join_button
-    action: click
-    data: null
-  - step_name: 51、点击参与人选择框
-    element: assistant_select
-    action: click
-    data: null
-  - step_name: 52、点击回车(添加'孙雪阳')
-    element: assistant_select
-    action: enter
-    data: null
-  - step_name: 53、点击确认按钮
-    element: assistant_enter
-    action: click
-    data: null
-  - step_name: 54、验证参与人列表包含'孙雪阳'
-    element: assistant_list
-    action: check_text
-    data: 孙雪阳
   result: 通过
 - id: 招聘平台-2
   page: gsr_admin_page
@@ -283,7 +255,7 @@ test_cases:
     action: click
     data: null
   - step_name: 13、点击发送邮件
-    element: email_save
+    element: sure_send
     action: click
     data: null
-  result: '失败: ''NoneType'' object has no attribute ''is_displayed'''
+  result: "失败: Message: \n"

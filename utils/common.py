@@ -14,10 +14,14 @@ def read_yaml(file_path):
         timestamp = settings.TIME_STAMP
         username = settings.USER
         password = settings.PASSWORD
+        customer = settings.CUSTOMER
+        owner = settings.OWNER
         replacements = {
             '{replace_num}': str(timestamp),
             '{username}': username,
             '{password}': password,
+            '{customer}': customer,
+            '{owner}': owner
         }
         for placeholder, value in replacements.items():
             content = content.replace(placeholder, value)

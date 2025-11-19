@@ -100,7 +100,7 @@ pt_new_position:
     value:  "/html/body/div[1]/div/div[2]/div[2]/main/div/div/div/div/div/div/div[3]/div[2]/div/div[3]/button"
   hidden_project_possessor:  # 岗位确认页-项目负责人
     by: "xpath"
-    value:  "/html/body/div[1]/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/form/div/div[1]/div/div/div/div/div/div/div/div[2]/div/div/div[9]/div/div/div[2]/div/div/div/div/span/span[1]"
+    value:  "/html/body/div[1]/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/form/div/div[1]/div/div/div/div/div/div/div/div[2]/div/div/div[9]/div/div/div[2]/div/div/div/div/span/span[1]/input"
   project_possessor_check: # 岗位确认页-项目负责人
     by: "xpath"
     value: "/html/body/div[1]/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/form/div/div[1]/div/div/div/div/div/div/div/div[2]/div/div/div[9]/div/div/div[2]/div/div/div/div/span/span[2]"
@@ -208,4 +208,4 @@ pt_new_position:
     value: "//div[@class='ant-tabs-content-holder']/div/div[2]/div[1]/div/div[4]/button"
   sure_send:  # 确认发送邮件
     by: "xpath"
-    value:  "//div[@class='ant-modal-confirm-btns']/button[2]"
+    value:  "//div[@class='ant-tabs-content-holder']/div/div[2]/div[1]/div/div[4]/button"

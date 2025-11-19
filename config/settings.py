@@ -20,6 +20,19 @@ class Settings:
         }
         self.URL = self.BASE_URLS[self.ENV]
         self.OMIN_URL = self.OMIN_URLS[self.ENV]
+        # 不同环境的客户名称数据
+        self.CUSTOMERS = {
+            "测试环境": "louie测试1号客户",
+            "预生产环境": "高斯全球B（演示用）",
+            "生产环境": "高斯全球B（演示用）"
+        }
+        self.OWNERS = {
+            "测试环境": "卢毅",
+            "预生产环境": "黄伟龙",
+            "生产环境": "卢毅"
+        }
+        self.CUSTOMER = self.CUSTOMERS[self.ENV]
+        self.OWNER = self.OWNERS[self.ENV]
 
         # 项目配置
         self.PROJECT_CONFIGS = {
