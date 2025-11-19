@@ -229,13 +229,7 @@ test_cases:
     element: assistant_list
     action: check_text
     data: 孙雪阳
-  result: "失败: Message: no such window: target window already closed\nfrom unknown\
-    \ error: web view not found\n  (Session info: chrome=142.0.7444.163)\nStacktrace:\n\
-    Symbols not available. Dumping unresolved backtrace:\n\t0x7ff6dd90a215\n\t0x7ff6dd662620\n\
-    \t0x7ff6dd3f16dd\n\t0x7ff6dd3c8e31\n\t0x7ff6dd47a22e\n\t0x7ff6dd49b3d2\n\t0x7ff6dd43b0ed\n\
-    \t0x7ff6dd43bf63\n\t0x7ff6dd935d40\n\t0x7ff6dd92fe6a\n\t0x7ff6dd950fe5\n\t0x7ff6dd67d70e\n\
-    \t0x7ff6dd684e0f\n\t0x7ff6dd66b7b4\n\t0x7ff6dd66b96f\n\t0x7ff6dd6518d8\n\t0x7ffeac33257d\n\
-    \t0x7ffead38af08\n"
+  result: 通过
 - id: 招聘平台-2
   page: gsr_admin_page
   name: 发送邮件测试

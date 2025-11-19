@@ -81,19 +81,29 @@ class Settings:
 
         # 数据库配置
         self.DB_HOST_LIST = {
-            "测试环境": "43.154.110.127"
+            "测试环境": "43.154.110.127",
+            "预生产环境": "",
+            "生产环境": ""
         }
         self.DB_USER_LIST = {
-            "测试环境": "gsr_db"
+            "测试环境": "gsr_db",
+            "预生产环境": "",
+            "生产环境": ""
         }
         self.DB_PASSWORD_LIST = {
-            "测试环境": "gsr666666"
+            "测试环境": "gsr666666",
+            "预生产环境": "",
+            "生产环境": ""
         }
         self.DB_PORT_LIST = {
-            "测试环境": "3306"
+            "测试环境": "3306",
+            "预生产环境": "",
+            "生产环境": ""
         }
         self.DB_NAME_LIST = {
-            "测试环境": "gsr"
+            "测试环境": "gsr",
+            "预生产环境": "",
+            "生产环境": ""
         }
         self.DB_HOST = self._get_env_var("DB_HOST", self.DB_HOST_LIST[self.ENV])
         self.DB_USER = self._get_env_var("DB_USER", self.DB_USER_LIST[self.ENV])
