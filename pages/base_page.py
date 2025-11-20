@@ -406,11 +406,6 @@ class BasePage:
     def verify_contains(result, expected_value: str) -> bool:
         """
         验证结果中包含特定值
-        Args:
-            result: 数据库查询结果
-            expected_value (str): 期望包含的值
-        Returns:
-            bool: 是否包含期望值
         """
         for row in result:
             # 遍历每一行中的每个值

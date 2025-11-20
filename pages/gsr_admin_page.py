@@ -71,15 +71,14 @@ class GsrAdminPage(BasePage):
             self.take_screenshot("登录失败")
             raise e
 
-    @allure.step("确保已登录")
     def ensure_logged_in(self):
         """确保用户已登录"""
         login_url = self.settings.URL
         try:
             # 检查是否已经登录（通过检查登录后的元素是否存在）
             self.open(login_url)
-            if (self.is_element_present("talent_button", 1) or
-                    self.is_element_present("user_part", 1)):
+            if (self.is_element_present("talent_button", 5) or
+                    self.is_element_present("user_part", 5)):
                 self.logger.info("用户已登录")
                 return True
             else:

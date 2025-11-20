@@ -133,7 +133,7 @@ class Settings:
         self.WINDOW_SIZE = tuple(map(int, window_size_str.split(',')))
 
         # 等待时间设置
-        self.IMPLICIT_WAIT = int(self._get_env_var("IMPLICIT_WAIT", "10"))
+        self.IMPLICIT_WAIT = int(self._get_env_var("IMPLICIT_WAIT", "15"))
         self.HIDDEN_FIND_WAIT = int(self._get_env_var("HIDDEN_WAIT", "3"))
         self.EXPLICIT_WAIT = int(self._get_env_var("EXPLICIT_WAIT", "120"))
         self.REFRESH_TIME = int(self._get_env_var("REFRESH_TIME", "15"))
