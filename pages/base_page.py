@@ -91,7 +91,6 @@ class BasePage:
         logger.info(f"在元素 {element_name} 输入: {text}")
         element_id = self.find_element(element_name)
         if clear_first:
-            # element_id.clear()
             current_value = element_id.get_attribute("value")
             if current_value:
                 logger.info(f"输入框存在内容:'{current_value}',开始清空输入框内容")

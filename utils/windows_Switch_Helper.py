@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
 from typing import List
+from utils.logger import logger
 
 
 class WindowSwitchHelper:
@@ -63,10 +64,10 @@ class WindowSwitchHelper:
             current_url = self.driver.current_url
 
             if (partial_match and url in current_url) or (not partial_match and url == current_url):
-                print(f"已切换到URL为 '{current_url}' 的窗口")
+                logger.info(f"已切换到URL为 '{current_url}' 的窗口")
                 return True
         self.driver.switch_to.window(current_handle)
-        print(f"未找到URL包含 '{url}' 的窗口")
+        logger.info(f"未找到URL包含 '{url}' 的窗口")
         return False
 
     def wait_for_new_window_and_switch(self, expected_windows: int = 2, timeout: int = 10) -> bool:
