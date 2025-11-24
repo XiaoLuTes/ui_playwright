@@ -39,7 +39,7 @@ class Executor:
         """关闭数据库连接"""
         if self._db_utils:
             try:
-                self._db_utils.close()
+                self._db_utils.database_close()
             except Exception as e:
                 logger.warning(f"关闭数据库连接时发生错误: {e}")
             finally:
@@ -47,6 +47,8 @@ class Executor:
             # 清除所有页面的数据库引用
             for page_name, page in self.page_manager.pages.items():
                 page.set_db_utils(None)
+        else:
+            logger.info(f"未建立数据库链接，无需关闭")
 
     def register_page(self, page_name, page_object=None):
         """注册页面对象"""

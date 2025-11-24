@@ -74,7 +74,7 @@ class DatabaseUtils:
             logger.error(f"更新执行失败: {e}, SQL: {query}")
             raise
 
-    def close(self):
+    def database_close(self):
         """关闭数据库连接"""
         if self.connection:
             self.connection.close()

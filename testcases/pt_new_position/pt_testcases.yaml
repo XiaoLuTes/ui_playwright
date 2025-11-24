@@ -201,7 +201,9 @@ test_cases:
     element: submit_contract
     action: click
     data: null
-  result: 通过
+  result: '失败: Message: 隐藏元素查找超时: hidden_project_possessor
+
+    '
 - id: 招聘平台-2
   page: gsr_admin_page
   name: 发送邮件测试
