@@ -201,9 +201,7 @@ test_cases:
     element: submit_contract
     action: click
     data: null
-  result: '失败: Message: 隐藏元素查找超时: hidden_project_possessor
-
-    '
+  result: 通过
 - id: 招聘平台-2
   page: gsr_admin_page
   name: 发送邮件测试
@@ -260,10 +258,4 @@ test_cases:
     element: sure_send
     action: click
     data: null
-  result: "失败: Message: no such window: target window already closed\nfrom unknown\
-    \ error: web view not found\n  (Session info: chrome=142.0.7444.163)\nStacktrace:\n\
-    Symbols not available. Dumping unresolved backtrace:\n\t0x7ff74938a215\n\t0x7ff7490e2620\n\
-    \t0x7ff748e716dd\n\t0x7ff748e48e31\n\t0x7ff748efa22e\n\t0x7ff748f1b3d2\n\t0x7ff748ebb0ed\n\
-    \t0x7ff748ebbf63\n\t0x7ff7493b5d40\n\t0x7ff7493afe6a\n\t0x7ff7493d0fe5\n\t0x7ff7490fd70e\n\
-    \t0x7ff749104e0f\n\t0x7ff7490eb7b4\n\t0x7ff7490eb96f\n\t0x7ff7490d18d8\n\t0x7ffeac33257d\n\
-    \t0x7ffead38af08\n"
+  result: 通过

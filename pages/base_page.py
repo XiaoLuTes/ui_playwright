@@ -153,6 +153,7 @@ class BasePage:
             logger.info(f"查找到元素：{element_name}")
             return True
         except TimeoutException:
+            self.take_screenshot(f"未找到指定元素:{element_name}")
             logger.info(f"未找到指定元素: {element_name}")
             return False
 
@@ -352,13 +353,11 @@ class BasePage:
             # 处理超时错误
             error_msg = f"数据库验证超时: {str(e)}"
             logger.error(error_msg)
-            self.take_screenshot("数据库验证超时")
             raise
         except Exception as e:
             # 处理其他所有异常
             error_msg = f"数据库验证执行失败: {str(e)}"
             logger.error(error_msg)
-            self.take_screenshot("数据库验证异常")
             raise
 
     def parse_and_verify_expected(self, result, expected: str) -> bool:
