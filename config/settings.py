@@ -65,7 +65,6 @@ class Settings:
         self.PAGE_CLASSES = {
             "gsr_admin_page": "GsrAdminPage",
             "flutter_page": "FlutterPage"
-            # 可以继续添加其他页面映射...
         }
         # 获取当前项目
         self.CURRENT_PROJECT = self._get_env_var("CURRENT_PROJECT", '招聘平台新建岗位')
