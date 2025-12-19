@@ -153,7 +153,6 @@ class BasePage:
             logger.info(f"查找到元素：{element_name}")
             return True
         except TimeoutException:
-            self.take_screenshot(f"未找到指定元素:{element_name}")
             logger.info(f"未找到指定元素: {element_name}")
             return False
 
@@ -284,7 +283,6 @@ class BasePage:
         def value_equals(_):
             """
             获取元素当前值与期望值比较
-            :param _:
             :return: True or False
             """
             if real_action == "value":

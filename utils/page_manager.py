@@ -75,6 +75,7 @@ class PageManager:
             page_obj = self.get_page(page_name)
             if page_name == "gsr_admin_page":
                 page_obj.ensure_logged_in()
+                logger.info(f"登录成功")
                 WindowSwitchHelper.switch_to_window_by_url(page_obj, page_url)
             else:
                 from pages.base_page import BasePage

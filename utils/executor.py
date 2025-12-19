@@ -165,6 +165,7 @@ class Executor:
         elif action == "check_exists":
             exists = page_object.is_element_present(element_name)
             if data == "存在" and not exists:
+                page_object.take_screenshot(f"{element_name}元素不存在")
                 raise Exception(f"步骤'{step_name}'校验失败, {element_name}元素应存在,实际不存在")
             elif data == "不存在" and exists:
                 raise Exception(f"步骤'{step_name}'校验失败: {element_name}元素应不存在,实际存在")

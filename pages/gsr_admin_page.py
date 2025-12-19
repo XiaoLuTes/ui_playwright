@@ -61,7 +61,6 @@ class GsrAdminPage(BasePage):
             self.element_click("login_button")
             # 等待登录成功 - 检查登录后页面元素
             self.is_element_present("talent_button")
-            self.logger.info("登录成功")
             # 如果提供了executor，则在登录成功后注册项目所需的页面对象
             # if executor:
             #     self.register_project_pages(executor)
