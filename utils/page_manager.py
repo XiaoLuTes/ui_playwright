@@ -73,7 +73,7 @@ class PageManager:
         page_url = self.settings.PAGE_URLS.get(page_name)
         if page_url:
             page_obj = self.get_page(page_name)
-            if page_name == "gsr_admin_page":
+            if page_name == self.settings.DEFAULT_PAGE_NAME:
                 page_obj.ensure_logged_in()
                 logger.info(f"登录成功")
                 WindowSwitchHelper.switch_to_window_by_url(page_obj, page_url)

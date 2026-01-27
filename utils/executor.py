@@ -4,6 +4,7 @@ import allure
 from utils.element_locator import ElementLocator
 from utils.page_manager import PageManager
 from utils.yaml_load import YamlLoad
+from config.settings import Settings
 
 
 class Executor:
@@ -14,6 +15,7 @@ class Executor:
         self.locators = self.data_loader.load_locators()    # 用于页面元素定位器引用
         self.page_manager = PageManager(driver)
         self.yaml_load = YamlLoad()   # 用于yaml用例引用
+        self.settings = Settings()
         self.page_name = None
         self._db_utils = None  # 数据库工具
         if page_manager is not None:
@@ -83,8 +85,8 @@ class Executor:
                 if not self.page_manager.navigate_to_page(test_case_page):
                     raise Exception(f"无法导航到指定页面: {test_case_page}")
             else:
-                logger.info(f"未指定测试页面，使用默认页面：gsr_admin_page")
-                self.page_manager.navigate_to_page("gsr_admin_page")
+                logger.info(f"未指定测试页面，使用默认页面：{self.settings.DEFAULT_PAGE_NAME}")
+                self.page_manager.navigate_to_page(self.settings.DEFAULT_PAGE_NAME)
             # 执行测试步骤
             for step in test_case['steps']:
                 step_name = step['step_name']

@@ -74,6 +74,7 @@ class Settings:
         self.TESTCASES = self.PROJECT_CONFIG["TESTCASES_PATH"]
         # 页面名称(根据项目获取)
         self.PAGE_NAME = self.PROJECT_CONFIG["PAGE_NAME"]
+        self.DEFAULT_PAGE_NAME = "gsr_admin_page"
         # 元素定位器地址
         self.ELEMENT_LOCATORS = self.PROJECT_CONFIG["ELEMENT_LOCATORS"]
 
