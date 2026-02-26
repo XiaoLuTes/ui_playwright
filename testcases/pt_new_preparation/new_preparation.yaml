@@ -212,7 +212,7 @@ test_cases:
     action: click
     data: null
   - step_name: 等待1秒
-    element:
+    element: null
     action: wait
     data: '1'
   - step_name: 49、点击发票赎期天数选择栏
@@ -242,7 +242,7 @@ test_cases:
   - step_name: 等待2秒
     element: null
     action: wait
-    data: "2"
+    data: '2'
   - step_name: 55、点击查看按钮
     element: preparation_view_1
     action: click
@@ -250,19 +250,23 @@ test_cases:
   - step_name: 等待1秒
     element: null
     action: wait
-    data: "1"
+    data: '1'
   - step_name: 56、点击提交按钮
     element: end_invoice_submit
     action: click
     data: null
-  - step_name: 等待1秒
+  - step_name: 等待2秒
     element: null
     action: wait
-    data: "1"
+    data: '2'
   - step_name: 57、入职回访-提交按钮
     element: submit
     action: click
     data: null
+  - step_name: 等待3秒
+    element: null
+    action: wait
+    data: '3'
   - step_name: 58、退回编制管理页
     element: preparation
     action: click
@@ -275,24 +279,26 @@ test_cases:
     element: preparation_view_1
     action: click
     data: null
-  - step_name: 等待1秒
+  - step_name: 等待2秒
     element: null
     action: wait
-    data: "1"
+    data: '2'
   - step_name: 61、成功交付页点击提交
     element: after_onboarding
     action: click
     data: null
-  - step_name: 等待1秒
+  - step_name: 等待3秒
     element: null
     action: wait
-    data: "1"
+    data: '3'
   - step_name: 62、过保回访页点击提交
-    element: end_invoice_submit
+    element: end_invoice_submit_2
     action: click
     data: null
   - step_name: 63、验证流程实例状态为'结束'
     element: instance_status
     action: check_text
     data: 结束
-  result: 通过
+  result: '失败: Message: 尝试查找隐藏元素失败: talent_button
+
+    '

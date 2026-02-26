@@ -23,6 +23,9 @@ gsr_admin_page:
   position_new: # 创建的新岗位
     by: "xpath"
     value: "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div/div[2]/div/div[2]/div/div/div/div/div/table/tbody/tr[2]/td[2]/div"
+  candidate_1: # 第一位候选人
+    by: "xpath"
+    value: "//tbody[@class= 'ant-table-tbody']/tr[2]"
   choose_1:  # 勾选列表第一个
     by: "xpath"
     value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/div[2]/div/div/div/div[2]/div/div/div[2]/div/div/div/div/div/div/div/div/div/div/div/div/div/div/div/table/tbody/tr[2]/td[1]/label/span"
@@ -145,11 +148,15 @@ gsr_admin_page:
     value:  "//*[@id='settlementCurrency']"
   invoice_submit: # 提交开票
     by: "xpath"
-    value:  "/html/body/div[2]/div/div[2]/div/div[1]/div/div[2]/form/div/div[14]/button[2]"
+    value:  "/html/body/div[2]/div/div[2]/div/div[1]/div/div[2]/form/div/div[14]/div/div[2]/button[2]"
   end_invoice_submit:  # 第一次开票结束页-提交
     by: "xpath"
-    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[3]/div[2]/div/div/button[./span='L_提交']"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[3]/div[2]/div/div/button[./span='Submit']"
   after_onboarding: # 入职回访页、保证期-提交
     by: "xpath"
-    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[3]/div[2]/div/div/button[./span='提 交']"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[3]/div[2]/div/div[2]/button"
+  after_onboarding_2: # 过保回访-提交
+    by: "xpath"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[3]/div[2]/div/div[2]/button"
+
 
