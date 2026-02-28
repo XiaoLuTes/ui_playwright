@@ -19,11 +19,11 @@ def setup_logger():
 
     # 2. 日志文件名优化（按日期命名，而非时间戳，避免文件过多）
     today = datetime.now().strftime("%Y%m%d")
-    full_log_file = os.path.join(log_dir, f"API_log_{today}.log")
-    error_log_file = os.path.join(log_dir_error, f"API_error_log_{today}.log")
+    full_log_file = os.path.join(log_dir, f"UI_log_{today}.log")
+    error_log_file = os.path.join(log_dir_error, f"UI_error_log_{today}.log")
 
     # 3. 获取/创建日志器（单例模式，避免重复添加处理器）
-    logger = logging.getLogger("API_Automation")
+    logger = logging.getLogger("AUI_Automation")
     logger.setLevel(logging.DEBUG)  # 根级别必须最低，确保所有日志都能被处理器接收
     logger.propagate = False  # 防止日志传递到根日志器，导致重复输出
 
