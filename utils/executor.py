@@ -153,6 +153,7 @@ class Executor:
             actual_text = page_object.get_text(element_name)
             data_str = str(data)
             if data_str not in actual_text:
+                page_object.take_screenshot(f"{element_name}元素文本检查失败")
                 raise Exception(f"文本检查失败: 步骤'{step_name}'预期包含 '{data_str}', 实际: '{actual_text}'")
 
         elif action == "down":

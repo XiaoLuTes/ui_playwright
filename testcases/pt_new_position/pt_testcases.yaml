@@ -201,7 +201,7 @@ test_cases:
     element: submit_contract
     action: click
     data: null
-  result: 通过
+  result: '失败: 文本检查失败: 步骤''32、验证项目负责人选择卢毅''预期包含 ''卢毅'', 实际: '''''
 - id: 招聘平台-2
   page: gsr_admin_page
   name: 发送邮件测试
@@ -258,4 +258,11 @@ test_cases:
     element: sure_send
     action: click
     data: null
-  result: 通过
+  result: "失败: Message: invalid session id: session deleted as the browser has closed\
+    \ the connection\nfrom disconnected: not connected to DevTools\n  (Session info:\
+    \ chrome=145.0.7632.109); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalidsessionidexception\n\
+    Stacktrace:\nSymbols not available. Dumping unresolved backtrace:\n\t0x7ff7963b5715\n\
+    \t0x7ff7963b5770\n\t0x7ff79616108d\n\t0x7ff79614c622\n\t0x7ff79617299b\n\t0x7ff7961ed5e0\n\
+    \t0x7ff796209772\n\t0x7ff7961acc28\n\t0x7ff7961adb33\n\t0x7ff79669e9f0\n\t0x7ff796698ded\n\
+    \t0x7ff7966b969a\n\t0x7ff7963d11e5\n\t0x7ff7963d99cc\n\t0x7ff7963bebf4\n\t0x7ff7963beda6\n\
+    \t0x7ff7963a4e87\n\t0x7ffa8a68257d\n\t0x7ffa8c72af08\n"

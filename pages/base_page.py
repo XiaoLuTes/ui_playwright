@@ -115,8 +115,10 @@ class BasePage:
                 error_msg = f"点击元素失败: {element_name}, 错误：{e_str}"
                 logger.error(error_msg)
                 if "element click intercepted" in e_str or "not clickable" in e_str:
-                    logger.info("检测到元素被遮挡，尝试使用JavaScript点击")
+                    logger.info("检测到元素被遮挡，等待5s，防止加载未完成")
+                    time.sleep(5)
                     try:
+                        logger.info("已等待5s，开始尝试JavaScript点击")
                         element_retry = self.find_element(element_name)
                         self.driver.execute_script("arguments[0].click();", element_retry)
                         logger.info(f"通过JavaScript点击成功: {element_name}")
