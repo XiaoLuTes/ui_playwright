@@ -23,7 +23,7 @@ def setup_logger():
     error_log_file = os.path.join(log_dir_error, f"UI_error_log_{today}.log")
 
     # 3. 获取/创建日志器（单例模式，避免重复添加处理器）
-    logger = logging.getLogger("AUI_Automation")
+    logger = logging.getLogger("UI_Automation")
     logger.setLevel(logging.DEBUG)  # 根级别必须最低，确保所有日志都能被处理器接收
     logger.propagate = False  # 防止日志传递到根日志器，导致重复输出
 
