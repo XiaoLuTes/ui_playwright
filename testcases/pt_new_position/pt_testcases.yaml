@@ -205,13 +205,19 @@ test_cases:
     element: submit_contract
     action: click
     data: null
-  result: "失败: Message: element not interactable\n  (Session info: chrome=145.0.7632.119);\
-    \ For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementnotinteractableexception\n\
-    Stacktrace:\nSymbols not available. Dumping unresolved backtrace:\n\t0x7ff6c5c75715\n\
-    \t0x7ff6c5c75770\n\t0x7ff6c5a20e76\n\t0x7ff6c5a759a9\n\t0x7ff6c5a73384\n\t0x7ff6c5aa598a\n\
-    \t0x7ff6c5a6e846\n\t0x7ff6c5ac9e45\n\t0x7ff6c5a6cc28\n\t0x7ff6c5a6db33\n\t0x7ff6c5f5e9f0\n\
-    \t0x7ff6c5f58ded\n\t0x7ff6c5f7969a\n\t0x7ff6c5c911e5\n\t0x7ff6c5c999cc\n\t0x7ff6c5c7ebf4\n\
-    \t0x7ff6c5c7eda6\n\t0x7ff6c5c64e87\n\t0x7ffa8a68257d\n\t0x7ffa8c72af08\n"
+  result: "失败: Message: invalid session id; For documentation on this error, please\
+    \ visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalidsessionidexception\n\
+    Stacktrace:\n\tchromedriver!GetHandleVerifier [0x7ff68ee910a5+14cc5]\n\tchromedriver!GetHandleVerifier\
+    \ [0x7ff68ee91110+14d30]\n\tchromedriver!(No symbol) [0x7ff68ebfd956]\n\tchromedriver!(No\
+    \ symbol) [0x7ff68ec48766]\n\tchromedriver!(No symbol) [0x7ff68ec80272]\n\tchromedriver!(No\
+    \ symbol) [0x7ff68ec7a4d1]\n\tchromedriver!(No symbol) [0x7ff68ec79783]\n\tchromedriver!(No\
+    \ symbol) [0x7ff68ebc6585]\n\tchromedriver!GetHandleVerifier [0x7ff68f195ddd+3199fd]\n\
+    \tchromedriver!GetHandleVerifier [0x7ff68f1904bd+3140dd]\n\tchromedriver!GetHandleVerifier\
+    \ [0x7ff68f1b29ba+3365da]\n\tchromedriver!GetHandleVerifier [0x7ff68eeaca45+30665]\n\
+    \tchromedriver!GetHandleVerifier [0x7ff68eeb5b9c+397bc]\n\tchromedriver!(No symbol)\
+    \ [0x7ff68ebc534a]\n\tchromedriver!GetHandleVerifier [0x7ff68f2e9878+46d498]\n\
+    \tKERNEL32!BaseThreadInitThunk [0x7fff651d257d+1d]\n\tntdll!RtlUserThreadStart\
+    \ [0x7fff66a2af08+28]\n"
 - id: 招聘平台-2
   page: gsr_admin_page
   name: 发送邮件测试
@@ -268,4 +274,16 @@ test_cases:
     element: sure_send
     action: click
     data: null
-  result: 通过
+  result: "失败: Message: invalid session id; For documentation on this error, please\
+    \ visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalidsessionidexception\n\
+    Stacktrace:\n\tchromedriver!GetHandleVerifier [0x7ff68ee910a5+14cc5]\n\tchromedriver!GetHandleVerifier\
+    \ [0x7ff68ee91110+14d30]\n\tchromedriver!(No symbol) [0x7ff68ebfd956]\n\tchromedriver!(No\
+    \ symbol) [0x7ff68ec48766]\n\tchromedriver!(No symbol) [0x7ff68ec80272]\n\tchromedriver!(No\
+    \ symbol) [0x7ff68ec7a4d1]\n\tchromedriver!(No symbol) [0x7ff68ec79783]\n\tchromedriver!(No\
+    \ symbol) [0x7ff68ebc6585]\n\tchromedriver!GetHandleVerifier [0x7ff68f195ddd+3199fd]\n\
+    \tchromedriver!GetHandleVerifier [0x7ff68f1904bd+3140dd]\n\tchromedriver!GetHandleVerifier\
+    \ [0x7ff68f1b29ba+3365da]\n\tchromedriver!GetHandleVerifier [0x7ff68eeaca45+30665]\n\
+    \tchromedriver!GetHandleVerifier [0x7ff68eeb5b9c+397bc]\n\tchromedriver!(No symbol)\
+    \ [0x7ff68ebc534a]\n\tchromedriver!GetHandleVerifier [0x7ff68f2e9878+46d498]\n\
+    \tKERNEL32!BaseThreadInitThunk [0x7fff651d257d+1d]\n\tntdll!RtlUserThreadStart\
+    \ [0x7fff66a2af08+28]\n"
