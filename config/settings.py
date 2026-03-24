@@ -53,6 +53,12 @@ class Settings:
                 "TESTCASES_PATH": "./testcases/test_database/test_database.yaml",
                 "ELEMENT_LOCATORS": "./config/locators/flutter.yaml",
                 "description": "测试下数据库链接"
+            },
+            "假勤打卡日报及月报测试": {
+                "PAGE_NAME": ["gsr_admin_page"],
+                "TESTCASES_PATH": "./testcases/attendance_and_leave/test_attendance.yaml",
+                "ELEMENT_LOCATORS": "./config/locators/attendance_and_leave.yaml",
+                "description": "打卡日报及月报测试"
             }
         }
         # 页面url映射

@@ -77,6 +77,12 @@ pt_new_position:
   fr_upload_list:   # 文件上传列表
     by: "xpath"
     value:  "//*[@id='jdAttachment']/span/div/span/div/div[3]/div"
+  if_ai_yes:  # 是否启用ai搜索-是
+    by: "xpath"
+    value: "//*[@id='fr-ees_if_AI']/label[1]/span[1]"
+  if_ai_no: # 是否启用ai搜索-否
+    by: "xpath"
+    value: "//*[@id='fr-ees_if_AI']/label[2]/span[1]"
   ai_instruction:   # AI描述栏
     by: "xpath"
     value:  "//*[@id='fr-ees_aiInstruction']"
