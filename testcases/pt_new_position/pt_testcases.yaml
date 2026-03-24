@@ -205,19 +205,7 @@ test_cases:
     element: submit_contract
     action: click
     data: null
-  result: "失败: Message: invalid session id; For documentation on this error, please\
-    \ visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalidsessionidexception\n\
-    Stacktrace:\n\tchromedriver!GetHandleVerifier [0x7ff68ee910a5+14cc5]\n\tchromedriver!GetHandleVerifier\
-    \ [0x7ff68ee91110+14d30]\n\tchromedriver!(No symbol) [0x7ff68ebfd956]\n\tchromedriver!(No\
-    \ symbol) [0x7ff68ec48766]\n\tchromedriver!(No symbol) [0x7ff68ec80272]\n\tchromedriver!(No\
-    \ symbol) [0x7ff68ec7a4d1]\n\tchromedriver!(No symbol) [0x7ff68ec79783]\n\tchromedriver!(No\
-    \ symbol) [0x7ff68ebc6585]\n\tchromedriver!GetHandleVerifier [0x7ff68f195ddd+3199fd]\n\
-    \tchromedriver!GetHandleVerifier [0x7ff68f1904bd+3140dd]\n\tchromedriver!GetHandleVerifier\
-    \ [0x7ff68f1b29ba+3365da]\n\tchromedriver!GetHandleVerifier [0x7ff68eeaca45+30665]\n\
-    \tchromedriver!GetHandleVerifier [0x7ff68eeb5b9c+397bc]\n\tchromedriver!(No symbol)\
-    \ [0x7ff68ebc534a]\n\tchromedriver!GetHandleVerifier [0x7ff68f2e9878+46d498]\n\
-    \tKERNEL32!BaseThreadInitThunk [0x7fff651d257d+1d]\n\tntdll!RtlUserThreadStart\
-    \ [0x7fff66a2af08+28]\n"
+  result: 通过
 - id: 招聘平台-2
   page: gsr_admin_page
   name: 发送邮件测试
@@ -274,16 +262,6 @@ test_cases:
     element: sure_send
     action: click
     data: null
-  result: "失败: Message: invalid session id; For documentation on this error, please\
-    \ visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalidsessionidexception\n\
-    Stacktrace:\n\tchromedriver!GetHandleVerifier [0x7ff68ee910a5+14cc5]\n\tchromedriver!GetHandleVerifier\
-    \ [0x7ff68ee91110+14d30]\n\tchromedriver!(No symbol) [0x7ff68ebfd956]\n\tchromedriver!(No\
-    \ symbol) [0x7ff68ec48766]\n\tchromedriver!(No symbol) [0x7ff68ec80272]\n\tchromedriver!(No\
-    \ symbol) [0x7ff68ec7a4d1]\n\tchromedriver!(No symbol) [0x7ff68ec79783]\n\tchromedriver!(No\
-    \ symbol) [0x7ff68ebc6585]\n\tchromedriver!GetHandleVerifier [0x7ff68f195ddd+3199fd]\n\
-    \tchromedriver!GetHandleVerifier [0x7ff68f1904bd+3140dd]\n\tchromedriver!GetHandleVerifier\
-    \ [0x7ff68f1b29ba+3365da]\n\tchromedriver!GetHandleVerifier [0x7ff68eeaca45+30665]\n\
-    \tchromedriver!GetHandleVerifier [0x7ff68eeb5b9c+397bc]\n\tchromedriver!(No symbol)\
-    \ [0x7ff68ebc534a]\n\tchromedriver!GetHandleVerifier [0x7ff68f2e9878+46d498]\n\
-    \tKERNEL32!BaseThreadInitThunk [0x7fff651d257d+1d]\n\tntdll!RtlUserThreadStart\
-    \ [0x7fff66a2af08+28]\n"
+  result: '失败: Message: 在120秒总超时时间内未找到元素: choose_1, 共尝试24次
+
+    '

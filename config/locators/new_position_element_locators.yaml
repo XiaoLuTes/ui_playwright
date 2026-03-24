@@ -91,13 +91,13 @@ pt_new_position:
     value:  "//*[@id='fr-ees_jobTitle']"
   country_click:    # 国家/地区选项栏，点击使输入栏可见
     by: "xpath"
-    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/form/div/div[2]/div/div/div/div/div/div/div/div[2]/div/div/div[4]/div/div[1]/div[2]/div[1]/div/div/div"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/form/div/div[2]/div/div/div/div/div/div/div/div[2]/div/div/div[5]/div/div/div[2]/div[1]/div/div/div/span/div"
   country:    # 国家/地区选项栏
     by: "xpath"
     value:  "//*[@id='fr-ees_country']"
   country_check:    # 国家/地区选项栏,校验用
     by: "xpath"
-    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/form/div/div[2]/div/div/div/div/div/div/div/div[2]/div/div/div[4]/div/div[1]/div[2]/div[1]/div/div/div/span"
+    value:  "//*[@id='root']/div/div[2]/div[2]/main/div/div/div/div/div/div/div[2]/div/div[3]/div/form/div/div[2]/div/div/div/div/div/div/div/div[2]/div/div/div[5]/div/div/div[2]/div[1]/div/div/div/span/div/div[1]/span"
   country_city:   # 国家/地区输入栏
     by: "xpath"
     value:  "//*[@id='fr-ees_countryOrRegion']"
