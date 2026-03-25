@@ -88,6 +88,10 @@ test_cases:
     element: if_ai_yes
     action: click
     data: null
+  - step_name: 22、等待ai描述框加载
+    element:
+    action: wait
+    data: '3'
   - step_name: 23、输入AI描述
     element: ai_instruction
     action: input
