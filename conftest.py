@@ -1,30 +1,22 @@
 import pytest
-from utils.browser import Browser
-from utils.logger import logger
-
+from playwright.sync_api import sync_playwright
+from config.settings import settings
 
 @pytest.fixture(scope="session")
 def browser():
-    """
-    pytest session级fixture - 在整个测试会话期间只创建一次浏览器实例
-    用于管理浏览器的生命周期
-    """
-    # 创建浏览器实例
-    browser_manager = Browser()
-    # 返回浏览器实例(不在此处获取driver)
-    yield browser_manager
-    browser_manager.quit_driver()
-    logger.info("测试会话结束，浏览器已关闭")
+    playwright = sync_playwright().start()
+    browser = playwright.chromium.launch(
+        headless=settings.HEADLESS,  # 无头模式
+        slow_mo=settings.SLOW_MO  # 单次操作延迟
+    )
+    context = browser.new_context()
 
-@pytest.fixture(scope="session")
-def driver(browser):
-    """
-    pytest 函数级fixture - 每个测试函数执行前获取driver
-    :param browser: 浏览器管理实例
-    """
-    # 获取WebDriver实例
-    driver = browser.get_driver()
-    yield driver
-    # 测试函数结束后清理cookies
-    driver.delete_all_cookies()
-    logger.info("已清除浏览器cookies")
+    page = context.new_page()
+    page.set_default_timeout(settings.IMPLICIT_WAIT)  # 设置超时时间
+    page.set_viewport_size(settings.BROWSER_VIEWPORT)  # 设置分辨率
+
+    yield page
+
+    context.close()
+    browser.close()
+    playwright.stop()

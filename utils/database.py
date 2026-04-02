@@ -32,7 +32,7 @@ class DatabaseUtils:
             return self.connection
         except Exception as e:
             logger.error(f"数据库连接失败: {e}")
-            raise Exception
+            raise
 
     def execute_query(self, query: str, params=None) -> List[Dict[str, Any]]:
         """执行查询语句"""
@@ -42,11 +42,11 @@ class DatabaseUtils:
 
             with self.connection.cursor() as cursor:
                 cursor.execute(query, params or ())
-                result = cursor.fetchall()  # 获取查询结果
-                logger.info(f"SQL执行成功")
+                result = cursor.fetchall()
+                logger.info(f"SQL查询执行成功")
                 return result
         except Exception as e:
-            logger.error(f"查询执行失败: {e}, SQL: {query}")
+            logger.error(f"SQL查询失败: {e}, SQL: {query}")
             raise
 
     def execute_update(self, query: str, params=None) -> int:
@@ -57,18 +57,19 @@ class DatabaseUtils:
 
             with self.connection.cursor() as cursor:
                 cursor.execute(query, params or ())
-                self.connection.commit()  # 提交事务
-                rowcount = cursor.rowcount  # 获取影响行数
-                logger.info(f"更新执行成功: {query}, 影响行数: {rowcount}")
+                self.connection.commit()
+                rowcount = cursor.rowcount
+                logger.info(f"SQL更新成功，影响行数: {rowcount}")
                 return rowcount
         except Exception as e:
             if self.connection:
                 self.connection.rollback()
-            logger.error(f"更新执行失败: {e}, SQL: {query}")
+            logger.error(f"SQL更新失败: {e}, SQL: {query}")
             raise
 
     def database_close(self):
         """关闭数据库连接"""
         if self.connection:
             self.connection.close()
+            self.connection = None
             logger.info("数据库连接已关闭")

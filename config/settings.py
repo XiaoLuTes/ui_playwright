@@ -130,18 +130,15 @@ class Settings:
         self.DB_PORT = self._get_env_var("DB_PORT", self.DB_PORT_LIST[self.ENV])
         self.DB_NAME = self._get_env_var("DB_NAME", self.DB_NAME_LIST[self.ENV])
 
-        # 浏览器配置
-        self.BROWSER = self._get_env_var("BROWSER", "chrome")
-        self.HEADLESS = self._get_env_var("HEADLESS", "False").lower() == "true"
+        # ===================== Playwright 配置 =====================
+        self.BROWSER = self._get_env_var("BROWSER", "chrome")  # chromium / firefox / webkit
+        self.HEADLESS = self._get_env_var("HEADLESS", "False").lower() == "true"  # False=显示浏览器，True=无界面
+        self.SLOW_MO = 100  # 操作延迟（调试用）
+        self.BROWSER_VIEWPORT = {"width": 1920, "height": 1080}
 
-        # 窗口大小处理
-        window_size_str = self._get_env_var("WINDOW_SIZE", "1920,1080")
-        self.WINDOW_SIZE = tuple(map(int, window_size_str.split(',')))
-
-        # 等待时间设置
-        self.IMPLICIT_WAIT = int(self._get_env_var("IMPLICIT_WAIT", "15"))
-        self.HIDDEN_FIND_WAIT = int(self._get_env_var("HIDDEN_WAIT", "3"))
-        self.EXPLICIT_WAIT = int(self._get_env_var("EXPLICIT_WAIT", "120"))
+        # 超时时间设置(毫秒)
+        self.IMPLICIT_WAIT = int(self._get_env_var("IMPLICIT_WAIT", "15000"))
+        # 其他时间设置
         self.REFRESH_TIME = int(self._get_env_var("REFRESH_TIME", "15"))
         self.DB_TIMEOUT = int(self._get_env_var("DB_TIMEOUT", "20"))
         self.WAIT_ELEMENT_APPEAR = int(self._get_env_var("WAIT_ELEMENT_APPEAR", "120"))

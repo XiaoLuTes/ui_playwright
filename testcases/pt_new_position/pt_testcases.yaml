@@ -204,7 +204,7 @@ test_cases:
     element: submit_contract
     action: click
     data: null
-  result: 通过
+  result: '失败: 元素查找超时: country_click_for_noai'
 - id: 招聘平台-2
   page: gsr_admin_page
   name: 创建启用ai岗位
@@ -415,7 +415,7 @@ test_cases:
     element: submit_contract
     action: click
     data: null
-  result: 通过
+  result: '失败: 元素应存在但未找到: jobManagement'
 - id: 招聘平台-3
   page: gsr_admin_page
   name: 发送邮件测试
@@ -472,4 +472,4 @@ test_cases:
     element: sure_send
     action: click
     data: null
-  result: 通过
+  result: '失败: Timeout 1500ms exceeded.'

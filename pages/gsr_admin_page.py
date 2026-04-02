@@ -1,92 +1,78 @@
-import time
-from selenium.common import TimeoutException
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as ec
+import allure
+from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 from pages.base_page import BasePage
 from utils.logger import logger
 from config.settings import Settings
-import allure
 
 
 class GsrAdminPage(BasePage):
-    """
-    管理端页面对象 - 封装登录页面相关操作
-    继承自BasePage
-    """
+    """管理端页面"""
 
-    def __init__(self, page_name, driver):
-        """初始化登录页面"""
-        super().__init__(page_name, driver)
-        # 获取配置
-        self.logger = logger
+    def __init__(self, page_name, page):
+        super().__init__(page_name, page)
         self.settings = Settings()
 
     @allure.step("导航到登录页面")
     def navigate_to_login(self, max_retry=3):
-        """打开登录页面"""
         login_url = self.settings.URL
-        locator = self.get_element_locator("username_input")
-        time_out = self.settings.IMPLICIT_WAIT
-        for times in range(max_retry):
+
+        for attempt in range(max_retry):
             try:
-                self.logger.info(f"尝试导航到登录页面 (尝试 {times + 1}/{max_retry}次登录): {login_url}")
+                logger.info(f"导航到登录页面 第 {attempt + 1}/{max_retry} 次")
                 self.open(login_url)
-                # 等待页面关键元素加载完成
-                WebDriverWait(self.driver, time_out).until(
-                    ec.presence_of_element_located(locator)
-                )
-                self.logger.info("成功导航到登录页面")
+                # 等待用户名输入框出现（自动等待）
+                self.find_element("username_input")
+                logger.info("成功进入登录页面")
                 return True
 
-            except TimeoutException as e:
-                self.logger.warning(f"导航到登录页面超时 (尝试 {times + 1}/{max_retry}次登录): {str(e)}")
-                if times == max_retry - 1:
-                    self.logger.error("所有重试尝试均失败")
-                    raise e
-                time.sleep(5)
+            except PlaywrightTimeoutError:
+                logger.warning(f"登录页面加载超时，重试中 {attempt + 1}/{max_retry}")
+                if attempt == max_retry - 1:
+                    logger.error("所有重试均失败")
+                    raise
+                self.page.wait_for_timeout(5000)
 
             except Exception as e:
-                self.logger.error(f"打开页面时发生错误: {str(e)}")
-                if times == max_retry - 1:
-                    raise e
+                logger.error(f"打开页面异常: {str(e)}")
+                if attempt == max_retry - 1:
+                    raise
+                self.page.wait_for_timeout(3000)
+
         return False
 
     @allure.step("执行登录操作")
     def perform_login(self):
-        """执行登录操作"""
         try:
+            # 输入账号
             self.input_text("username_input", self.settings.USER)
+            # 输入密码
             self.input_text("password_input", self.settings.PASSWORD)
+            # 输入验证码
             self.input_text("code_input", '1')
+            # 点击登录
             self.element_click("login_button")
-            # 等待登录成功 - 检查登录后页面元素
             self.is_element_present("talent_button")
-            # 如果提供了executor，则在登录成功后注册项目所需的页面对象
-            # if executor:
-            #     self.register_project_pages(executor)
             return True
-        except Exception as e:
-            self.logger.error(f"登录失败: {str(e)}")
-            self.take_screenshot("登录失败")
-            raise e
 
-    def ensure_logged_in(self):
-        """确保用户已登录"""
-        login_url = self.settings.URL
-        try:
-            # 检查是否已经登录（通过检查登录后的元素是否存在）
-            self.open(login_url)
-            if (self.is_element_present("talent_button", 5) or
-                    self.is_element_present("user_part", 5)):
-                self.logger.info("用户已登录")
-                return True
-            else:
-                self.logger.info("用户未登录，开始执行登录")
-                # 导航到登录页面
-                self.navigate_to_login()
-                # 执行登录
-                return self.perform_login()
         except Exception as e:
-            self.logger.error(f"确保登录状态失败: {str(e)}")
-            self.take_screenshot("确保登录状态失败")
-            raise e
+            logger.error(f"登录失败: {str(e)}")
+            self.take_screenshot("登录失败")
+            raise
+
+    @allure.step("确保已登录状态")
+    def ensure_logged_in(self):
+        try:
+            self.open(self.settings.URL)
+            # 5秒内检查是否已登录（元素存在即代表已登录）
+            if ((self.is_element_present("talent_button")) or
+                    (self.is_element_present("user_part"))):
+                logger.info("当前已处于登录状态")
+                return True
+            logger.info("未登录，开始自动登录流程")
+            self.navigate_to_login()
+            return self.perform_login()
+
+        except Exception as e:
+            logger.error(f"登录状态检查失败: {str(e)}")
+            self.take_screenshot("登录状态异常")
+            raise

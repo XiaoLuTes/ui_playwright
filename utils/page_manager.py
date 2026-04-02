@@ -1,24 +1,22 @@
 from utils.logger import logger
 from config.settings import settings
 import importlib
-from utils.windows_Switch_Helper import WindowSwitchHelper
 
 
 class PageManager:
-    """页面对象管理器 - 动态管理多个页面对象"""
+    """页面对象管理器 - 动态管理多个页面对象（Playwright 版）"""
 
-    def __init__(self, driver):
-        self.driver = driver
+    def __init__(self, page):
+        self.page = page
         self.pages = {}
         self.settings = settings
 
     def register_page(self, page_name, page_class=None):
         """注册页面对象"""
         if page_class is None:
-            # 动态导入页面类
             page_class = self.import_page_class(page_name)
         if page_class:
-            page_instance = page_class(page_name, self.driver)
+            page_instance = page_class(page_name, self.page)
             if hasattr(page_instance, 'set_page_manager'):
                 page_instance.set_page_manager(self)
             self.pages[page_name] = page_instance
@@ -26,7 +24,7 @@ class PageManager:
             return page_instance
         else:
             from pages.base_page import BasePage
-            page_instance = BasePage(page_name, self.driver)
+            page_instance = BasePage(page_name, self.page)
         self.pages[page_name] = page_instance
         logger.info(f"注册页面对象: {page_name}")
         return page_instance
@@ -55,7 +53,7 @@ class PageManager:
             return self.register_page(page_name)
 
     def initialize_project_pages(self, project_name=None):
-        """初始化指定项目的所有页面"""
+        """初始化项目页面"""
         if project_name is None:
             project_name = self.settings.CURRENT_PROJECT
 
@@ -74,19 +72,12 @@ class PageManager:
         if page_url:
             page_obj = self.get_page(page_name)
             if page_name == self.settings.DEFAULT_PAGE_NAME:
-                page_obj.ensure_logged_in()
-                logger.info(f"登录成功")
-                WindowSwitchHelper.switch_to_window_by_url(page_obj, page_url)
+                if hasattr(page_obj, "ensure_logged_in"):
+                    page_obj.ensure_logged_in()
             else:
-                from pages.base_page import BasePage
-                base_page = BasePage(page_name, self.driver)
-                base_page.open(page_url)
-                WindowSwitchHelper.switch_to_window_by_url(page_obj, page_url)
+                page_obj.open(page_url)
+
             return True
         else:
             logger.error(f"未找到页面 {page_name} 的URL配置")
             return False
-
-    def get_page_manager(self):
-        """获取页面管理器"""
-        return self
