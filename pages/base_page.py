@@ -40,7 +40,6 @@ class BasePage:
         self.page.goto(url, wait_until="domcontentloaded")
         logger.info(f"页面打开成功: {url}")
 
-    # ==================== 查找元素 ====================
     def find_element(self, element_name):
         by, value = self.get_element_locator(element_name)
         is_hidden = element_name.startswith("hidden_")
@@ -74,7 +73,6 @@ class BasePage:
             self.take_screenshot(f"元素查找失败-{element_name}")
             raise e
 
-    # ==================== 输入文本 ====================
     @allure.step("对元素【{element_name}】输入文本: {text}")
     def input_text(self, element_name, text, clear_first=True):
         logger.info(f"元素【{element_name}】输入: {text}")
@@ -83,7 +81,6 @@ class BasePage:
             loc.fill("")
         loc.fill(str(text))
 
-    # ==================== 点击元素====================
     @allure.step("点击元素: {element_name}")
     def element_click(self, element_name):
         loc = self.find_element(element_name)
@@ -106,19 +103,16 @@ class BasePage:
                 logger.error(f"点击失败: {element_name} => {e}")
                 raise
 
-    # ==================== 获取文本 ====================
     @allure.step("获取元素文本: {element_name}")
     def get_text(self, element_name):
         loc = self.find_element(element_name)
         return loc.text_content().strip()
 
-    # ==================== 获取输入框值 ====================
     @allure.step("获取元素值: {element_name}")
     def get_element_value(self, element_name):
         loc = self.find_element(element_name)
         return loc.input_value().strip()
 
-    # ==================== 判断元素是否存在====================
     def is_element_present(self, element_name):
         try:
             self.find_element(element_name)
@@ -126,7 +120,6 @@ class BasePage:
         except PlaywrightTimeoutError:
             return False
 
-    # ==================== 截图 ====================
     @allure.step("页面截图")
     def take_screenshot(self, name="screenshot"):
         screenshot_dir = self.settings.SCREENSHOT_PATH
@@ -144,14 +137,12 @@ class BasePage:
             attachment_type=allure.attachment_type.PNG
         )
 
-    # ==================== 查找元素所属页面 ====================
     def find_element_page(self, element_name):
         for page_name, elements in self.locators.items():
             if element_name in elements:
                 return page_name
         return None
 
-    # ==================== 键盘向下 ====================
     @allure.step("键盘向下按键 {data} 次")
     def keyboard_down(self, data):
         times = int(data)
@@ -159,7 +150,6 @@ class BasePage:
             self.page.keyboard.press("ArrowDown")
         logger.info(f"向下按键 {times} 次")
 
-    # ==================== 键盘向上 ====================
     @allure.step("键盘向上按键 {data} 次")
     def keyboard_up(self, data):
         times = int(data)
@@ -167,13 +157,11 @@ class BasePage:
             self.page.keyboard.press("ArrowUp")
         logger.info(f"向上按键 {times} 次")
 
-    # ==================== 回车键 ====================
     @allure.step("按下 Enter 键")
     def keyboard_enter(self):
         self.page.keyboard.press("Enter")
         logger.info("按下 Enter 键")
 
-    # ==================== 上传文件 ====================
     @allure.step("上传文件: {data}")
     def upload_file(self, element_name, data):
         if not Path(data).exists():
@@ -185,7 +173,6 @@ class BasePage:
         logger.info(f"文件上传成功: {abs_path}")
         time.sleep(3)
 
-    # ==================== 等待元素值/文本变化 ====================
     @allure.step("等待元素【{element_name}】的【{real_action}】等于【{expected_value}】")
     def wait_for_element_value(self, element_name, real_action, expected_value):
         timeout = self.settings.EXPLICIT_WAIT
@@ -211,7 +198,6 @@ class BasePage:
         self.take_screenshot(f"等待值超时-{element_name}")
         raise Exception(error_msg)
 
-    # ==================== 等待元素出现 ====================
     def wait_for_element_appear(self, element_name):
         total_wait = self.settings.WAIT_ELEMENT_APPEAR
         refresh_interval = self.settings.REFRESH_TIME
@@ -234,7 +220,6 @@ class BasePage:
         self.take_screenshot(f"等待元素超时-{element_name}")
         raise Exception(error_msg)
 
-    # ==================== 数据库验证（无修改） ====================
     @allure.step("执行 SQL 验证")
     def verify_mysql_data(self, sql: str, expected: str):
         logger.info(f"执行 SQL: {sql}")
