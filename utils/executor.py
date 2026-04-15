@@ -65,7 +65,7 @@ class Executor:
 
     def execute_test_case(self, test_case):
         """
-        执行单个测试用例（完全不变，兼容原有逻辑）
+        执行单个测试用例
         """
         test_case_page = test_case['page']
         page_object = self.page_manager.get_page(test_case_page)
@@ -112,7 +112,7 @@ class Executor:
             logger.info(f"测试用例 {test_case_id} 执行完成")
 
     def execute_step(self, page_object, step_name, element_name, action, data, expected):
-        """执行测试步骤 —— 100% 兼容你原来的所有 action"""
+        """执行测试步骤"""
         with allure.step("步骤参数"):
             parameters = {
                 'element_name': element_name,
