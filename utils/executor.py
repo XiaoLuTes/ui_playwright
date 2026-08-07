@@ -35,7 +35,7 @@ class Executor:
 
             for page_name, page in self.page_manager.pages.items():
                 page.set_db_utils(self._db_utils)
-                logger.debug(f"设置数据库连接到页面: {page_name}")
+                logger.info(f"设置数据库连接到页面: {page_name}")
 
     def _close_database_connection(self):
         """关闭数据库连接"""
