@@ -86,13 +86,13 @@ class Settings:
 
         # 账号密码配置
         self.USER_LIST = {
-            "生产环境": "louie.lu@gsrtech.com",
-            "预生产环境": "louie.lu@gsrtech.com",
+            "生产环境": "xxx",
+            "预生产环境": "lxxx",
             "测试环境": "小卢"
         }
         self.PASSWORD_LIST = {
-            "生产环境": "GSR@2025",
-            "预生产环境": "qwe112233",
+            "生产环境": "xxx",
+            "预生产环境": "xxx",
             "测试环境": "Aa129889"
         }
         self.USER = self._get_env_var("USER", self.USER_LIST[self.ENV])
