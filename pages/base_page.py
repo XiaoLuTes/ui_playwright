@@ -20,7 +20,6 @@ class BasePage:
         self.wait_timeout = self.settings.IMPLICIT_WAIT
         self._db_utils = None
         self.page_manager = None
-
         self.page.set_default_timeout(self.wait_timeout)
 
     def set_page_manager(self, page_manager):
@@ -40,7 +39,7 @@ class BasePage:
         self.page.goto(url, wait_until="domcontentloaded")
         logger.info(f"页面打开成功: {url}")
 
-    def find_element(self, element_name):
+    def find_element(self, element_name, screenshot_on_error=True, timeout=None):
         by, value = self.get_element_locator(element_name)
         is_hidden = element_name.startswith("hidden_")
         by = by.lower()
@@ -58,19 +57,21 @@ class BasePage:
 
         try:
             if is_hidden:
-                loc.wait_for(state="attached")
+                loc.wait_for(state="attached", timeout=timeout)
             else:
-                loc.wait_for(state="visible")
+                loc.wait_for(state="visible", timeout=timeout)
             return loc
         except PlaywrightTimeoutError:
             error_msg = f"元素查找超时: {element_name}"
             logger.error(error_msg)
-            self.take_screenshot(f"元素查找超时-{element_name}")
+            if screenshot_on_error:
+                self.take_screenshot(f"元素查找超时-{element_name}")
             raise PlaywrightTimeoutError(error_msg)
         except Exception as e:
             error_msg = f"元素{element_name}查找失败: {e}"
             logger.error(error_msg)
-            self.take_screenshot(f"元素查找失败-{element_name}")
+            if screenshot_on_error:
+                self.take_screenshot(f"元素查找失败-{element_name}")
             raise e
 
     @allure.step("对元素【{element_name}】输入文本: {text}")
@@ -104,18 +105,18 @@ class BasePage:
                 raise
 
     @allure.step("获取元素文本: {element_name}")
-    def get_text(self, element_name):
-        loc = self.find_element(element_name)
+    def get_text(self, element_name, timeout=None, screenshot_on_error=False):
+        loc = self.find_element(element_name, timeout=timeout, screenshot_on_error=screenshot_on_error)
         return loc.text_content().strip()
 
     @allure.step("获取元素值: {element_name}")
-    def get_element_value(self, element_name):
-        loc = self.find_element(element_name)
+    def get_element_value(self, element_name, timeout=None, screenshot_on_error=False):
+        loc = self.find_element(element_name, timeout=timeout, screenshot_on_error=screenshot_on_error)
         return loc.input_value().strip()
 
-    def is_element_present(self, element_name):
+    def is_element_present(self, element_name, screenshot_on_error=False, timeout=None):
         try:
-            self.find_element(element_name)
+            self.find_element(element_name, screenshot_on_error=screenshot_on_error, timeout=timeout)
             return True
         except PlaywrightTimeoutError:
             return False
@@ -175,37 +176,46 @@ class BasePage:
 
     @allure.step("等待元素【{element_name}】的【{real_action}】等于【{expected_value}】")
     def wait_for_element_value(self, element_name, real_action, expected_value):
-        timeout = self.settings.EXPLICIT_WAIT
-        start_time = time.time()
+        timeout = self.settings.EXPLICIT_WAIT  # 总超时时间
+        timeout_find = self.settings.TIME_FIND  # 查找超时时间
+        start_time = time.time()  # 轮询开始时间
+        last_refresh_time = start_time  # 最新刷新时间
+        refresh_interval = self.settings.REFRESH_INTERVAL  # 刷新间隔时间
 
         while time.time() - start_time < timeout:
             try:
                 if real_action == "value":
-                    val = self.get_element_value(element_name)
+                    val = self.get_element_value(element_name, timeout_find)
                 elif real_action == "text":
-                    val = self.get_text(element_name)
+                    val = self.get_text(element_name, timeout_find)
                 else:
-                    val = self.get_element_value(element_name)
+                    val = self.get_element_value(element_name, timeout_find)
 
                 if val.strip() == str(expected_value).strip():
                     logger.info(f"值匹配成功: {expected_value}")
                     return
             except PlaywrightTimeoutError:
-                pass
-            time.sleep(1)
+                pass  # 元素不存在，刷新后继续轮询
+            if refresh_interval and time.time() - last_refresh_time >= refresh_interval:
+                logger.info(f"元素：{element_name}非期望值{expected_value}，刷新页面继续等待...")
+                self.page.reload()
+                last_refresh_time = time.time()
+            time.sleep(1)  # 轮询节奏
 
         error_msg = f"等待超时: {element_name} 期望={expected_value}"
         self.take_screenshot(f"等待值超时-{element_name}")
         raise Exception(error_msg)
 
+    @allure.step("等待元素{element_name}出现")
     def wait_for_element_appear(self, element_name):
         total_wait = self.settings.WAIT_ELEMENT_APPEAR
         refresh_interval = self.settings.REFRESH_TIME
+        timeout_find = self.settings.TIME_FIND
         start_time = time.time()
         last_refresh_time = start_time
 
         while time.time() - start_time < total_wait:
-            if self.is_element_present(element_name):
+            if self.is_element_present(element_name, timeout=timeout_find):
                 logger.info(f"元素已出现: {element_name}")
                 return True
 
@@ -214,7 +224,7 @@ class BasePage:
                 self.page.reload()
                 last_refresh_time = time.time()
 
-            time.sleep(2)
+            time.sleep(2)  # 轮询节奏
 
         error_msg = f"等待元素出现超时: {element_name}"
         self.take_screenshot(f"等待元素超时-{element_name}")

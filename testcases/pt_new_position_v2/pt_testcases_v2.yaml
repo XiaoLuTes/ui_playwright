@@ -1,0 +1,369 @@
+test_cases:
+- id: 招聘平台-1
+  page: gsr_admin_page
+  name: 创建不启用ai岗位
+  steps:
+  - step_name: 1、点击招聘平台入口（OCR自动登录已完成）
+    element: talent_entry
+    action: click
+    data: null
+  - step_name: 2、验证进入招聘平台
+    element: jobManagement
+    action: check_exists
+    data: 存在
+  - step_name: 3、点击进入岗位管理
+    element: jobManagement
+    action: click
+    data: null
+  - step_name: 4、新建岗位需求
+    element: new_job
+    action: click
+    data: null
+  - step_name: 5、岗位类型选择-新建岗位
+    element: customer_type_new
+    action: click
+    data: null
+  - step_name: 6、点击合同类型
+    element: contract_type
+    action: click
+    data: null
+  - step_name: 7、合同类型输入'Labor Contract'
+    element: contract_type
+    action: input
+    data: Labor Contract
+  - step_name: 8、等待下拉选项加载
+    element: null
+    action: wait
+    data: '2'
+  - step_name: 9、回车确认选择'Labor Contract'
+    element: contract_type
+    action: enter
+    data: null
+  - step_name: 10、验证合同选择
+    element: contract_type_check
+    action: check_text
+    data: Labor Contract
+  - step_name: 11、点击公司名称
+    element: company_name
+    action: click
+    data: null
+  - step_name: 12、公司名称输入"{customer}"
+    element: company_name
+    action: input
+    data: '{customer}'
+  - step_name: 13、等待下拉选项加载
+    element: null
+    action: wait
+    data: '2'
+  - step_name: 14、回车确认
+    element: company_name
+    action: enter
+    data: null
+  - step_name: 15、校验公司选择
+    element: company_name_check
+    action: check_text
+    data: '{customer}'
+  - step_name: 16、需求类型：猎头
+    element: requirement_type_1
+    action: click
+    data: null
+  - step_name: 17、需求人数11人
+    element: recruitment_volume
+    action: input
+    data: '11'
+    expected: true
+  - step_name: 18、选择非eor入职
+    element: eor_not
+    action: click
+    data: null
+  - step_name: 19、点击岗位负责人栏
+    element: project_manager
+    action: click
+    data: null
+  - step_name: 20、岗位负责人栏输入"{owner}"
+    element: project_manager
+    action: input
+    data: '{owner}'
+  - step_name: 21、等待下拉选项加载
+    element: null
+    action: wait
+    data: '2'
+  - step_name: 22、回车确认
+    element: project_manager
+    action: enter
+    data: null
+  - step_name: 23、校验岗位负责人选择
+    element: project_manager_check
+    action: check_text
+    data: '{owner}'
+  - step_name: 24、上传文件
+    element: hidden_fr_upload_jd
+    action: upload
+    data: testcases/pt_new_position/JD-TG(Japan CA)-LS（JP-EN）.pdf
+  - step_name: 25、验证上传是否成功
+    element: fr_upload_list
+    action: check_exists
+    data: 存在
+  - step_name: 26、选择不需要触发ai搜索
+    element: if_ai_no
+    action: click
+    data: null
+  - step_name: 27、选择不需要AI优化
+    element: need_ai_no
+    action: click
+    data: null
+  - step_name: 28、job_title输入'自动化测试'
+    element: job_title
+    action: input
+    data: 不触发AI测试{replace_num}
+  - step_name: 29、点击国家/地区选项栏
+    element: country
+    action: click
+    data: null
+  - step_name: 30、国家/地区选项栏模糊输入
+    element: country
+    action: input
+    data: japan
+  - step_name: 31、等待下拉选项加载
+    element: null
+    action: wait
+    data: '3'
+  - step_name: 32、回车确认
+    element: country
+    action: enter
+    data: null
+  - step_name: 33、验证国家/地区选项栏
+    element: country_check_for_noai
+    action: check_text
+    data: Japan
+  - step_name: 34、国家/城市栏输入japan
+    element: country_city
+    action: input
+    data: japan
+    expected: true
+  - step_name: 35、点击start
+    element: start
+    action: click
+    data: null
+  - step_name: 36、等待流程提交
+    element: null
+    action: wait
+    data: '3'
+  result: 通过
+- id: 招聘平台-2
+  page: gsr_admin_page
+  name: 创建启用ai岗位
+  steps:
+  - step_name: 1、点击招聘平台入口（OCR自动登录已完成）
+    element: talent_entry
+    action: click
+    data: null
+  - step_name: 2、验证进入招聘平台
+    element: jobManagement
+    action: check_exists
+    data: 存在
+  - step_name: 3、点击进入岗位管理
+    element: jobManagement
+    action: click
+    data: null
+  - step_name: 4、新建岗位需求
+    element: new_job
+    action: click
+    data: null
+  - step_name: 5、岗位类型选择-新建岗位
+    element: customer_type_new
+    action: click
+    data: null
+  - step_name: 6、点击合同类型
+    element: contract_type
+    action: click
+    data: null
+  - step_name: 7、合同类型输入'Labor Contract'
+    element: contract_type
+    action: input
+    data: Labor Contract
+  - step_name: 8、等待下拉选项加载
+    element: null
+    action: wait
+    data: '2'
+  - step_name: 9、回车确认选择'Labor Contract'
+    element: contract_type
+    action: enter
+    data: null
+  - step_name: 10、验证合同选择
+    element: contract_type_check
+    action: check_text
+    data: Labor Contract
+  - step_name: 11、点击公司名称
+    element: company_name
+    action: click
+    data: null
+  - step_name: 12、公司名称输入"{customer}"
+    element: company_name
+    action: input
+    data: '{customer}'
+  - step_name: 13、等待下拉选项加载
+    element: null
+    action: wait
+    data: '2'
+  - step_name: 14、回车确认
+    element: company_name
+    action: enter
+    data: null
+  - step_name: 15、校验公司选择
+    element: company_name_check
+    action: check_text
+    data: '{customer}'
+  - step_name: 16、需求类型：猎头
+    element: requirement_type_1
+    action: click
+    data: null
+  - step_name: 17、需求人数11人
+    element: recruitment_volume
+    action: input
+    data: '11'
+    expected: true
+  - step_name: 18、选择非eor入职
+    element: eor_not
+    action: click
+    data: null
+  - step_name: 19、点击岗位负责人栏
+    element: project_manager
+    action: click
+    data: null
+  - step_name: 20、岗位负责人栏输入"{owner}"
+    element: project_manager
+    action: input
+    data: '{owner}'
+  - step_name: 21、等待下拉选项加载
+    element: null
+    action: wait
+    data: '2'
+  - step_name: 22、回车确认
+    element: project_manager
+    action: enter
+    data: null
+  - step_name: 23、校验岗位负责人选择
+    element: project_manager_check
+    action: check_text
+    data: '{owner}'
+  - step_name: 24、上传文件
+    element: hidden_fr_upload_jd
+    action: upload
+    data: testcases/pt_new_position/JD-TG(Japan CA)-LS（JP-EN）.pdf
+  - step_name: 25、验证上传是否成功
+    element: fr_upload_list
+    action: check_exists
+    data: 存在
+  - step_name: 26、选择需要触发ai搜索
+    element: if_ai_yes
+    action: click
+    data: null
+  - step_name: 27、选择需要AI优化
+    element: need_ai_yes
+    action: click
+    data: null
+  - step_name: 28、等待ai描述框加载
+    element: null
+    action: wait
+    data: '3'
+  - step_name: 29、输入AI描述
+    element: ai_instruction
+    action: input
+    data: auto
+    expected: true
+  - step_name: 30、job_title输入'自动化测试'
+    element: job_title
+    action: input
+    data: 触发AI测试{replace_num}
+  - step_name: 31、点击国家/地区选项栏
+    element: country
+    action: click
+    data: null
+  - step_name: 32、国家/地区选项栏模糊输入
+    element: country
+    action: input
+    data: japan
+  - step_name: 33、等待下拉选项加载
+    element: null
+    action: wait
+    data: '3'
+  - step_name: 34、回车确认
+    element: country
+    action: enter
+    data: null
+  - step_name: 35、验证国家/地区选项栏
+    element: country_check
+    action: check_text
+    data: Japan
+  - step_name: 36、国家/城市栏输入japan
+    element: country_city
+    action: input
+    data: japan
+    expected: true
+  - step_name: 37、点击start
+    element: start
+    action: click
+    data: null
+  - step_name: 38、等待流程提交
+    element: null
+    action: wait
+    data: '3'
+  result: null
+- id: 招聘平台-3
+  page: gsr_admin_page
+  name: 发送邮件测试
+  steps:
+  - step_name: 1、点击招聘平台入口（OCR自动登录已完成）
+    element: talent_entry
+    action: click
+    data: null
+  - step_name: 2、点击进入岗位管理
+    element: jobManagement
+    action: click
+    data: null
+  - step_name: 3、点击刚才创建的岗位
+    element: position_new
+    action: click
+    data: null
+  - step_name: 4、等待ai返回候选人
+    element: choose_1
+    action: wait_exists
+    data: null
+  - step_name: 5、勾选初筛页第一位候选人
+    element: choose_1
+    action: click
+    data: null
+  - step_name: 6、点击下个环节按钮
+    element: next_round_first
+    action: click
+    data: null
+  - step_name: 7、等待2秒
+    element: null
+    action: wait
+    data: '2'
+  - step_name: 8、进入匹配页
+    element: match
+    action: click
+    data: null
+  - step_name: 9、点击修改邮箱按钮
+    element: change_email
+    action: click
+    data: null
+  - step_name: 10、邮箱输入"louie.lu@gsrtech.com"
+    element: email_input
+    action: input
+    data: louie.lu@gsrtech.com
+  - step_name: 11、点击保存
+    element: email_save
+    action: click
+    data: null
+  - step_name: 12、勾选已修改邮箱的候选人
+    element: choose_1
+    action: click
+    data: null
+  - step_name: 13、点击发送邮件
+    element: sure_send
+    action: click
+    data: null
+  result: null

@@ -4,7 +4,7 @@ import allure
 from utils.element_locator import ElementLocator
 from utils.page_manager import PageManager
 from utils.yaml_load import YamlLoad
-from config.settings import Settings
+from config.settings import settings
 
 class Executor:
     def __init__(self, page, page_manager=None):
@@ -14,7 +14,7 @@ class Executor:
         self.locators = self.data_loader.load_locators()
         self.page_manager = PageManager(page)
         self.yaml_load = YamlLoad()
-        self.settings = Settings()
+        self.settings = settings
         self.page_name = None
         self._db_utils = None
 
@@ -128,15 +128,16 @@ class Executor:
         if action == "input":
             page_object.input_text(element_name, data)
             if expected:
-                actual_value = page_object.get_element_value(element_name)
+                actual_value = page_object.get_element_value(element_name, screenshot_on_error=True)
                 if str(data) not in actual_value:
+                    page_object.take_screenshot(f"{element_name}_文本检查失败")
                     raise Exception(f"输入验证失败：预期'{data}'，实际'{actual_value}'")
 
         elif action == "click":
             page_object.element_click(element_name)
 
         elif action == "check_text":
-            actual_text = page_object.get_text(element_name)
+            actual_text = page_object.get_text(element_name, screenshot_on_error=True)
             if str(data) not in actual_text:
                 page_object.take_screenshot(f"{element_name}_文本检查失败")
                 raise Exception(f"文本不匹配：预期包含'{data}'，实际'{actual_text}'")

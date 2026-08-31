@@ -36,7 +36,7 @@ class BrowserEngine:
             locale="zh-CN",
             viewport=settings.BROWSER_VIEWPORT
         )
-        self.context.set_default_timeout(settings.IMPLICIT_WAIT * 1000)
+        self.context.set_default_timeout(settings.IMPLICIT_WAIT)
         self.page = self.context.new_page()
 
         logger.info("Playwright 浏览器启动完成")

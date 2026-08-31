@@ -1,5 +1,8 @@
 import os
 import time
+from dotenv import load_dotenv
+
+load_dotenv()  # 读取项目根目录 .env（Jenkins 环境变量优先级更高，会覆盖）
 
 class Settings:
     """支持环境变量覆盖的配置类"""
@@ -59,11 +62,24 @@ class Settings:
                 "TESTCASES_PATH": "./testcases/attendance_and_leave/test_attendance.yaml",
                 "ELEMENT_LOCATORS": "./config/locators/attendance_and_leave.yaml",
                 "description": "打卡日报及月报测试"
+            },
+            "管理端冒烟登录测试": {
+                "PAGE_NAME": ["login_page", "gsr_admin_page"],
+                "TESTCASES_PATH": "./testcases/smoke_login/smoke_login.yaml",
+                "ELEMENT_LOCATORS": "./config/locators/gsr_admin_page.yaml",
+                "description": "管理端登录冒烟测试（登录页加载/显式登录/自动登录路径）"
+            },
+            "招聘平台新建岗位-维护版": {
+                "PAGE_NAME": ["login_page", "gsr_admin_page"],
+                "TESTCASES_PATH": "./testcases/pt_new_position_v2/pt_testcases_v2.yaml",
+                "ELEMENT_LOCATORS": "./config/locators/pt_new_position_v2.yaml",
+                "description": "招聘平台新建岗位全流程（维护版，重新采集元素）"
             }
         }
         # 页面url映射
         self.PAGE_URLS = {
-            "gsr_admin_page": self.URL,  # 登录页面URL
+            "gsr_admin_page": self.URL,  # 管理端首页URL（导航时自动登录）
+            "login_page": self.URL,  # 登录页URL（不做自动登录，用于显式测试登录表单）
             "flutter_page": self.OMIN_URL
             # 可以继续添加其他页面的URL配置...
         }
@@ -73,62 +89,30 @@ class Settings:
             "flutter_page": "FlutterPage"
         }
         # 获取当前项目
-        self.CURRENT_PROJECT = self._get_env_var("CURRENT_PROJECT", '招聘平台新建岗位')
+        self.CURRENT_PROJECT = self._get_env_var("CURRENT_PROJECT", '招聘平台新建岗位-维护版')
         # 获取当前项目配置
         self.PROJECT_CONFIG = self.get_current_project_config(self.CURRENT_PROJECT)
         # 测试用例文件位置(根据项目获取)
         self.TESTCASES = self.PROJECT_CONFIG["TESTCASES_PATH"]
+        # 复用测试用例文件位置(写回步骤测试结果，防止污染用例)
+        self.TEST_RESULT_DIR = self._get_env_var("TEST_RESULT_DIR", "./reports/test_results")
         # 页面名称(根据项目获取)
         self.PAGE_NAME = self.PROJECT_CONFIG["PAGE_NAME"]
+        # 默认项目页面
         self.DEFAULT_PAGE_NAME = "gsr_admin_page"
         # 元素定位器地址
         self.ELEMENT_LOCATORS = self.PROJECT_CONFIG["ELEMENT_LOCATORS"]
 
         # 账号密码配置
-        self.USER_LIST = {
-            "生产环境": "xxx",
-            "预生产环境": "lxxx",
-            "测试环境": "小卢"
-        }
-        self.PASSWORD_LIST = {
-            "生产环境": "xxx",
-            "预生产环境": "xxx",
-            "测试环境": "Aa129889"
-        }
-        self.USER = self._get_env_var("USER", self.USER_LIST[self.ENV])
-        self.PASSWORD = self._get_env_var("PASSWORD", self.PASSWORD_LIST[self.ENV])
+        self.LOGIN_USER = self._get_env_var("LOGIN_USER", '')
+        self.PASSWORD = self._get_env_var("PASSWORD", '')
 
         # 数据库配置
-        self.DB_HOST_LIST = {
-            "测试环境": "43.154.110.127",
-            "预生产环境": "",
-            "生产环境": ""
-        }
-        self.DB_USER_LIST = {
-            "测试环境": "gsr_db",
-            "预生产环境": "",
-            "生产环境": ""
-        }
-        self.DB_PASSWORD_LIST = {
-            "测试环境": "gsr666666",
-            "预生产环境": "",
-            "生产环境": ""
-        }
-        self.DB_PORT_LIST = {
-            "测试环境": "3306",
-            "预生产环境": "",
-            "生产环境": ""
-        }
-        self.DB_NAME_LIST = {
-            "测试环境": "gsr",
-            "预生产环境": "",
-            "生产环境": ""
-        }
-        self.DB_HOST = self._get_env_var("DB_HOST", self.DB_HOST_LIST[self.ENV])
-        self.DB_USER = self._get_env_var("DB_USER", self.DB_USER_LIST[self.ENV])
-        self.DB_PASSWORD = self._get_env_var("DB_PASSWORD", self.DB_PASSWORD_LIST[self.ENV])
-        self.DB_PORT = self._get_env_var("DB_PORT", self.DB_PORT_LIST[self.ENV])
-        self.DB_NAME = self._get_env_var("DB_NAME", self.DB_NAME_LIST[self.ENV])
+        self.DB_HOST = self._get_env_var("DB_HOST", '')
+        self.DB_USER = self._get_env_var("DB_USER", '')
+        self.DB_PASSWORD = self._get_env_var("DB_PASSWORD", '')
+        self.DB_PORT = self._get_env_var("DB_PORT", '')
+        self.DB_NAME = self._get_env_var("DB_NAME", '')
 
         # ===================== Playwright 配置 =====================
         self.BROWSER = self._get_env_var("BROWSER", "chrome")  # chromium / firefox / webkit
@@ -136,8 +120,14 @@ class Settings:
         self.SLOW_MO = 100  # 操作延迟（调试用）
         self.BROWSER_VIEWPORT = {"width": 1920, "height": 1080}
 
-        # 超时时间设置(毫秒)
+        # 超时时间设置(毫秒)-隐式超时(page全局)
         self.IMPLICIT_WAIT = int(self._get_env_var("IMPLICIT_WAIT", "15000"))
+        # 超时时间设置(秒)-等待元素值变更超时时间
+        self.EXPLICIT_WAIT = int(self._get_env_var("EXPLICIT_WAIT", "30"))
+        # 等待值变化时的页面刷新间隔(秒)，默认5秒
+        self.REFRESH_INTERVAL = int(self._get_env_var("REFRESH_INTERVAL", "5"))
+        # 等待元素值变化时，元素不存在超时时间(毫秒)，默认3000毫秒
+        self.TIME_FIND = int(self._get_env_var("TIME_FIND", "3000"))
         # 其他时间设置
         self.REFRESH_TIME = int(self._get_env_var("REFRESH_TIME", "15"))
         self.DB_TIMEOUT = int(self._get_env_var("DB_TIMEOUT", "20"))
@@ -188,3 +178,18 @@ class Settings:
 
 
 settings = Settings()
+
+# ============ 敏感配置启动校验（进程启动时执行一次） ============
+REQUIRED_ENV = [
+    ("LOGIN_USER", "登录账号"),
+    ("PASSWORD", "登录密码"),
+    ("DB_HOST", "数据库地址"),
+    ("DB_USER", "数据库用户"),
+    ("DB_PASSWORD", "数据库密码"),
+    ("DB_NAME", "数据库名"),
+]
+missing = [cn for cn, _ in REQUIRED_ENV if not getattr(settings, cn, "")]
+if missing:
+    descs = "、".join(f"{cn}({desc})" for cn, desc in REQUIRED_ENV if not getattr(settings, cn, ""))
+    raise SystemExit(f"[配置错误] 以下敏感配置未设置(请通过环境变量或 .env 提供): {descs}")
+

@@ -12,7 +12,7 @@ def read_yaml(file_path):
     with open(file_path, mode='r', encoding="utf-8") as a:
         content = a.read()
         timestamp = settings.TIME_STAMP
-        username = settings.USER
+        username = settings.LOGIN_USER
         password = settings.PASSWORD
         customer = settings.CUSTOMER
         owner = settings.OWNER
