@@ -2,7 +2,7 @@ import os
 import time
 from dotenv import load_dotenv
 
-load_dotenv()  # 读取项目根目录 .env（Jenkins 环境变量优先级更高，会覆盖）
+load_dotenv(encoding="utf-8")  # 读取项目根目录 .env（Jenkins 环境变量优先级更高，会覆盖）
 
 class Settings:
     """支持环境变量覆盖的配置类"""
@@ -44,6 +44,7 @@ class Settings:
                 "TESTCASES_PATH": "./testcases/pt_new_position/pt_testcases.yaml",  # 测试用例路径
                 "ELEMENT_LOCATORS": "./config/locators/new_position_element_locators.yaml",  # 元素定位器路径
                 "description": "招聘平台非eor岗位全流程",  # 项目描述
+                "LOADING_SELECTOR": ""  # 项目页面加载项(需要等待加载完成的),填CSS id选择器,不需要等待则不填
             },
             "招聘平台新建编制": {
                 "PAGE_NAME": ["gsr_admin_page"],
@@ -51,29 +52,18 @@ class Settings:
                 "ELEMENT_LOCATORS": "./config/locators/gsr_admin_page.yaml",
                 "description": "招聘平台新发起编制流程"
             },
-            "flutter页面测试": {
-                "PAGE_NAME": ["gsr_admin_page", "flutter_page"],
-                "TESTCASES_PATH": "./testcases/test_database/test_database.yaml",
-                "ELEMENT_LOCATORS": "./config/locators/flutter.yaml",
-                "description": "测试下数据库链接"
-            },
-            "假勤打卡日报及月报测试": {
-                "PAGE_NAME": ["gsr_admin_page"],
-                "TESTCASES_PATH": "./testcases/attendance_and_leave/test_attendance.yaml",
-                "ELEMENT_LOCATORS": "./config/locators/attendance_and_leave.yaml",
-                "description": "打卡日报及月报测试"
-            },
-            "管理端冒烟登录测试": {
-                "PAGE_NAME": ["login_page", "gsr_admin_page"],
-                "TESTCASES_PATH": "./testcases/smoke_login/smoke_login.yaml",
-                "ELEMENT_LOCATORS": "./config/locators/gsr_admin_page.yaml",
-                "description": "管理端登录冒烟测试（登录页加载/显式登录/自动登录路径）"
-            },
             "招聘平台新建岗位-维护版": {
                 "PAGE_NAME": ["login_page", "gsr_admin_page"],
                 "TESTCASES_PATH": "./testcases/pt_new_position_v2/pt_testcases_v2.yaml",
                 "ELEMENT_LOCATORS": "./config/locators/pt_new_position_v2.yaml",
                 "description": "招聘平台新建岗位全流程（维护版，重新采集元素）"
+            },
+            "薪资结算包收款包链路": {
+                "PAGE_NAME": ["gsr_admin_page"],
+                "TESTCASES_PATH": "./testcases/eor_salary_ettlement/salary_payment_collection.yaml",
+                "ELEMENT_LOCATORS": "./config/locators/gsr_admin_page_management.yaml",
+                "description": "薪资结算包收款包单月发起引用链路",
+                "LOADING_SELECTOR": "#loader-wrapper"
             }
         }
         # 页面url映射
@@ -89,7 +79,7 @@ class Settings:
             "flutter_page": "FlutterPage"
         }
         # 获取当前项目
-        self.CURRENT_PROJECT = self._get_env_var("CURRENT_PROJECT", '招聘平台新建岗位-维护版')
+        self.CURRENT_PROJECT = self._get_env_var("CURRENT_PROJECT", '薪资结算包收款包链路')
         # 获取当前项目配置
         self.PROJECT_CONFIG = self.get_current_project_config(self.CURRENT_PROJECT)
         # 测试用例文件位置(根据项目获取)
@@ -98,6 +88,8 @@ class Settings:
         self.TEST_RESULT_DIR = self._get_env_var("TEST_RESULT_DIR", "./reports/test_results")
         # 页面名称(根据项目获取)
         self.PAGE_NAME = self.PROJECT_CONFIG["PAGE_NAME"]
+        # 项目页面加载项(需要等待加载完成的)CSS id选择器
+        self.LOADING_SELECTOR = self.PROJECT_CONFIG.get("LOADING_SELECTOR", "")
         # 默认项目页面
         self.DEFAULT_PAGE_NAME = "gsr_admin_page"
         # 元素定位器地址

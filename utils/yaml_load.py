@@ -2,7 +2,7 @@ import os
 import time
 from utils.logger import logger
 from config.settings import settings
-from utils.common import read_yaml_raw, read_yaml, write_yaml
+from utils.common import read_yaml, write_yaml
 
 
 class YamlLoad:
@@ -40,10 +40,10 @@ class YamlLoad:
         result_file = self._get_result_file_path()
         try:
             if os.path.exists(result_file):
-                data = read_yaml_raw(result_file)
+                data = read_yaml(result_file)
             else:
                 # 首次写入：从源用例文件拷贝骨架（只保留 id/name）
-                source_data = read_yaml_raw(self.setting.TESTCASES)
+                source_data = read_yaml(self.setting.TESTCASES)
                 data = {
                     "source": self.setting.TESTCASES,          # 溯源：来自哪个用例文件
                     "run_at": time.strftime("%Y-%m-%d %H:%M:%S"),

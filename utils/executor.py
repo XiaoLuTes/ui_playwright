@@ -5,6 +5,7 @@ from utils.element_locator import ElementLocator
 from utils.page_manager import PageManager
 from utils.yaml_load import YamlLoad
 from config.settings import settings
+from utils.common import VariableStore
 
 class Executor:
     def __init__(self, page, page_manager=None):
@@ -113,6 +114,9 @@ class Executor:
 
     def execute_step(self, page_object, step_name, element_name, action, data, expected):
         """执行测试步骤"""
+        # 运行时变量替换：在记录步骤参数之前，把 {变量名} 替换为真实值
+        data = VariableStore.render(data)
+        expected = VariableStore.render(expected)
         with allure.step("步骤参数"):
             parameters = {
                 'element_name': element_name,
@@ -138,9 +142,27 @@ class Executor:
 
         elif action == "check_text":
             actual_text = page_object.get_text(element_name, screenshot_on_error=True)
-            if str(data) not in actual_text:
+            if str(data) not in actual_text:  # 包含内容即可，并非==
                 page_object.take_screenshot(f"{element_name}_文本检查失败")
                 raise Exception(f"文本不匹配：预期包含'{data}'，实际'{actual_text}'")
+
+        elif action == "check_value":
+            actual_value = page_object.get_element_value(element_name, screenshot_on_error=True)
+            if str(data) not in actual_value:
+                page_object.take_screenshot(f"{element_name}_文本检查失败")
+                raise Exception(f"输入验证失败：预期'{data}'，实际'{actual_value}'")
+
+        elif action == "save_text":
+            # 保存元素文本为变量（data 字段是变量名）
+            value = page_object.get_text(element_name, screenshot_on_error=True)
+            VariableStore.set_variable(data, value)
+            logger.info(f"已保存文本变量 [{data}] = {value}")
+
+        elif action == "save_value":
+            # 保存元素值（表单元素）为变量（data 字段是变量名）
+            value = page_object.get_element_value(element_name, screenshot_on_error=True)
+            VariableStore.set_variable(data, value)
+            logger.info(f"已保存值变量 [{data}] = {value}")
 
         elif action == "down":
             page_object.keyboard_down(data)

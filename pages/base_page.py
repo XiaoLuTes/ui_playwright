@@ -1,3 +1,5 @@
+from time import sleep
+
 from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 from utils.logger import logger
 from utils.element_locator import ElementLocator
@@ -6,6 +8,7 @@ import allure
 import time
 import os
 from pathlib import Path
+from playwright.sync_api import expect
 
 
 class BasePage:
@@ -14,8 +17,8 @@ class BasePage:
     def __init__(self, page_name, page):
         self.page = page  # 页面对象
         self.page_name = page_name  # 页面名
-        self.locator = ElementLocator()  # 元素定位器
-        self.locators = self.locator.load_locators()  # 获取所有页面元素
+        self.element_locator = ElementLocator()  # 元素定位器实例
+        self.locators = self.element_locator.load_locators()  # 获取所有页面元素
         self.settings = settings  # 配置项
         self.wait_timeout = self.settings.IMPLICIT_WAIT
         self._db_utils = None
@@ -23,11 +26,13 @@ class BasePage:
         self.page.set_default_timeout(self.wait_timeout)
 
     def set_page_manager(self, page_manager):
+        # 设置页面管理器
         self.page_manager = page_manager
 
     def get_element_locator(self, element_name):
+        # 获取元素定位器
         page_name_str = self.find_element_page(element_name)
-        return self.locator.get_locator(page_name_str, element_name)
+        return self.element_locator.get_locator(page_name_str, element_name)
 
     def set_db_utils(self, db_utils):
         self._db_utils = db_utils
@@ -83,38 +88,77 @@ class BasePage:
         loc.fill(str(text))
 
     @allure.step("点击元素: {element_name}")
-    def element_click(self, element_name):
+    def element_click(self, element_name, retry_times=3):
+        """点击元素：真实点击；失败时检查存在性+可点击状态，就绪后重试"""
         loc = self.find_element(element_name)
         loc.scroll_into_view_if_needed()
 
-        try:
-            loc.click()
-            logger.info(f"点击成功: {element_name}")
-        except Exception as e:
-            err_msg = str(e).lower()
-            # 遮挡时，尝试JavaScript点击
-            if "click intercepted" in err_msg or "not clickable" in err_msg or "pointer-intercept" in err_msg:
-                logger.warning(f"元素被遮挡/不可点击，启用 JS 点击: {element_name}")
-                self.page.evaluate("""(el) => {
-                    el.scrollIntoView({ block: "center" });
-                    el.click();
-                }""", loc.element_handle())
-                logger.info(f"JS 点击完成: {element_name}")
-            else:
-                logger.error(f"点击失败: {element_name} => {e}")
+        for attempt in range(1, retry_times + 1):
+            try:
+                loc.click()
+                logger.info(f"点击成功: {element_name}")
+                return
+            except TimeoutError as e:
+                # 预期内：元素暂时不可点击（不可见/不稳定/被遮挡），走重试流程
+                logger.warning(f"第{attempt}次点击超时(不可点击): {element_name} => {e}")
+            except Exception as e:
+                # 非超时异常（定位器语法错、页面崩溃等）
+                logger.error(f"点击异常(非超时): {element_name} => {e}")
                 raise
+            if attempt == retry_times:
+                break
+            # 元素存在性检查
+            if not self.is_element_present(element_name, screenshot_on_error=False, timeout=3000):
+                logger.error(f"点击失败后元素已不存在: {element_name}")
+                break
+            # 等待可点击状态（预期异常：等待超时/断言失败）
+            try:
+                expect(loc).to_be_visible(timeout=3000)
+                expect(loc).to_be_enabled(timeout=3000)
+            except (AssertionError, TimeoutError) as wait_err:
+                logger.warning(f"元素未能就绪: {element_name} => {wait_err}")
+            time.sleep(1)
 
-    @allure.step("获取元素文本: {element_name}")
-    def get_text(self, element_name, timeout=None, screenshot_on_error=False):
+        error_msg = f"点击失败(重试{retry_times}次): {element_name}"
+        self.take_screenshot(f"点击失败-{element_name}")
+        raise Exception(error_msg)
+
+    def _get_text(self, element_name, timeout=None, screenshot_on_error=False):
+        # 内部封装去掉装饰器,轮询时不需要触发allure.step,用于等待元素文本变更后比对
         loc = self.find_element(element_name, timeout=timeout, screenshot_on_error=screenshot_on_error)
         return loc.text_content().strip()
 
-    @allure.step("获取元素值: {element_name}")
-    def get_element_value(self, element_name, timeout=None, screenshot_on_error=False):
+    @allure.step("获取元素文本: {element_name}")
+    def get_text(self, element_name, timeout=None, screenshot_on_error=False):
+        # 供executor-check_text、save_text使用
+        for attempt in range(1, 4):  # 防止元素已出现，但前端未取值
+            value = self._get_text(element_name, timeout=timeout, screenshot_on_error=screenshot_on_error)
+            if value:
+                return value
+            logger.info(f"元素:{element_name}文本为空,等待1s后重试")
+            time.sleep(1)
+        logger.warning(f"元素:{element_name}文本仍为空,已重试三次")
+        return ""
+
+    def _get_element_value(self, element_name, timeout=None, screenshot_on_error=False):
+        # 内部封装去掉装饰器,轮询时不需要触发allure.step,用于等待元素值变更后比对
         loc = self.find_element(element_name, timeout=timeout, screenshot_on_error=screenshot_on_error)
         return loc.input_value().strip()
 
+    @allure.step("获取元素值: {element_name}")
+    def get_element_value(self, element_name, timeout=None, screenshot_on_error=False):
+        # 专供executor-check_value、save_value使用
+        for attempt in range(1, 4):  # 防止元素已出现，但前端未取值
+            value = self._get_element_value(element_name, timeout=timeout, screenshot_on_error=screenshot_on_error)
+            if value:
+                return value
+            logger.info(f"元素:{element_name}值为空,等待1s后重试")
+            time.sleep(1)
+        logger.warning(f"元素:{element_name}值仍为空,已重试三次")
+        return ""
+
     def is_element_present(self, element_name, screenshot_on_error=False, timeout=None):
+        # 校验元素是否存在
         try:
             self.find_element(element_name, screenshot_on_error=screenshot_on_error, timeout=timeout)
             return True
@@ -185,11 +229,11 @@ class BasePage:
         while time.time() - start_time < timeout:
             try:
                 if real_action == "value":
-                    val = self.get_element_value(element_name, timeout_find)
+                    val = self._get_element_value(element_name, timeout_find)
                 elif real_action == "text":
-                    val = self.get_text(element_name, timeout_find)
+                    val = self._get_text(element_name, timeout_find)
                 else:
-                    val = self.get_element_value(element_name, timeout_find)
+                    val = self._get_element_value(element_name, timeout_find)
 
                 if val.strip() == str(expected_value).strip():
                     logger.info(f"值匹配成功: {expected_value}")
@@ -269,3 +313,30 @@ class BasePage:
         rows = self._db_utils.execute_update(sql)
         logger.info(f"更新完成，影响行数: {rows}")
         return rows
+
+    def wait_if_loading(self, timeout=None):
+        """点击/登录后：若页面存在可见的加载动画，等待其消失；
+        依赖配置：settings.LOADING_SELECTOR（当前项目的动画选择器，如 "#loader-wrapper"）
+        原理：
+          - 未配置 LOADING_SELECTOR → 直接返回
+          - loader 不存在或不可见 → 即时返回（count/is_visible 都是同步查询，不等待）
+          - loader 可见（动画中）→ 等它 hidden（被移除/隐藏）
+        """
+        if timeout is None:
+            timeout = self.wait_timeout
+        # 当前项目未配置加载动画选择器 → 不检测
+        if not self.settings.LOADING_SELECTOR:
+            logger.info(f"页面未配置加载项,直接跳过")
+            return
+        loc = self.page.locator(self.settings.LOADING_SELECTOR).first
+        # 即时判断：元素不存在 或 不可见（display:none/移除）→ 没有动画，直接返回
+        if loc.count() == 0 or not loc.is_visible():
+            logger.info(f"页面加载项元素不存在或不可见,加载已完成")
+            sleep(3)  # 额外等待3s后开始执行测试
+            return
+        # 有可见的加载动画 → 等它消失（元素被移除/隐藏）
+        try:
+            loc.wait_for(state="hidden", timeout=timeout)
+            logger.info(f"加载动画已结束: {self.settings.LOADING_SELECTOR}")
+        except TimeoutError:
+            logger.warning(f"加载动画未在{timeout / 1000}秒内消失: {self.settings.LOADING_SELECTOR}")

@@ -1,0 +1,163 @@
+test_cases:
+- id: 1-创建eor薪资收款包
+  page: gsr_admin_page
+  name: 创建eor薪资收款包
+  steps:
+  - step_name: 1、点击结算管理（新）主菜单
+    element: ettlement_list
+    action: click
+    data: null
+  - step_name: 2、点击收款结算子菜单
+    element: payment_settlement
+    action: click
+    data: null
+  - step_name: 3、点击EOR类收款
+    element: eor_settlement
+    action: click
+    data: null
+  - step_name: 4、点击创建薪资包
+    element: create_salary_package
+    action: click
+    data: null
+  - step_name: 5、客户栏输入'louie测试1号客户'
+    element: client_input
+    action: input
+    data: 'louie测试1号客户'
+  - step_name: 6、回车确认
+    element:
+    action: enter
+    data:
+  - step_name: 7、验证客户栏选择'louie测试1号客户'
+    element: client_text
+    action: check_text
+    data: 'louie测试1号客户'
+  - step_name: 8、客户合同栏输入'payroll'
+    element: client_contract_input
+    action: input
+    data: 'payroll'
+  - step_name: 9、回车确认
+    element:
+    action: enter
+    data:
+  - step_name: 10、验证客户合同栏选择'测试payroll'
+    element: client_contract_text
+    action: check_text
+    data: 'payroll'
+  - step_name: 11、国家/地区栏输入‘France’
+    element: country_input
+    action: input
+    data: 'France'
+  - step_name: 12、回车确认
+    element:
+    action: enter
+    data:
+  - step_name: 13、验证国家/地区输入栏选择‘France’
+    element: country_text
+    action: check_text
+    data: 'France'
+  - step_name: 14、服务月份选择框输入‘2026-08’
+    element: service_month_input
+    action: input
+    data: '2026-08'
+  - step_name: 15、回车确认
+    element:
+    action: enter
+    data:
+  - step_name: 16、验证服务月份输入框值为‘2026-08’
+    element: service_month_input
+    action: check_value
+    data: '2026-08'
+  - step_name: 17、就职国家输入‘France’
+    element: onboarding_country_input
+    action: input
+    data: 'France'
+  - step_name: 18、回车确认
+    element:
+    action: enter
+    data:
+  - step_name: 19、验证就职国家选择‘France’
+    element: onboarding_country_text
+    action: check_text
+    data: 'France'
+  - step_name: 20、员工性质输入‘顾问’
+    element: consultan_flag
+    action: input
+    data: '顾问'
+  - step_name: 21、回车确认
+    element:
+    action: enter
+    data:
+  - step_name: 22、验证员工性质选择‘顾问’
+    element: consultanflag_text
+    action: check_text
+    data: '顾问'
+  - step_name: 23、点击确认按钮
+    element: confirm_button
+    action: click
+    data:
+  - step_name: 24、提取EOR薪资结算包code
+    element: settlement_package_code
+    action: save_text
+    data: settlement_package_code
+  - step_name: 25、点击‘创建员工结算单’
+    element: create_employee_settlement
+    action: click
+    data:
+  - step_name: 26、员工姓名输入框选择‘louie垃圾’
+    element: employee_input
+    action: input
+    data: 'louie垃圾'
+  - step_name: 27、回车确认
+    element:
+    action: enter
+    data:
+  - step_name: 28、校验员工姓名输入栏
+    element: employee_text
+    action: check_text
+    data: 'louie垃圾'
+  - step_name: 29、提取员工staffid
+    element: staffid_value
+    action: save_value
+    data: staff_id_first
+  - step_name: 30、点击确认
+    element: confirm_employee_settlement
+    action: click
+    data:
+  - step_name: 31、通过列表staffid确认是否成功创建结算单
+    element: employee_settlement_staffid
+    action: check_text
+    data: '{staff_id_first}'
+  - step_name: 32、点击‘创建员工结算单’
+    element: create_employee_settlement
+    action: click
+    data:
+  - step_name: 33、员工姓名输入框选择‘louienewbee’
+    element: employee_input
+    action: input
+    data: 'louienewbee'
+  - step_name: 34、回车确认
+    element:
+    action: enter
+    data:
+  - step_name: 35、校验员工姓名输入栏
+    element: employee_text
+    action: check_text
+    data: 'louienewbee'
+  - step_name: 36、提取员工staffid
+    element: staffid_value
+    action: save_value
+    data: staff_id_sec
+  - step_name: 37、点击确认
+    element: confirm_employee_settlement
+    action: click
+    data:
+  - step_name: 38、通过列表staffid确认是否创建结算单
+    element: employee_settlement_staffid
+    action: check_text
+    data: '{staff_id_sec}'
+
+
+
+
+
+
