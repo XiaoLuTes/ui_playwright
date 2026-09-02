@@ -1,6 +1,6 @@
 # UI 自动化测试框架
 
-基于 **Playwright + Pytest + YAML 数据驱动** 的 Web UI 自动化测试框架，支持多项目切换、OCR 验证码自动识别、数据库校验、失败截图与日志留证。
+基于 **Playwright + Pytest + YAML 数据驱动** 的 Web UI 自动化测试框架，支持多项目切换、OCR 验证码自动登录、运行时变量、数据库校验、失败截图与日志留证。
 
 ---
 
@@ -8,214 +8,261 @@
 
 | 组件 | 说明 |
 |---|---|
-| Playwright | 浏览器自动化（Chromium） |
-| Pytest | 测试框架（参数化驱动） |
-| PyYAML | 用例与定位器配置（YAML 格式） |
+| Playwright | 浏览器自动化（Chromium，sync API）|
+| Pytest | 测试框架（参数化驱动用例）|
+| PyYAML | 用例与定位器配置 |
 | ddddocr / OpenCV | 验证码 OCR 识别 |
-| pymysql | 数据库校验 |
-| Allure | 测试报告（可选） |
+| PyMySQL | 数据库校验 |
+| python-dotenv | 本地凭据读取（.env）|
+| Allure | 测试报告（可选）|
 
 ## 二、目录结构
 
 ```
 ui_playwright/
-├── run.py                     # 入口脚本（执行 pytest）
-├── test_from_yaml.py          # pytest 测试类（参数化加载用例）
-├── conftest.py                # pytest fixture（session 级浏览器）
-├── pytest.ini                 # pytest 配置
-├── requirements.txt           # 依赖清单
-├── README.md                  # 本文档
-├── 超时配置说明.md             # 超时配置速查表
+├── run.py                  # 入口脚本（pytest.main）
+├── test_from_yaml.py       # pytest 测试类（参数化加载用例）
+├── conftest.py             # pytest fixtures + VariableStore.preload(settings) 启动预置
+├── pytest.ini              # pytest 配置
+├── requirements.txt        # 依赖清单
+├── .env                    # 本地凭据（已被 .gitignore 排除，勿提交）
+├── .env.example            # 凭据模板（可提交）
+├── .gitignore
+├── README.md               # 本文档
+├── 超时配置说明.md          # 超时配置速查
 │
 ├── config/
-│   ├── settings.py            # 全局配置（环境/账号/项目/超时/路径）
-│   └── locators/              # 元素定位器（按页面/项目分文件）
-│       ├── gsr_admin_page.yaml
+│   ├── settings.py         # 全局配置（环境/凭据/项目/超时/路径）
+│   └── locators/           # 元素定位器（按页面分文件）
+│       ├── gsr_admin_page.yaml               # 登录页元素（gsr_admin_page 分组）
+│       ├── gsr_admin_page_management.yaml    # 管理平台元素（gsr_admin_page_management 分组）
 │       ├── new_position_element_locators.yaml
-│       ├── pt_new_position_v2.yaml
-│       ├── attendance_and_leave.yaml
-│       └── flutter.yaml
+│       └── pt_new_position_v2.yaml
 │
-├── pages/                     # 页面对象层
-│   ├── base_page.py           # 页面操作基类（查找/点击/输入/上传/等待/截图）
-│   ├── gsr_admin_page.py      # 管理端页面对象（含 OCR 自动登录）
-│   └── flutter_page.py        # Flutter 页面（已废弃，勿用）
+├── pages/                  # 页面对象层
+│   ├── base_page.py        # 操作基类（查找/点击/输入/上传/等待/截图/加载动画检测）
+│   ├── gsr_admin_page.py   # 管理端页面对象（OCR 自动登录 + 进入管理端）
+│   └── flutter_page.py     # Flutter 页面（已废弃，勿用）
 │
-├── utils/                     # 工具层
-│   ├── browser.py             # 浏览器引擎（单例）
-│   ├── executor.py            # 动作执行器（YAML 动作 → 页面方法）
-│   ├── yaml_load.py           # 用例加载 + 测试结果回写
-│   ├── page_manager.py        # 页面注册与导航管理
-│   ├── element_locator.py     # 元素定位器读取
-│   ├── captcha_ocr.py         # 验证码 OCR 识别
-│   ├── database.py            # 数据库操作（查询/更新）
-│   ├── common.py              # 通用工具（变量替换/截图）
-│   └── logger.py              # 日志配置（按天切割）
+├── utils/                  # 工具层
+│   ├── executor.py         # 动作执行器（YAML 动作 → 页面方法，含 save_* 动作）
+│   ├── yaml_load.py        # 用例加载 + 结果写入 reports/test_results
+│   ├── page_manager.py     # 页面注册与导航
+│   ├── element_locator.py  # 定位器读取（YAML → 分组字典）
+│   ├── browser.py          # 浏览器引擎（单例）
+│   ├── captcha_ocr.py      # 验证码 OCR（连通域分割 + 多级回退）
+│   ├── database.py         # 数据库操作
+│   ├── common.py           # 通用工具（read_yaml/write_yaml + VariableStore 变量存储）
+│   └── logger.py           # 日志（按天切割 + 7天自动清理）
 │
-├── testcases/                 # 测试用例（YAML 数据驱动）
-│   ├── pt_new_position/       # 招聘平台（旧版）
-│   ├── pt_new_position_v2/    # 招聘平台（维护版，当前在用）
-│   ├── pt_new_preparation/    # 招聘准备
-│   ├── smoke_login/           # 冒烟登录
-│   ├── attendance_and_leave/  # 考勤请假
-│   └── template.yaml          # 用例模板
+├── testcases/              # 测试用例（YAML）
+│   ├── eor_salary_ettlement/   # 薪资结算包收款包链路（当前在用）
+│   ├── pt_new_position/        # 招聘平台（旧版）
+│   ├── pt_new_position_v2/     # 招聘平台（维护版）
+│   ├── pt_new_preparation/     # 招聘准备
+│   └── template.yaml           # 用例模板
 │
-└── reports/                   # 产物目录
-    ├── logs/                  # 运行日志（按天）
-    ├── logs_error/            # 错误日志（按天）
-    ├── screenshots/           # 失败截图
-    ├── temp/                  # Allure 临时文件
-    └── test_results/          # 测试结果（每次运行汇总一个 YAML 文件）
+└── reports/                # 产物目录（.gitignore 排除）
+    ├── logs/               # 运行日志（按天）
+    ├── logs_error/         # 错误日志（按天）
+    ├── screenshots/        # 失败截图
+    ├── temp/               # Allure 临时文件
+    └── test_results/       # 测试结果（每次运行汇总 1 个 YAML，用例源文件只读）
 ```
 
 ## 三、环境准备
 
 ```bash
-# 1. 安装依赖
-pip install -r requirements.txt
+# 1. 安装依赖（国内可用阿里云镜像）
+pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
 
 # 2. 安装 Playwright 浏览器（首次）
+set PLAYWRIGHT_BROWSERS_PATH=C:\playwright-browsers
 playwright install chromium
 ```
 
-> 若本机已安装 Chrome，`config/settings.py` 中可配置浏览器可执行文件路径，优先复用本机 Chrome。
+### 3.1 凭据配置（.env 或环境变量）
+
+敏感配置**不写在代码里**，通过 `.env`（本地）或环境变量（Jenkins）提供：
+
+```bash
+# 复制模板 → 填写真实值
+copy .env.example .env
+```
+
+```env
+# .env（已被 .gitignore 排除）
+LOGIN_USER=你的登录账号
+PASSWORD=你的登录密码
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_USER=你的数据库用户
+DB_PASSWORD=你的数据库密码
+DB_NAME=你的数据库名
+```
+
+**优先级**：Jenkins/系统环境变量 > `.env` > settings 默认值（敏感项默认已清空）
+
+⚠️ **Windows 注意**：不要用 `USERNAME` 作为自定义键名（系统保留变量，会被 Windows 用户名遮蔽），框架使用 `LOGIN_USER`。
 
 ## 四、配置说明（config/settings.py）
 
 ### 4.1 多项目切换
 
-```python
-CURRENT_PROJECT = "招聘平台新建岗位-维护版"   # ← 切换项目在这里改
+```bash
+# 方式一：改 settings.py 的 CURRENT_PROJECT
+# 方式二：环境变量覆盖（Jenkins 推荐）
+$env:CURRENT_PROJECT = "薪资结算包收款包链路"
+python run.py
 ```
 
-每个项目在 `PROJECT_CONFIGS` 中配置：
-
-```python
-"招聘平台新建岗位-维护版": {
-    "PAGE_NAME": ["gsr_admin_page"],          # 涉及的页面对象
-    "ELEMENT_LOCATORS": "./config/locators/pt_new_position_v2.yaml",  # 定位器文件
-    "TESTCASES_PATH": "./testcases/pt_new_position_v2/pt_testcases_v2.yaml",  # 用例文件
-}
-```
+每个项目在 `PROJECT_CONFIGS` 中配置：PAGE_NAME / ELEMENT_LOCATORS / TESTCASES_PATH / LOADING_SELECTOR（可选）。
 
 ### 4.2 超时配置（详见 `超时配置说明.md`）
 
 | 配置 | 默认值 | 单位 | 用途 |
 |---|---|---|---|
 | `IMPLICIT_WAIT` | 15000 | 毫秒 | page 全局默认超时（元素操作兜底）|
-| `EXPLICIT_WAIT` | 30 | 秒 | 等待元素值变化的总超时 |
+| `EXPLICIT_WAIT` | 30 | 秒 | 等待元素值变化总超时 |
 | `TIME_FIND` | 3000 | 毫秒 | 轮询单次查找超时 |
-| `REFRESH_INTERVAL` | 5 | 秒 | 等待值变化时的页面刷新间隔 |
-| `REFRESH_TIME` | 15 | 秒 | 等待元素出现时的页面刷新间隔 |
-| `WAIT_ELEMENT_APPEAR` | 120 | 秒 | 等待元素出现的总超时 |
+| `REFRESH_INTERVAL` | 5 | 秒 | wait_text/value 刷新间隔 |
+| `REFRESH_TIME` | 15 | 秒 | wait_exists 刷新间隔 |
+| `WAIT_ELEMENT_APPEAR` | 120 | 秒 | 元素出现总超时 |
 | `DB_TIMEOUT` | 20 | 秒 | 数据库连接超时 |
+| `SLOW_MO` | 500 | 毫秒 | 操作延迟（调试用，Jenkins 应设 0）|
 
-> 所有超时配置均支持环境变量覆盖（`_get_env_var`）。
+### 4.3 加载动画配置（按项目）
 
-### 4.3 环境变量覆盖
+项目进入时有加载动画（如 `#loader-wrapper`），在**该项目配置段**加：
 
-配置项可通过同名环境变量覆盖，例如：
-
-```bash
-# Windows PowerShell
-$env:EXPLICIT_WAIT = "60"
-python run.py
+```python
+"薪资结算包收款包链路": {
+    ...
+    "LOADING_SELECTOR": "#loader-wrapper",   # CSS 选择器，多个逗号分隔
+}
 ```
+
+未配置的项目**不启用**加载动画检测（框架默认零影响）。点击/登录时会自动等待动画消失。
 
 ## 五、编写测试用例
 
-### 5.1 用例文件格式（testcases/*.yaml）
+### 5.1 用例格式
 
 ```yaml
 test_cases:
-  - id: 招聘平台-1              # 用例 ID（唯一）
-    name: 创建不启用ai岗位       # 用例名称
-    steps:                      # 步骤列表
-      - step_name: 打开登录页    # 步骤名称
-        element: username_input  # 元素名（引用定位器文件中的定义）
-        action: input            # 动作
-        data: '{username}'       # 输入内容（支持变量）
-        expected: true           # 可选：输入后校验
+  - id: 薪资结算包-1
+    name: 创建EOR薪资结算包
+    steps:
+      - step_name: 输入账号
+        element: username_input
+        action: input
+        data: '{username}'        # 占位符必须加引号！（不加会被 YAML 解析成 dict）
+      - step_name: 保存结算包code
+        element: settlement_package_code
+        action: save_text         # 保存为变量
+        data: package_code        # 变量名（不带 {}）
+      - step_name: 引用变量
+        element: search_input
+        action: input
+        data: '{package_code}'    # 执行时替换为保存的值
 ```
 
-### 5.2 支持的动作列表
+### 5.2 动作列表
 
-| 动作 | 必填项 | 说明 |
+| 动作 | 必填 | 说明 |
 |---|---|---|
-| `input` | element / action / data | 输入文本，`expected: true` 校验输入成功，`clear_first` 控制是否先清空（默认清空）|
-| `click` | element / action | 点击元素 |
-| `check_text` | element / action / data | 校验元素文本是否包含 data |
-| `check_exists` | element / action / data | 校验元素存在与否，data 填 `存在` 或 `不存在` |
-| `wait_exists` | element / action | 等待元素出现（最长 `WAIT_ELEMENT_APPEAR`，每 `REFRESH_TIME` 刷新页面）|
-| `wait_text` / `wait_value` | element / action / data | 等待元素文本/值变为 data（最长 `EXPLICIT_WAIT`，每 `REFRESH_INTERVAL` 刷新页面）|
-| `upload` | element / action / data | 上传文件（input 类型元素，data 为相对路径）|
-| `wait` | action / data | 固定等待，data 为秒数 |
-| `up` / `down` | element / action / data | 键盘上/下方向键，data 为次数 |
-| `enter` | element / action | 回车键（表单多选场景）|
-| `sql` | action / data / expected | 执行查询 SQL 并校验 |
-| `sql_update` | action / data / expected | 执行更新 SQL 并校验 |
+| `input` | element/action/data | 输入文本（`expected: true` 可校验输入结果）|
+| `click` | element/action | 点击（真实点击重试 + 加载动画检测，无 JS 强点）|
+| `check_text` | element/action/data | 校验元素文本包含 data |
+| `check_value` | element/action/data | 校验表单元素值包含 data |
+| `check_exists` | element/action/data | 校验元素存在与否（data: 存在/不存在）|
+| `wait_exists` | element/action | 等待元素出现（最长120s，每15s刷新）|
+| `wait_text` / `wait_value` | element/action/data | 等待文本/值变为 data（最长30s，每5s刷新）|
+| `save_text` / `save_value` | element/action/data | 取元素文本/值存入运行时变量（自动等待非空）|
+| `upload` | element/action/data | 上传文件（data 为相对路径）|
+| `wait` | action/data | 固定等待（data 为秒）|
+| `up` / `down` / `enter` | element/action | 键盘操作 |
+| `sql` / `sql_update` | action/data/expected | 数据库查询/更新校验 |
 | `screenshot` | action | 主动截图 |
 
-### 5.3 可用变量
+### 5.3 变量机制
 
-| 变量 | 说明 |
-|---|---|
-| `{replace_num}` | 时间戳随机数（同一次运行内固定）|
-| `{username}` / `{password}` | settings 中配置的账号密码 |
-| `{customer}` / `{owner}` | settings 中配置的客户/负责人 |
+| 类型 | 写法 | 来源 | 替换时机 |
+|---|---|---|---|
+| 预置变量 | `{username}` `{password}` `{customer}` `{owner}` `{replace_num}` | conftest 启动时从 settings 预置 | 执行步骤时 |
+| 运行时变量 | `{任意变量名}` | save_text/save_value 保存 | 执行步骤时 |
 
-### 5.4 元素定位器格式（config/locators/*.yaml）
+- **占位符必须加引号**：`data: '{变量名}'`（不加引号 YAML 解析成 dict，不会替换）
+- 替换发生在 `execute_step` 开头（data/expected 字段），字符串任意位置/多次出现均可
+- 同一次运行内全局共享（跨用例可用），进程结束自动清空
+
+### 5.4 定位器格式（config/locators/*.yaml）
 
 ```yaml
-gsr_admin_page:                # 页面名（与 settings 中 PAGE_NAME 对应）
-  username_input:              # 元素名（用例中引用）
-    by: id                     # 定位方式：id / xpath / css / name
-    value: username            # 定位表达式
-  hidden_upload:               # 隐藏元素：名称前加 hidden_
+gsr_admin_page:                 # 页面分组（与页面注册名对应）
+  username_input:
+    by: id                      # id / xpath / css / name
+    value: username
+  hidden_upload:                # 隐藏元素：名称加 hidden_ 前缀
     by: xpath
     value: //input[@type='file']
 ```
 
+⚠️ **多文件定位器**：若登录元素与管理平台元素分属不同 YAML，需在项目 `ELEMENT_LOCATORS` 配置中指向**包含对应分组的文件**（当前支持单文件，含全部所需分组的 YAML）。
+
 ## 六、运行测试
 
 ```bash
-# 方式一：入口脚本（推荐）
+# 本地
 python run.py
 
-# 方式二：pytest 直接运行
-python -m pytest -v
+# 指定项目（环境变量）
+$env:CURRENT_PROJECT = "薪资结算包收款包链路"
+python run.py
 
-# 方式三：只跑指定用例
-python -m pytest -v -k "招聘平台"
+# pytest 直跑 / 按关键字筛选
+python -m pytest -v -k "创建EOR"
 ```
 
-运行前确认 `config/settings.py` 中 `CURRENT_PROJECT` 指向目标项目。
+**Jenkins 建议**：环境变量注入 `CURRENT_PROJECT`、凭据（LOGIN_USER/PASSWORD/DB_*）、`SLOW_MO=0`；`PLAYWRIGHT_BROWSERS_PATH` 固定浏览器缓存目录。
 
 ## 七、测试结果与报告
 
 | 产物 | 位置 | 说明 |
 |---|---|---|
-| 测试结果汇总 | `reports/test_results/<项目>_<批次>.yaml` | 每次运行一个文件，含全部用例的通过/失败结果 |
-| 失败截图 | `reports/screenshots/` | 每个失败场景自动截图留证 |
-| 运行日志 | `reports/logs/UI_log_日期.log` | 按天切割 |
-| 错误日志 | `reports/logs_error/UI_error_log_日期.log` | 按天切割 |
+| 结果汇总 | `reports/test_results/<项目>_<批次>.yaml` | 每次运行 1 个文件，含全部用例 id/name/result |
+| 失败截图 | `reports/screenshots/` | 自动截图留证 |
+| 运行日志 | `reports/logs/UI_log_日期.log` | 按天切割，7 天自动清理（保留最新一份）|
+| 错误日志 | `reports/logs_error/UI_error_log_日期.log` | 同上 |
 
-> 测试结果**不会写回用例源文件**，用例 YAML 保持只读，git diff 干净。
+**用例源文件只读**：结果写往 reports/test_results，不污染 testcases YAML。
 
-## 八、注意事项
+## 八、框架能力
 
-1. **登录依赖 OCR**：`gsr_admin_page.py` 自动识别验证码，失败自动重试 3 次；测试环境不稳定时可能出现登录失败，属于环境问题而非脚本问题。
-2. **wait_text / wait_value 会刷新页面**：等待期间按 `REFRESH_INTERVAL` 刷新页面拉取最新状态；请勿在"填写表单中途"使用（刷新会清空表单）。
-3. **用例间避免隐式依赖**：新建用例时，前置数据建议通过接口造数或 SQL 准备，不要依赖前序用例的执行结果。
-4. **凭据安全**：`settings.py` 中当前为明文账号密码（测试环境），建议后续迁移至 `.env` 文件并加入 `.gitignore`。
+1. **自动登录**：`perform_login` OCR 识别验证码 + 自动重试；登录后自动进入管理平台（无缓存走 /sys 选择页），等待页面加载动画结束（`_wait_if_loading`）
+2. **点击防遮挡**：真实点击（无 JS 强点）；点击前检测加载动画（按项目 `LOADING_SELECTOR` 配置，无动画零开销）；点击失败自动重试（存在性检查 + expect 可点击等待）
+3. **异步取值**：`get_text`/`get_element_value` 空值自动重试（元素不存在直接抛错）
+4. **轮询静默**：wait 类方法轮询不产生 Allure 噪音步骤
+5. **运行时变量**：save 动作 + `{变量名}` 引用，解耦用例间数据依赖
 
-## 九、常见问题
+## 九、注意事项
 
-**Q: 元素查找超时（15 秒）？**
-A: 多为测试环境响应慢或页面未加载完成；可临时调大 `IMPLICIT_WAIT`，或检查定位器是否因页面改版失效。
+1. **占位符必须加引号**：`data: '{xxx}'`——漏引号会被 YAML 解析成 dict，替换失效（报错文案会出现 `{'xxx': None}`）
+2. **wait_text/wait_value 会刷新页面**：请勿在"填写表单中途"使用
+3. **用例间避免隐式依赖**：推荐用 save 变量传递数据，不要依赖前序用例留下的页面状态
+4. **凭据安全**：.env 已被 .gitignore 排除；旧版本 settings.py 明文密码若已进 git 历史，建议更换测试环境密码
+5. **SLOW_MO**：本地调试可设 100~500（慢速观察），Jenkins 务必设 `SLOW_MO=0`（每个 Playwright 操作间会插入该延迟）
+
+## 十、常见问题
+
+**Q: 元素查找超时？**
+A: 多为环境响应慢或定位器失效；调大 `IMPLICIT_WAIT` 或检查定位器。注意 get_text/get_element_value 对"元素不存在"是直接抛错（不做空值重试）。
 
 **Q: 登录失败/验证码识别失败？**
-A: 确认测试环境可用；截图位于 `reports/screenshots/登录失败-*.png`，可查看实际页面状态。
+A: 确认环境可用 + 缓存场景（/sys vs /statistics 都视为登录成功）；截图在 reports/screenshots。
 
-**Q: 结果文件里某些用例 result 为空？**
-A: 说明该用例因环境问题中断未执行完；重新运行即可，结果会累积写入同一批次文件。
+**Q: 步骤报"预期包含 '{'xxx': None}'"？**
+A: 用例里占位符没加引号，被 YAML 解析成 dict——改为 `data: '{xxx}'`。
+
+**Q: 结果文件部分用例 result 为空？**
+A: 用例因环境问题中断未执行；重跑即可（同一批次文件累积写入）。
