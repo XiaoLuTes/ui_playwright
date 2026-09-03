@@ -14,6 +14,7 @@
 | ddddocr / OpenCV | 验证码 OCR 识别 |
 | PyMySQL | 数据库校验 |
 | python-dotenv | 本地凭据读取（.env）|
+| openpyxl | Excel 填写（edit_excel 动作）|
 | Allure | 测试报告（可选）|
 
 ## 二、目录结构
@@ -40,7 +41,7 @@ ui_playwright/
 │       └── pt_new_position_v2.yaml
 │
 ├── pages/                  # 页面对象层
-│   ├── base_page.py        # 操作基类（查找/点击/输入/上传/等待/截图/加载动画检测）
+│   ├── base_page.py        # 操作基类（查找/点击/输入/上传/下载/Excel填写/等待/截图/加载动画检测）
 │   ├── gsr_admin_page.py   # 管理端页面对象（OCR 自动登录 + 进入管理端）
 │   └── flutter_page.py     # Flutter 页面（已废弃，勿用）
 │
@@ -67,6 +68,7 @@ ui_playwright/
     ├── logs_error/         # 错误日志（按天）
     ├── screenshots/        # 失败截图
     ├── temp/               # Allure 临时文件
+    ├── downloads/          # 下载的文件（下载→编辑→上传 中间产物）
     └── test_results/       # 测试结果（每次运行汇总 1 个 YAML，用例源文件只读）
 ```
 
@@ -179,7 +181,9 @@ test_cases:
 | `wait_exists` | element/action | 等待元素出现（最长120s，每15s刷新）|
 | `wait_text` / `wait_value` | element/action/data | 等待文本/值变为 data（最长30s，每5s刷新）|
 | `save_text` / `save_value` | element/action/data | 取元素文本/值存入运行时变量（自动等待非空）|
-| `upload` | element/action/data | 上传文件（data 为相对路径）|
+| `upload` | element/action/data | 上传文件（data 为文件路径或变量）|
+| `download` | element/action/data | 触发浏览器下载，保存到 reports/downloads（data=保存文件名，存同名变量）|
+| `edit_excel` | action/data/expected | 填写 Excel 单元格（data=文件路径, expected=填写配置JSON），覆盖保存原文件 |
 | `wait` | action/data | 固定等待（data 为秒）|
 | `up` / `down` / `enter` | element/action | 键盘操作 |
 | `sql` / `sql_update` | action/data/expected | 数据库查询/更新校验 |
@@ -209,6 +213,30 @@ gsr_admin_page:                 # 页面分组（与页面注册名对应）
 ```
 
 ⚠️ **多文件定位器**：若登录元素与管理平台元素分属不同 YAML，需在项目 `ELEMENT_LOCATORS` 配置中指向**包含对应分组的文件**（当前支持单文件，含全部所需分组的 YAML）。
+
+### 5.5 文件操作（下载 → 编辑 → 上传）
+
+```yaml
+- step_name: 1、下载导入模板
+  element: download_button        # 触发下载的元素
+  action: download
+  data: import_template.xlsx      # 保存文件名（同时作为变量名）
+
+- step_name: 2、填写导入模板
+  action: edit_excel              # 不需要 element
+  data: '{import_template.xlsx}'  # 文件路径（变量引用）
+  expected: '{"A1": "张三", "B2": "20260903", "C3": "{staff_id_first}"}'  # 填写配置JSON（变量可嵌入）
+
+- step_name: 3、上传填写好的文件
+  element: upload_input
+  action: upload
+  data: '{import_template.xlsx}'  # 覆盖保存过，内容已是填写后的
+```
+
+说明：
+- 下载文件保存到 `reports/downloads/`（基于项目根，不依赖启动目录）
+- `edit_excel` **覆盖保存原文件** → 变量路径不变，upload 引用同一变量即为填写后的文件
+- `expected` 中的 `{变量名}` 同样会被替换（render 只替换真实存在的变量，`{"A1": ...}` 等 JSON 结构不会被误替换）
 
 ## 六、运行测试
 
@@ -244,6 +272,7 @@ python -m pytest -v -k "创建EOR"
 3. **异步取值**：`get_text`/`get_element_value` 空值自动重试（元素不存在直接抛错）
 4. **轮询静默**：wait 类方法轮询不产生 Allure 噪音步骤
 5. **运行时变量**：save 动作 + `{变量名}` 引用，解耦用例间数据依赖
+6. **文件下载与 Excel 填写**：download 动作捕获浏览器下载到 reports/downloads；edit_excel 用 openpyxl 填写单元格（覆盖保存），上传直接引用变量路径
 
 ## 九、注意事项
 

@@ -156,7 +156,14 @@ test_cases:
     action: check_text
     data: '{staff_id_sec}'
 
-
+- id: 2-流转eor薪资收款包
+  page: gsr_admin_page
+  name: 流转eor薪资收款包
+  steps:
+  - step_name: 1、点击结算管理（新）主菜单
+    element: ettlement_list
+    action: click
+    data: null
 
 
 

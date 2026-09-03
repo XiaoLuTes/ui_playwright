@@ -2,7 +2,10 @@ import os
 import time
 from dotenv import load_dotenv
 
-load_dotenv(encoding="utf-8")  # 读取项目根目录 .env（Jenkins 环境变量优先级更高，会覆盖）
+load_dotenv(encoding="utf-8")
+# 读取项目根目录 .env（Jenkins 环境变量优先级更高，会覆盖）
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 
 class Settings:
     """支持环境变量覆盖的配置类"""
@@ -94,6 +97,8 @@ class Settings:
         self.DEFAULT_PAGE_NAME = "gsr_admin_page"
         # 元素定位器地址
         self.ELEMENT_LOCATORS = self.PROJECT_CONFIG["ELEMENT_LOCATORS"]
+        # 下载文件默认目录
+        self.DOWNLOAD_DIR = self._get_env_var("DOWNLOAD_DIR", "reports/downloads")
 
         # 账号密码配置
         self.LOGIN_USER = self._get_env_var("LOGIN_USER", '')

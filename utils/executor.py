@@ -6,6 +6,8 @@ from utils.page_manager import PageManager
 from utils.yaml_load import YamlLoad
 from config.settings import settings
 from utils.common import VariableStore
+import json
+
 
 class Executor:
     def __init__(self, page, page_manager=None):
@@ -114,7 +116,7 @@ class Executor:
 
     def execute_step(self, page_object, step_name, element_name, action, data, expected):
         """执行测试步骤"""
-        # 运行时变量替换：在记录步骤参数之前，把 {变量名} 替换为真实值
+        # 运行时变量替换
         data = VariableStore.render(data)
         expected = VariableStore.render(expected)
         with allure.step("步骤参数"):
@@ -183,6 +185,21 @@ class Executor:
 
         elif action == "wait_exists":
             page_object.wait_for_element_appear(element_name)
+
+        elif action == "download":
+            # data = 保存的文件名（如 template.xlsx），下载到 reports/downloads
+            save_path = page_object.download_file(element_name, data)
+            # 路径存入变量，变量名取data(最终: data:save_path)
+            VariableStore.set_variable(data, save_path)
+            logger.info(f"下载完成并记录路径: {save_path}")
+
+        elif action == "edit_excel":
+            # data = 文件路径（变量引用或直接路径）；expected = 填写配置 JSON
+            cfg = json.loads(expected)
+            # 防止data未被替换变量
+            file_path = VariableStore.get_variable(data, data)
+            edit_path = page_object.edit_excel(file_path, cfg)
+            logger.info(f"Excel编辑完成: {edit_path}")
 
         elif action == "upload":
             page_object.upload_file(element_name, data)

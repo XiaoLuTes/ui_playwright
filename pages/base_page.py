@@ -1,5 +1,4 @@
 from time import sleep
-
 from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 from utils.logger import logger
 from utils.element_locator import ElementLocator
@@ -206,6 +205,47 @@ class BasePage:
     def keyboard_enter(self):
         self.page.keyboard.press("Enter")
         logger.info("按下 Enter 键")
+
+    @allure.step("下载文件")
+    def download_file(self, element_name, save_filename):
+        """点击元素触发浏览器下载，保存到项目 reports/downloads 目录
+        :param element_name: 触发下载的元素（下载按钮）
+        :param save_filename: 保存的文件名（如 template.xlsx）
+        :return: 保存后的完整路径
+        """
+        # 目录定位：相对路径统一基于项目根
+        save_dir = self.settings.DOWNLOAD_DIR
+        if not os.path.isabs(save_dir):  # 检查目录是否是绝对路径
+            save_dir = os.path.join(self.settings.PROJECT_ROOT, save_dir)
+        os.makedirs(save_dir, exist_ok=True)
+        # Playwright 下载监听
+        with self.page.expect_download() as dl_info:
+            self.element_click(element_name)  # 触发下载（带防遮挡+重试）
+        download = dl_info.value  # 拿到下载事件
+        # 保存到本地（save_as 只能调用一次）
+        save_path = os.path.join(save_dir, save_filename)
+        download.save_as(save_path)
+        logger.info(f"文件已下载: {save_path}")
+        return save_path
+
+    def edit_excel(self, file_path, cells):
+        """填写 Excel 单元格并保存（覆盖原文件，供后续上传）
+        :param file_path: 下载的模板文件路径
+        :param cells: 填写配置 {"单元格": "值"}，如 {"A1": "张三", "B2": "20260903"}
+        :return: 保存后的文件路径（原路径，内容已更新）
+        """
+        if not Path(file_path).exists():
+            raise FileNotFoundError(f"文件不存在: {file_path}")
+
+        from openpyxl import load_workbook
+        wb = load_workbook(file_path)  # 打开已有 Excel（保留原格式）
+        ws = wb.active  # 默认第一个 sheet
+        for cell, value in cells.items():
+            ws[cell] = value  # 逐个单元格写入
+        wb.save(file_path)  # 覆盖保存（路径不变）
+        wb.close()  # 关闭释放文件锁（Windows 上传前必须）
+        logger.info(f"Excel已填写: {file_path} cells={cells}")
+        return file_path
 
     @allure.step("上传文件: {data}")
     def upload_file(self, element_name, data):
