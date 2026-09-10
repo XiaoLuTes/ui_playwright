@@ -97,6 +97,8 @@ class Settings:
         self.DEFAULT_PAGE_NAME = "gsr_admin_page"
         # 元素定位器地址
         self.ELEMENT_LOCATORS = self.PROJECT_CONFIG["ELEMENT_LOCATORS"]
+        # 文件下载路径(当前项目路径)
+        self.PROJECT_ROOT = PROJECT_ROOT
         # 下载文件默认目录
         self.DOWNLOAD_DIR = self._get_env_var("DOWNLOAD_DIR", "reports/downloads")
 

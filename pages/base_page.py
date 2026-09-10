@@ -220,7 +220,7 @@ class BasePage:
         os.makedirs(save_dir, exist_ok=True)
         # Playwright 下载监听
         with self.page.expect_download() as dl_info:
-            self.element_click(element_name)  # 触发下载（带防遮挡+重试）
+            self.element_click(element_name)  # 触发下载
         download = dl_info.value  # 拿到下载事件
         # 保存到本地（save_as 只能调用一次）
         save_path = os.path.join(save_dir, save_filename)
@@ -244,11 +244,11 @@ class BasePage:
             ws[cell] = value  # 逐个单元格写入
         wb.save(file_path)  # 覆盖保存（路径不变）
         wb.close()  # 关闭释放文件锁（Windows 上传前必须）
-        logger.info(f"Excel已填写: {file_path} cells={cells}")
+        logger.info(f"Excel已填写: {file_path} 共修改{len(cells)}个cell")
         return file_path
 
     @allure.step("上传文件: {data}")
-    def upload_file(self, element_name, data):
+    def upload_file(self, element_name, data, wait_success_element=None):
         if not Path(data).exists():
             raise FileNotFoundError(f"文件不存在: {data}")
 
@@ -256,7 +256,11 @@ class BasePage:
         loc = self.find_element(element_name)
         loc.set_input_files(abs_path)
         logger.info(f"文件上传成功: {abs_path}")
-        time.sleep(3)
+        if wait_success_element:
+            self.find_element(wait_success_element)  # 以元素出现判断是否上传完成
+            logger.info(f"上传完成元素已出现: {wait_success_element}")
+        else:
+            time.sleep(3)
 
     @allure.step("等待元素【{element_name}】的【{real_action}】等于【{expected_value}】")
     def wait_for_element_value(self, element_name, real_action, expected_value):
@@ -291,28 +295,54 @@ class BasePage:
         raise Exception(error_msg)
 
     @allure.step("等待元素{element_name}出现")
-    def wait_for_element_appear(self, element_name):
+    def wait_for_element_appear(self, element_name, refresh=False):
         total_wait = self.settings.WAIT_ELEMENT_APPEAR
         refresh_interval = self.settings.REFRESH_TIME
         timeout_find = self.settings.TIME_FIND
         start_time = time.time()
         last_refresh_time = start_time
+        if refresh:
+            logger.info(f"当前允许刷新页面")
+        else:
+            logger.info(f"当前禁止刷新页面")
 
         while time.time() - start_time < total_wait:
             if self.is_element_present(element_name, timeout=timeout_find):
                 logger.info(f"元素已出现: {element_name}")
                 return True
 
-            if time.time() - last_refresh_time >= refresh_interval:
-                logger.info("刷新页面继续等待...")
-                self.page.reload()
-                last_refresh_time = time.time()
+            if refresh:
+                if time.time() - last_refresh_time >= refresh_interval:
+                    logger.info("刷新页面继续等待...")
+                    self.page.reload()
+                    last_refresh_time = time.time()
 
             time.sleep(2)  # 轮询节奏
 
         error_msg = f"等待元素出现超时: {element_name}"
         self.take_screenshot(f"等待元素超时-{element_name}")
         raise Exception(error_msg)
+
+    @allure.step("提交,等待接口响应")
+    def click_and_wait_response(self, element_name, url_keyword):
+        """点击元素并等待指定接口返回（提交/保存类操作的可靠等待）
+        :param element_name: 触发提交的元素（提交按钮）
+        :param url_keyword: 接口 URL 关键字（如 "api/order/submit"）
+        :return: 接口响应对象（可检查 status/body）
+        """
+        timeout = self.settings.IMPLICIT_WAIT
+        with self.page.expect_response(
+                lambda r: url_keyword in r.url,  # 匹配目标接口
+                timeout=timeout
+        ) as resp_info:
+            self.element_click(element_name)  # 注册监听再点击触发提交
+        resp = resp_info.value  # 拿到响应（阻塞等待直到返回）
+        # 检查业务是否成功
+        body = resp.json()
+        if body.get("code") not in (0, 200):
+            raise Exception(f"提交业务失败: {body}")
+        logger.info(f"接口已返回: status={resp.status} url={resp.url}")
+        return resp
 
     @allure.step("执行 SQL 验证")
     def verify_mysql_data(self, sql: str, expected: str):

@@ -99,7 +99,7 @@ class GsrAdminPage(BasePage):
                     if "/sys" in self.page.url:
                         logger.info("检测到系统选择页，点击进入管理平台")
                         self.element_click("management_button")
-                    # ===== 新增②：进入管理端后可能有加载动画 → 等它消失（无动画零开销）=====
+                    # ===== 进入管理端后可能有加载动画 → 等它消失=====
                     self.wait_if_loading()
                     logger.info("·················已进入管理端，页面就绪·················")
                     return True

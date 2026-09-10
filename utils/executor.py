@@ -117,6 +117,7 @@ class Executor:
     def execute_step(self, page_object, step_name, element_name, action, data, expected):
         """执行测试步骤"""
         # 运行时变量替换
+        element_name = VariableStore.render(element_name)
         data = VariableStore.render(data)
         expected = VariableStore.render(expected)
         with allure.step("步骤参数"):
@@ -186,6 +187,12 @@ class Executor:
         elif action == "wait_exists":
             page_object.wait_for_element_appear(element_name)
 
+        elif action == "wait_exists_refresh":
+            page_object.wait_for_element_appear(element_name, refresh=True)
+
+        elif action == "submit":
+            page_object.click_and_wait_response(element_name, data)
+
         elif action == "download":
             # data = 保存的文件名（如 template.xlsx），下载到 reports/downloads
             save_path = page_object.download_file(element_name, data)
@@ -202,7 +209,11 @@ class Executor:
             logger.info(f"Excel编辑完成: {edit_path}")
 
         elif action == "upload":
-            page_object.upload_file(element_name, data)
+            file_path = VariableStore.get_variable(data, data)
+            if expected:
+                page_object.upload_file(element_name, file_path, expected)
+            else:
+                page_object.upload_file(element_name, file_path)
 
         elif action == "wait":
             time.sleep(int(data))

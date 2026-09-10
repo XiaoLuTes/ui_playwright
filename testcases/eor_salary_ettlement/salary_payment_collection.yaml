@@ -92,7 +92,7 @@ test_cases:
     action: check_text
     data: '顾问'
   - step_name: 23、点击确认按钮
-    element: confirm_button
+    element: confirm_button_createEOR
     action: click
     data:
   - step_name: 24、提取EOR薪资结算包code
@@ -155,16 +155,132 @@ test_cases:
     element: employee_settlement_staffid
     action: check_text
     data: '{staff_id_sec}'
-
-- id: 2-流转eor薪资收款包
-  page: gsr_admin_page
-  name: 流转eor薪资收款包
-  steps:
-  - step_name: 1、点击结算管理（新）主菜单
-    element: ettlement_list
+  - step_name: 39、勾选无差异预收款
+    element: no_differential_advance_payment
     action: click
-    data: null
-
-
+    data:
+  - step_name: 40、勾选合并开票-是
+    element: merge_invoicing_yes
+    action: click
+    data:
+  - step_name: 41、点击确认流转至待上传
+    element: confirm_to_upload
+    action: click
+    data:
+  - step_name: 42、切换到‘待上传及处理’tab
+    element: upload_tab
+    action: click
+    data:
+  - step_name: 43、结算包id搜索框输入{settlement_package_code}
+    element: settlement_package_code_search
+    action: input
+    data: '{settlement_package_code}'
+  - step_name: 44、点击搜索
+    element: search_button
+    action: click
+    data:
+  - step_name: 45、核对列表返回结算包id为{settlement_package_code}
+    element: settlement_package_code_list
+    action: check_text
+    data: '{settlement_package_code}'
+  - step_name: 46、点击下载国家模板
+    element: national_template_download
+    action: download
+    data: '{settlement_package_code}.xlsx'
+  - step_name: 47、修改国家模板
+    element:
+    action: edit_excel
+    data: '{settlement_package_code}.xlsx'
+    expected: '{"L9":"11.00","M9":"11.00","N9":"11.00","O9":"11.00","P9":"11.00","Q9":"11.00","R9":"11.00","S9":"11.00","AO9":"1.00","AP9":"1.00",
+      "L10":"22.00","M10":"22.00","N10":"22.00","O10":"22.00","P10":"22.00","Q10":"22.00","R10":"22.00","S10":"22.00","AO10":"1.00","AP10":"1.00"
+    }'
+  - step_name: 48、点击上传国家模板
+    element: national_template_upload_button
+    action: click
+    data:
+  - step_name: 49、上传国家模板
+    element: hidden_national_template_upload_input
+    action: upload
+    data: '{settlement_package_code}.xlsx'
+  - step_name: 50、点击上传弹窗-确认
+    element: confirm_national_template_upload
+    action: click
+    data:
+  - step_name: 51、等待上传完成excel出现
+    element: luckly_sheet
+    action: wait_exists
+    data:
+  - step_name: 52、校验上传成功2条
+    element: upload_result_success
+    action: check_text
+    data: '成功2条'
+  - step_name: 53、点击上传完成弹窗-确认
+    element: confirm_upload_result
+    action: click
+    data:
+  - step_name: 54、等待提交成功后列表‘暂无数据’
+    element: description_upload
+    action: wait_exists
+    data:
+  - step_name: 55、点击切换至‘待财务审核’tab
+    element: review_financial_tab
+    action: click
+    data:
+  - step_name: 56、结算包id搜索框输入{settlement_package_code}
+    element: settlement_package_code_search
+    action: input
+    data: '{settlement_package_code}'
+  - step_name: 57、点击搜索
+    element: search_button
+    action: click
+    data:
+  - step_name: 58、核对列表返回结算包id为{settlement_package_code}
+    element: settlement_package_code_list
+    action: check_text
+    data: '{settlement_package_code}'
+  - step_name: 59、点击‘待财务审核’tab-审核按钮
+    element: review_financial_list
+    action: click
+    data:
+  - step_name: 60、等待excel组件出现
+    element: luckly_sheet
+    action: wait_exists
+    data:
+  - step_name: 61、点击通过按钮
+    element: confirm_financial_excel
+    action: click
+    data:
+  - step_name: 62、取消勾选‘继续审批下一张’
+    element: confirm_next_continue
+    action: click
+    data:
+  - step_name: 63、审核意见输入：自动化测试{replace_num}
+    element: review_comments
+    action: input
+    data: '自动化测试{replace_num}'
+  - step_name: 64、点击通过
+    element: confirm_review_comments
+    action: click
+    data:
+  - step_name: 65、等待提交成功后列表‘暂无数据’
+    element: description_upload
+    action: wait_exists
+    data:
+  - step_name: 66、切换至‘已审核’tab
+    element: reviewed_tab
+    action: click
+    data:
+  - step_name: 67、结算包id搜索框输入{settlement_package_code}
+    element: settlement_package_code_search
+    action: input
+    data: '{settlement_package_code}'
+  - step_name: 68、点击搜索
+    element: search_button
+    action: click
+    data:
+  - step_name: 69、核对列表返回结算包id为{settlement_package_code}
+    element: settlement_package_code_list
+    action: check_text
+    data: '{settlement_package_code}'
 
 
