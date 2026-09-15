@@ -52,20 +52,6 @@ class PageManager:
             logger.warning(f"页面对象未注册: {page_name}, 尝试动态注册")
             return self.register_page(page_name)
 
-    def initialize_project_pages(self, project_name=None):
-        """初始化项目页面"""
-        if project_name is None:
-            project_name = self.settings.CURRENT_PROJECT
-
-        project_config = self.settings.PROJECT_CONFIG
-        page_list = project_config.get("PAGE_NAME", [])
-
-        for page_name in page_list:
-            self.register_page(page_name)
-
-        logger.info(f"已为项目'{project_name}'注册 {len(page_list)} 个页面对象")
-        return self.pages
-
     def navigate_to_page(self, page_name):
         """导航到指定页面"""
         page_url = self.settings.PAGE_URLS.get(page_name)

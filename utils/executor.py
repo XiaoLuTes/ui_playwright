@@ -238,18 +238,5 @@ class Executor:
             if expected and str(result) != expected:
                 raise AssertionError(f"SQL行数不匹配 预期:{expected} 实际:{result}")
 
-        # ====================== Flutter/坐标动作（保留兼容）======================
-        # elif action == "flutter_click":
-        #     page_object.click_by_relative_coordinates(element_name)
-        #
-        # elif action == "flutter_input":
-        #     page_object.input_text_by_coordinates(element_name, data)
-        #
-        # elif action == "flutter_upload":
-        #     page_object.upload_file_by_coordinates(element_name, data)
-        #
-        # elif action == "flutter_drag":
-        #     page_object.drag_and_drop(element_name, data)
-
         else:
             raise Exception(f"不支持的操作类型: {action}")

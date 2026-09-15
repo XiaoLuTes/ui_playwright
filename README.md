@@ -43,7 +43,6 @@ ui_playwright/
 ├── pages/                  # 页面对象层
 │   ├── base_page.py        # 操作基类（查找/点击/输入/上传/下载/Excel填写/等待/截图/加载动画检测）
 │   ├── gsr_admin_page.py   # 管理端页面对象（OCR 自动登录 + 进入管理端）
-│   └── flutter_page.py     # Flutter 页面（已废弃，勿用）
 │
 ├── utils/                  # 工具层
 │   ├── executor.py         # 动作执行器（YAML 动作 → 页面方法，含 save_* 动作）

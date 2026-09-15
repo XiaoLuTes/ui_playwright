@@ -72,17 +72,15 @@ class Settings:
         # 页面url映射
         self.PAGE_URLS = {
             "gsr_admin_page": self.URL,  # 管理端首页URL（导航时自动登录）
-            "login_page": self.URL,  # 登录页URL（不做自动登录，用于显式测试登录表单）
-            "flutter_page": self.OMIN_URL
+            "login_page": self.URL  # 登录页URL（不做自动登录，用于显式测试登录表单）
             # 可以继续添加其他页面的URL配置...
         }
         # 页面类映射
         self.PAGE_CLASSES = {
-            "gsr_admin_page": "GsrAdminPage",
-            "flutter_page": "FlutterPage"
+            "gsr_admin_page": "GsrAdminPage"
         }
         # 获取当前项目
-        self.CURRENT_PROJECT = self._get_env_var("CURRENT_PROJECT", '薪资结算包收款包链路')
+        self.CURRENT_PROJECT = self._get_env_var("CURRENT_PROJECT", '招聘平台新建岗位-维护版')
         # 获取当前项目配置
         self.PROJECT_CONFIG = self.get_current_project_config(self.CURRENT_PROJECT)
         # 测试用例文件位置(根据项目获取)
@@ -157,10 +155,6 @@ class Settings:
             return self.PROJECT_CONFIGS[project_name]
         else:
             return self.PROJECT_CONFIGS[default_project]
-
-    def get_available_projects(self):
-        """获取所有可用项目列表"""
-        return list(self.PROJECT_CONFIGS.keys())
 
     # def _print_current_config(self):
     #     """打印当前配置"""
