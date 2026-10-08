@@ -1,0 +1,20 @@
+# 敏感信息
+.env
+
+# Python
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# 构建产物
+reports/
+allure-results/
+allure-report/
+
+# IDE
+.idea/
+.vscode/
+
+# 调试杂物
+others/
