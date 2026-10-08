@@ -120,7 +120,7 @@ class GsrAdminPage(BasePage):
     def ensure_logged_in(self):
         try:
             self.open(self.settings.URL)
-            # 已登录时打开管理端会跳转到 /sys；未登录则停留登录页（短超时，避免无效等待）
+            # 已登录时打开管理端会跳转到 /sys；未登录则停留登录页
             if self._is_logged_in():
                 logger.info("当前已处于登录状态")
                 return True
