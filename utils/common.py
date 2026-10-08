@@ -12,7 +12,7 @@ def write_yaml(file_path, data):
     with open(file_path, 'w', encoding='utf-8') as file:
         yaml.dump(data, file, allow_unicode=True, sort_keys=False)
 
-# ==================== 统一变量存储与替换 ====================
+# =================== 统一变量存储与替换 ===================
 class VariableStore:
     """统一变量存储：存值 + 渲染替换（统一 {变量名} 语法）
     用途：
