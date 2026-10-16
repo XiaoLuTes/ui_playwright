@@ -100,10 +100,10 @@ class BasePage:
 
         for attempt in range(1, retry_times + 1):
             try:
-                loc.click()
+                loc.click(timeout=5000)
                 logger.info(f"点击成功: {element_name}")
                 return
-            except TimeoutError as e:
+            except PlaywrightTimeoutError as e:
                 # 预期内：元素暂时不可点击（不可见/不稳定/被遮挡），走重试流程
                 logger.warning(f"第{attempt}次点击超时(不可点击): {element_name} => {e}")
             except Exception as e:
@@ -120,7 +120,7 @@ class BasePage:
             try:
                 expect(loc).to_be_visible(timeout=3000)
                 expect(loc).to_be_enabled(timeout=3000)
-            except (AssertionError, TimeoutError) as wait_err:
+            except (AssertionError, PlaywrightTimeoutError) as wait_err:
                 logger.warning(f"元素未能就绪: {element_name} => {wait_err}")
             time.sleep(1)
 
@@ -453,5 +453,5 @@ class BasePage:
         try:
             loc.wait_for(state="hidden", timeout=timeout)
             logger.info(f"加载动画已结束: {self.settings.LOADING_SELECTOR}")
-        except TimeoutError:
+        except PlaywrightTimeoutError:
             logger.warning(f"加载动画未在{timeout / 1000}秒内消失: {self.settings.LOADING_SELECTOR}")
